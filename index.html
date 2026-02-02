@@ -116,7 +116,12 @@
         .username {
             font-weight: bold;
             margin-bottom: 5px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
         }
 
         .contributions {
@@ -181,6 +186,7 @@
             padding: 15px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             transition: background 0.3s ease;
+            gap: 10px;
         }
 
         .stat-row:hover {
@@ -195,7 +201,9 @@
             font-size: 1.5rem;
             font-weight: bold;
             width: 50px;
+            min-width: 50px;
             text-align: center;
+            flex-shrink: 0;
         }
 
         .rank.gold { color: #f1c40f; }
@@ -207,15 +215,20 @@
             height: 50px;
             border-radius: 50%;
             margin-right: 15px;
+            flex-shrink: 0;
         }
 
         .stat-info {
             flex: 1;
+            min-width: 0;
         }
 
         .stat-username {
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .stat-username a {
@@ -241,6 +254,10 @@
             transition: width 1s ease-out;
         }
 
+        .progress-fill {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
         .rank.gold + .stat-avatar + .stat-info .progress-fill { background: linear-gradient(90deg, #f1c40f, #f39c12); }
         .rank.silver + .stat-avatar + .stat-info .progress-fill { background: linear-gradient(90deg, #bdc3c7, #95a5a6); }
         .rank.bronze + .stat-avatar + .stat-info .progress-fill { background: linear-gradient(90deg, #cd6133, #a0522d); }
@@ -249,6 +266,8 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: #f39c12;
+            min-width: 60px;
+            text-align: right;
         }
 
         .last-updated {
@@ -278,9 +297,16 @@
 
         @media (max-width: 600px) {
             h1 { font-size: 1.8rem; }
-            .podium { flex-direction: column; align-items: center; }
+            .podium { flex-direction: column; align-items: center; gap: 20px; }
             .podium-place { order: unset !important; }
-            .pedestal { height: 60px !important; width: 200px !important; }
+            .pedestal { height: 60px !important; width: 180px !important; }
+            .first .avatar, .avatar { width: 70px !important; height: 70px !important; }
+            .stat-row { padding: 12px 10px; }
+            .stat-username { font-size: 0.9rem; }
+            .stat-count { font-size: 1.2rem; min-width: 50px; }
+            .rank { font-size: 1.3rem; width: 40px; min-width: 40px; }
+            .stat-avatar { width: 40px; height: 40px; margin-right: 10px; }
+            .stats-table { padding: 15px; }
         }
     </style>
 </head>
