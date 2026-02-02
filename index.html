@@ -314,6 +314,31 @@
 
         const YEAR = 2026;
 
+        // List of CORS proxies to try
+        const CORS_PROXIES = [
+            (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+            (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+            (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+        ];
+
+        async function fetchWithProxy(url) {
+            for (const proxyFn of CORS_PROXIES) {
+                try {
+                    const proxyUrl = proxyFn(url);
+                    const response = await fetch(proxyUrl);
+                    if (response.ok) {
+                        const text = await response.text();
+                        if (text && text.length > 100) {
+                            return text;
+                        }
+                    }
+                } catch (e) {
+                    console.log('Proxy failed, trying next...');
+                }
+            }
+            throw new Error('All proxies failed');
+        }
+
         async function fetchContributions(username) {
             try {
                 // Fetch user profile from GitHub API
@@ -323,32 +348,19 @@
 
                 // Fetch contribution graph HTML via CORS proxy
                 const contributionsUrl = `https://github.com/users/${username}/contributions?from=${YEAR}-01-01&to=${YEAR}-12-31`;
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(contributionsUrl)}`;
-
-                const response = await fetch(proxyUrl);
-                const data = await response.json();
+                const html = await fetchWithProxy(contributionsUrl);
 
                 // Parse the HTML to extract contribution count
                 let contributions = 0;
-                const html = data.contents;
 
-                // Look for the contribution count in the HTML
-                // GitHub shows it in a format like "X contributions in YEAR"
-                const match = html.match(/(\d+)\s+contributions?\s+in\s+the\s+last\s+year/i) ||
-                              html.match(/(\d+)\s+contributions?\s+in\s+\d{4}/i) ||
-                              html.match(/(\d+)\s+contributions?/i);
+                // GitHub format: "245\n contributions\n in 2026"
+                // Match number followed by "contributions" with whitespace/newlines between
+                const match = html.match(/(\d+)\s+contributions\s+in\s+(\d{4})/i) ||
+                              html.match(/>(\d+)\s*<\/h2>/i) ||
+                              html.match(/(\d+)\s+contributions/i);
 
                 if (match) {
                     contributions = parseInt(match[1], 10);
-                } else {
-                    // Alternative: count data-level attributes (each day's contribution)
-                    const dayMatches = html.match(/data-count="(\d+)"/g);
-                    if (dayMatches) {
-                        contributions = dayMatches.reduce((sum, match) => {
-                            const count = parseInt(match.match(/\d+/)[0], 10);
-                            return sum + count;
-                        }, 0);
-                    }
                 }
 
                 return {
