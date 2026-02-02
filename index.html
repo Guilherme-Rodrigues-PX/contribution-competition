@@ -316,40 +316,40 @@
 
         async function fetchContributions(username) {
             try {
-                // Fetch user profile
+                // Fetch user profile from GitHub API
                 const userResponse = await fetch(`https://api.github.com/users/${username}`);
                 if (!userResponse.ok) throw new Error('User not found');
                 const userData = await userResponse.json();
 
-                // Fetch contribution data using the events API
-                // We'll count PushEvents, PullRequestEvents, IssuesEvents, etc from 2026
-                const eventsResponse = await fetch(`https://api.github.com/users/${username}/events/public?per_page=100`);
-                const events = await eventsResponse.json();
+                // Fetch contribution graph HTML via CORS proxy
+                const contributionsUrl = `https://github.com/users/${username}/contributions?from=${YEAR}-01-01&to=${YEAR}-12-31`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(contributionsUrl)}`;
 
-                // Count contributions from 2026
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+
+                // Parse the HTML to extract contribution count
                 let contributions = 0;
-                const year2026Events = events.filter(event => {
-                    const eventDate = new Date(event.created_at);
-                    return eventDate.getFullYear() === YEAR;
-                });
+                const html = data.contents;
 
-                year2026Events.forEach(event => {
-                    switch(event.type) {
-                        case 'PushEvent':
-                            contributions += event.payload.commits?.length || 1;
-                            break;
-                        case 'PullRequestEvent':
-                        case 'IssuesEvent':
-                        case 'IssueCommentEvent':
-                        case 'PullRequestReviewEvent':
-                        case 'CreateEvent':
-                        case 'DeleteEvent':
-                        case 'ForkEvent':
-                        case 'ReleaseEvent':
-                            contributions += 1;
-                            break;
+                // Look for the contribution count in the HTML
+                // GitHub shows it in a format like "X contributions in YEAR"
+                const match = html.match(/(\d+)\s+contributions?\s+in\s+the\s+last\s+year/i) ||
+                              html.match(/(\d+)\s+contributions?\s+in\s+\d{4}/i) ||
+                              html.match(/(\d+)\s+contributions?/i);
+
+                if (match) {
+                    contributions = parseInt(match[1], 10);
+                } else {
+                    // Alternative: count data-level attributes (each day's contribution)
+                    const dayMatches = html.match(/data-count="(\d+)"/g);
+                    if (dayMatches) {
+                        contributions = dayMatches.reduce((sum, match) => {
+                            const count = parseInt(match.match(/\d+/)[0], 10);
+                            return sum + count;
+                        }, 0);
                     }
-                });
+                }
 
                 return {
                     username: userData.login,
