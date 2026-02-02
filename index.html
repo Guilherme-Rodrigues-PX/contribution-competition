@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribution Competition 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #f39c12, #e74c3c, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #8892b0;
+            font-size: 1.1rem;
+        }
+
+        .year-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #f39c12, #e74c3c);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #8892b0;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #333;
+            border-top-color: #f39c12;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 15px;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        .podium-place {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .podium-place:hover {
+            transform: translateY(-10px);
+        }
+
+        .podium-place.first { order: 2; }
+        .podium-place.second { order: 1; }
+        .podium-place.third { order: 3; }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .first .avatar {
+            width: 100px;
+            height: 100px;
+            border-color: #f1c40f;
+        }
+        .second .avatar { border-color: #bdc3c7; }
+        .third .avatar { border-color: #cd6133; }
+
+        .username {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .contributions {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .first .contributions { color: #f1c40f; font-size: 2rem; }
+        .second .contributions { color: #bdc3c7; }
+        .third .contributions { color: #cd6133; }
+
+        .pedestal {
+            width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .first .pedestal {
+            height: 150px;
+            background: linear-gradient(180deg, #f1c40f, #f39c12);
+            width: 140px;
+        }
+
+        .second .pedestal {
+            height: 110px;
+            background: linear-gradient(180deg, #bdc3c7, #95a5a6);
+        }
+
+        .third .pedestal {
+            height: 80px;
+            background: linear-gradient(180deg, #cd6133, #a0522d);
+        }
+
+        .medal {
+            font-size: 2.5rem;
+        }
+
+        .first .medal { font-size: 3rem; }
+
+        .stats-table {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-table h2 {
+            margin-bottom: 20px;
+            color: #f39c12;
+            text-align: center;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.3s ease;
+        }
+
+        .stat-row:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            font-size: 1.5rem;
+            font-weight: bold;
+            width: 50px;
+            text-align: center;
+        }
+
+        .rank.gold { color: #f1c40f; }
+        .rank.silver { color: #bdc3c7; }
+        .rank.bronze { color: #cd6133; }
+
+        .stat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-username {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .stat-username a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .stat-username a:hover {
+            color: #f39c12;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        .rank.gold + .stat-avatar + .stat-info .progress-fill { background: linear-gradient(90deg, #f1c40f, #f39c12); }
+        .rank.silver + .stat-avatar + .stat-info .progress-fill { background: linear-gradient(90deg, #bdc3c7, #95a5a6); }
+        .rank.bronze + .stat-avatar + .stat-info .progress-fill { background: linear-gradient(90deg, #cd6133, #a0522d); }
+
+        .stat-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #8892b0;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #f39c12;
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .podium { flex-direction: column; align-items: center; }
+            .podium-place { order: unset !important; }
+            .pedestal { height: 60px !important; width: 200px !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Contribution Competition</h1>
+            <p class="subtitle">Quem vai dominar o GitHub em 2026?</p>
+            <span class="year-badge">2026</span>
+        </header>
+
+        <div id="content">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Carregando contribuições...</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Feito com muito código por <a href="https://github.com/Guilherme-Rodrigues-PX" target="_blank">Guilherme</a></p>
+            <p style="margin-top: 10px;">Que o melhor dev vença!</p>
+        </footer>
+    </div>
+
+    <script>
+        const COMPETITORS = [
+            'Guilherme-Rodrigues-PX',
+            'PXTarda',
+            'pedro-romao-px'
+        ];
+
+        const YEAR = 2026;
+
+        async function fetchContributions(username) {
+            try {
+                // Fetch user profile
+                const userResponse = await fetch(`https://api.github.com/users/${username}`);
+                if (!userResponse.ok) throw new Error('User not found');
+                const userData = await userResponse.json();
+
+                // Fetch contribution data using the events API
+                // We'll count PushEvents, PullRequestEvents, IssuesEvents, etc from 2026
+                const eventsResponse = await fetch(`https://api.github.com/users/${username}/events/public?per_page=100`);
+                const events = await eventsResponse.json();
+
+                // Count contributions from 2026
+                let contributions = 0;
+                const year2026Events = events.filter(event => {
+                    const eventDate = new Date(event.created_at);
+                    return eventDate.getFullYear() === YEAR;
+                });
+
+                year2026Events.forEach(event => {
+                    switch(event.type) {
+                        case 'PushEvent':
+                            contributions += event.payload.commits?.length || 1;
+                            break;
+                        case 'PullRequestEvent':
+                        case 'IssuesEvent':
+                        case 'IssueCommentEvent':
+                        case 'PullRequestReviewEvent':
+                        case 'CreateEvent':
+                        case 'DeleteEvent':
+                        case 'ForkEvent':
+                        case 'ReleaseEvent':
+                            contributions += 1;
+                            break;
+                    }
+                });
+
+                return {
+                    username: userData.login,
+                    avatar: userData.avatar_url,
+                    profile: userData.html_url,
+                    contributions: contributions
+                };
+            } catch (error) {
+                console.error(`Error fetching data for ${username}:`, error);
+                return {
+                    username: username,
+                    avatar: `https://github.com/${username}.png`,
+                    profile: `https://github.com/${username}`,
+                    contributions: 0
+                };
+            }
+        }
+
+        async function loadAllContributions() {
+            const results = await Promise.all(COMPETITORS.map(fetchContributions));
+            return results.sort((a, b) => b.contributions - a.contributions);
+        }
+
+        function getMedal(index) {
+            const medals = ['🥇', '🥈', '🥉'];
+            return medals[index] || `${index + 1}º`;
+        }
+
+        function getRankClass(index) {
+            const classes = ['gold', 'silver', 'bronze'];
+            return classes[index] || '';
+        }
+
+        function getPlaceClass(index) {
+            const classes = ['first', 'second', 'third'];
+            return classes[index] || '';
+        }
+
+        function renderResults(data) {
+            const maxContributions = Math.max(...data.map(d => d.contributions), 1);
+
+            const podiumHTML = `
+                <div class="podium">
+                    ${data.slice(0, 3).map((competitor, index) => `
+                        <div class="podium-place ${getPlaceClass(index)}">
+                            <img src="${competitor.avatar}" alt="${competitor.username}" class="avatar">
+                            <span class="username">${competitor.username}</span>
+                            <span class="contributions">${competitor.contributions}</span>
+                            <div class="pedestal">
+                                <span class="medal">${getMedal(index)}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const tableHTML = `
+                <div class="stats-table">
+                    <h2>Ranking Completo</h2>
+                    ${data.map((competitor, index) => `
+                        <div class="stat-row">
+                            <span class="rank ${getRankClass(index)}">${getMedal(index)}</span>
+                            <img src="${competitor.avatar}" alt="${competitor.username}" class="stat-avatar">
+                            <div class="stat-info">
+                                <div class="stat-username">
+                                    <a href="${competitor.profile}" target="_blank">${competitor.username}</a>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${(competitor.contributions / maxContributions) * 100}%"></div>
+                                </div>
+                            </div>
+                            <span class="stat-count">${competitor.contributions}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const lastUpdated = `
+                <div class="last-updated">
+                    Última atualização: ${new Date().toLocaleString('pt-BR')}
+                </div>
+            `;
+
+            document.getElementById('content').innerHTML = podiumHTML + tableHTML + lastUpdated;
+
+            // Animate progress bars
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 100);
+        }
+
+        function renderError(message) {
+            document.getElementById('content').innerHTML = `
+                <div class="error">
+                    <p>Erro ao carregar dados: ${message}</p>
+                    <p>Tente novamente mais tarde.</p>
+                </div>
+            `;
+        }
+
+        // Initialize
+        loadAllContributions()
+            .then(renderResults)
+            .catch(error => renderError(error.message));
+    </script>
+</body>
+</html>
