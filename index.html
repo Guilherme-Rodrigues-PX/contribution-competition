@@ -342,6 +342,27 @@
 
         const YEAR = 2026;
 
+        async function fetchContributionsFromGraph(username) {
+            const url = `https://github.com/users/${username}/contributions?from=${YEAR}-01-01&to=${YEAR}-12-31`;
+            const proxies = [
+                `https://api.codetabs.com/v1/proxy?quest=${url}`,
+                `https://corsproxy.io/?${encodeURIComponent(url)}`,
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+            ];
+            for (const proxyUrl of proxies) {
+                try {
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) continue;
+                    const html = await response.text();
+                    const match = html.match(/(\d+)\s+contributions?\s+in\s+/i);
+                    if (match) return parseInt(match[1], 10);
+                } catch (e) {
+                    continue;
+                }
+            }
+            return 0;
+        }
+
         async function fetchContributions(username) {
             try {
                 // Fetch user profile from GitHub API
@@ -350,13 +371,21 @@
                 const userData = await userResponse.json();
 
                 // Fetch contributions from dedicated API
-                const contributionsResponse = await fetch(
-                    `https://github-contributions-api.jogruber.de/v4/${username}?y=${YEAR}`
-                );
-                const contributionsData = await contributionsResponse.json();
+                let contributions = 0;
+                try {
+                    const contributionsResponse = await fetch(
+                        `https://github-contributions-api.jogruber.de/v4/${username}?y=${YEAR}`
+                    );
+                    const contributionsData = await contributionsResponse.json();
+                    contributions = contributionsData.total[YEAR] || 0;
+                } catch (e) {
+                    // API failed, will try fallback
+                }
 
-                // Get total contributions for the year
-                const contributions = contributionsData.total[YEAR] || 0;
+                // Fallback: scrape GitHub contributions page via CORS proxy
+                if (contributions === 0) {
+                    contributions = await fetchContributionsFromGraph(username);
+                }
 
                 return {
                     username: userData.login,
