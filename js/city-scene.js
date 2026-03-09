@@ -256,13 +256,14 @@ function createMainTower(competitor, options) {
   const group = new THREE.Group();
   group.position.copy(position);
 
-  const baseWidth = 42 + prRatio * 24 + (isLeader ? 12 : 0);
-  const baseDepth = 34 + reviewRatio * 22 + (isLeader ? 10 : 0);
-  const height = 150 + commitRatio * 260 + contributionRatio * 110 + (isLeader ? 90 : 0);
+  const baseWidth = 42 + prRatio * 24 + (isLeader ? 18 : 0);
+  const baseDepth = 34 + reviewRatio * 22 + (isLeader ? 14 : 0);
+  const height = 150 + commitRatio * 260 + contributionRatio * 110 + (isLeader ? 130 : 0);
   const crownHeight = height * (isLeader ? 0.1 : 0.07);
   const floors = Math.max(10, Math.round(height / 10));
   const columns = Math.max(4, Math.round(baseWidth / 7));
   const litRatio = Math.min(0.98, 0.2 + contributionRatio * 0.55 + commitRatio * 0.18);
+  const labelBaseY = height + crownHeight + (isLeader ? 108 : 58);
 
   const materials = createBuildingMaterials(
     seed,
@@ -309,12 +310,16 @@ function createMainTower(competitor, options) {
   roofGlow.position.y = height + crownHeight + (isLeader ? 24 : 14);
   group.add(roofGlow);
 
+  let haloRing = null;
+  let orbCluster = null;
+  let crownTier = null;
+  let cornerLights = null;
   const label = createLabelSprite(
     competitor.username,
     `${competitor.commits || 0} commits`,
     isLeader ? "#ffdd88" : accent
   );
-  label.position.set(0, height + crownHeight + (isLeader ? 62 : 42), 0);
+  label.position.set(0, labelBaseY, 0);
   group.add(label);
 
   const baseGlow = new THREE.Mesh(
@@ -331,6 +336,20 @@ function createMainTower(competitor, options) {
 
   let beam = null;
   if (isLeader) {
+    crownTier = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.54, crownHeight * 0.72, baseDepth * 0.52),
+      new THREE.MeshStandardMaterial({
+        color: 0xffe097,
+        emissive: new THREE.Color("#ffd977"),
+        emissiveIntensity: 1.35,
+        roughness: 0.28,
+        metalness: 0.66
+      })
+    );
+    crownTier.position.y = height + crownHeight + crownHeight * 0.38;
+    crownTier.castShadow = true;
+    group.add(crownTier);
+
     beam = new THREE.Mesh(
       new THREE.CylinderGeometry(baseWidth * 0.08, baseWidth * 0.22, 380, 24, 1, true),
       new THREE.MeshBasicMaterial({
@@ -343,6 +362,62 @@ function createMainTower(competitor, options) {
     );
     beam.position.y = height + 180;
     group.add(beam);
+
+    haloRing = new THREE.Mesh(
+      new THREE.TorusGeometry(baseWidth * 0.48, 4.4, 18, 64),
+      new THREE.MeshBasicMaterial({
+        color: 0xffe18c,
+        transparent: true,
+        opacity: 0.55
+      })
+    );
+    haloRing.rotation.x = Math.PI / 2;
+    haloRing.position.y = height + crownHeight + 54;
+    group.add(haloRing);
+
+    orbCluster = new THREE.Group();
+    const orbMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffefb4,
+      transparent: true,
+      opacity: 0.95
+    });
+    const orbOffsets = [
+      [baseWidth * 0.42, height + crownHeight + 72, 0],
+      [-baseWidth * 0.42, height + crownHeight + 72, 0],
+      [0, height + crownHeight + 72, baseDepth * 0.42],
+      [0, height + crownHeight + 72, -baseDepth * 0.42]
+    ];
+    orbOffsets.forEach(([x, y, z]) => {
+      const orb = new THREE.Mesh(new THREE.SphereGeometry(6, 20, 20), orbMaterial);
+      orb.position.set(x, y, z);
+      orbCluster.add(orb);
+    });
+    group.add(orbCluster);
+
+    cornerLights = new THREE.Group();
+    const finMaterial = new THREE.MeshStandardMaterial({
+      color: 0xffd56d,
+      emissive: new THREE.Color("#ffd46a"),
+      emissiveIntensity: 0.95,
+      roughness: 0.22,
+      metalness: 0.74
+    });
+    const finPositions = [
+      [baseWidth * 0.46, height * 0.5, baseDepth * 0.46],
+      [-baseWidth * 0.46, height * 0.5, baseDepth * 0.46],
+      [baseWidth * 0.46, height * 0.5, -baseDepth * 0.46],
+      [-baseWidth * 0.46, height * 0.5, -baseDepth * 0.46]
+    ];
+    finPositions.forEach(([x, y, z]) => {
+      const fin = new THREE.Mesh(
+        new THREE.BoxGeometry(5, height * 0.72, 5),
+        finMaterial
+      );
+      fin.position.set(x, y, z);
+      fin.castShadow = true;
+      cornerLights.add(fin);
+    });
+    group.add(cornerLights);
 
     const spire = new THREE.Mesh(
       new THREE.CylinderGeometry(3, 6, 72, 16),
@@ -375,7 +450,14 @@ function createMainTower(competitor, options) {
     competitor,
     body,
     label,
+    labelBaseY,
     beam,
+    haloRing,
+    orbCluster,
+    roofGlow,
+    crownTier,
+    cornerLights,
+    towerTop: height + crownHeight,
     focusHeight: height * 0.55
   };
 
@@ -572,8 +654,10 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
+  controls.dampingFactor = 0.075;
   controls.enablePan = false;
+  controls.rotateSpeed = 1.75;
+  controls.zoomSpeed = 1.35;
   controls.maxPolarAngle = Math.PI / 2.05;
   controls.minDistance = 180;
   controls.maxDistance = 1200;
@@ -770,7 +854,7 @@ export function createCityScene(container, competition, { onSelect } = {}) {
     controls.update();
 
     majorTowers.forEach((tower, index) => {
-      const glow = tower.children.find((child) => child.geometry instanceof THREE.TorusGeometry);
+      const glow = tower.userData.roofGlow;
       if (glow) {
         glow.rotation.z += 0.0025 + index * 0.0002;
       }
@@ -780,9 +864,20 @@ export function createCityScene(container, competition, { onSelect } = {}) {
         beam.material.opacity = 0.12 + Math.sin(elapsed * 1.8) * 0.03;
       }
 
+      const haloRing = tower.userData.haloRing;
+      if (haloRing) {
+        haloRing.rotation.z -= 0.0042;
+      }
+
+      const orbCluster = tower.userData.orbCluster;
+      if (orbCluster) {
+        orbCluster.rotation.y += 0.012;
+        orbCluster.position.y = Math.sin(elapsed * 1.3) * 4;
+      }
+
       const label = tower.userData.label;
       if (label) {
-        label.position.y = (tower.userData.focusHeight || 80) + 62 + Math.sin(elapsed * 1.4 + index) * 4;
+        label.position.y = (tower.userData.labelBaseY || 120) + Math.sin(elapsed * 1.4 + index) * 4;
       }
     });
 
