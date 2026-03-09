@@ -1,0 +1,780 @@
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+
+function hashString(value) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) | 0;
+  }
+  return Math.abs(hash);
+}
+
+function createRandom(seed) {
+  let state = seed % 2147483647;
+  if (state <= 0) {
+    state += 2147483646;
+  }
+
+  return () => {
+    state = (state * 16807) % 2147483647;
+    return (state - 1) / 2147483646;
+  };
+}
+
+function byCommits(left, right) {
+  return (
+    (right.commits || 0) - (left.commits || 0) ||
+    (right.contributions || 0) - (left.contributions || 0) ||
+    (right.pullRequests || 0) - (left.pullRequests || 0) ||
+    left.username.localeCompare(right.username)
+  );
+}
+
+function createPixelWindowTexture({
+  seed,
+  rows,
+  columns,
+  litRatio,
+  palette,
+  wallColor,
+  windowOff
+}) {
+  const cell = 10;
+  const gap = 3;
+  const pad = 6;
+  const width = pad * 2 + columns * cell + (columns - 1) * gap;
+  const height = pad * 2 + rows * cell + (rows - 1) * gap;
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+
+  const context = canvas.getContext("2d");
+  const random = createRandom(seed);
+
+  context.fillStyle = wallColor;
+  context.fillRect(0, 0, width, height);
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      const x = pad + column * (cell + gap);
+      const y = pad + row * (cell + gap);
+
+      context.fillStyle = random() < litRatio
+        ? palette[Math.floor(random() * palette.length)]
+        : windowOff;
+      context.fillRect(x, y, cell, cell);
+    }
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.magFilter = THREE.NearestFilter;
+  texture.minFilter = THREE.NearestFilter;
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  return texture;
+}
+
+function createLabelSprite(title, subtitle, tint) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 512;
+  canvas.height = 180;
+  const context = canvas.getContext("2d");
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "rgba(4, 8, 18, 0.76)";
+  context.strokeStyle = "rgba(255,255,255,0.14)";
+  context.lineWidth = 4;
+  roundRect(context, 18, 18, 476, 144, 22);
+  context.fill();
+  context.stroke();
+
+  context.font = "700 42px 'Space Grotesk', sans-serif";
+  context.fillStyle = "#edf2ff";
+  context.textAlign = "center";
+  context.fillText(title, canvas.width / 2, 78);
+
+  context.font = "700 30px 'Space Mono', monospace";
+  context.fillStyle = tint;
+  context.fillText(subtitle, canvas.width / 2, 122);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    depthWrite: false
+  });
+
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(110, 38, 1);
+  return sprite;
+}
+
+function roundRect(context, x, y, width, height, radius) {
+  context.beginPath();
+  context.moveTo(x + radius, y);
+  context.lineTo(x + width - radius, y);
+  context.quadraticCurveTo(x + width, y, x + width, y + radius);
+  context.lineTo(x + width, y + height - radius);
+  context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  context.lineTo(x + radius, y + height);
+  context.quadraticCurveTo(x, y + height, x, y + height - radius);
+  context.lineTo(x, y + radius);
+  context.quadraticCurveTo(x, y, x + radius, y);
+  context.closePath();
+}
+
+function createRoad(scene, width, depth, position) {
+  const road = new THREE.Mesh(
+    new THREE.BoxGeometry(width, 2, depth),
+    new THREE.MeshStandardMaterial({
+      color: 0x0a1123,
+      roughness: 0.95,
+      metalness: 0.05
+    })
+  );
+  road.position.copy(position);
+  road.receiveShadow = true;
+  scene.add(road);
+
+  const lane = new THREE.Mesh(
+    new THREE.PlaneGeometry(width * 0.92, depth * 0.05),
+    new THREE.MeshBasicMaterial({
+      color: 0x7ec6ff,
+      transparent: true,
+      opacity: 0.12,
+      side: THREE.DoubleSide
+    })
+  );
+  lane.rotation.x = -Math.PI / 2;
+  lane.position.set(position.x, position.y + 1.2, position.z);
+  scene.add(lane);
+}
+
+function createPlaza(scene, position, radius, color) {
+  const base = new THREE.Mesh(
+    new THREE.CylinderGeometry(radius, radius * 1.12, 4, 48),
+    new THREE.MeshStandardMaterial({
+      color: 0x101b34,
+      emissive: new THREE.Color(color).multiplyScalar(0.08),
+      roughness: 0.8,
+      metalness: 0.1
+    })
+  );
+  base.position.copy(position);
+  base.receiveShadow = true;
+  scene.add(base);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(radius * 0.84, radius * 0.96, 56),
+    new THREE.MeshBasicMaterial({
+      color,
+      transparent: true,
+      opacity: 0.42,
+      side: THREE.DoubleSide
+    })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.set(position.x, position.y + 2.2, position.z);
+  scene.add(ring);
+}
+
+function createBuildingMaterials(seed, palette, rows, columns, litRatio, accentColor, leader = false) {
+  const wallTexture = createPixelWindowTexture({
+    seed,
+    rows,
+    columns,
+    litRatio,
+    palette,
+    wallColor: leader ? "#18284f" : "#111b35",
+    windowOff: leader ? "#15203a" : "#0b1226"
+  });
+
+  const sideTexture = createPixelWindowTexture({
+    seed: seed + 91,
+    rows,
+    columns: Math.max(2, Math.round(columns * 0.7)),
+    litRatio: Math.max(0.08, litRatio * 0.85),
+    palette,
+    wallColor: leader ? "#132246" : "#0f1731",
+    windowOff: leader ? "#101935" : "#090f22"
+  });
+
+  const frontMaterial = new THREE.MeshStandardMaterial({
+    map: wallTexture,
+    emissive: new THREE.Color(accentColor).multiplyScalar(leader ? 0.4 : 0.16),
+    emissiveMap: wallTexture,
+    roughness: 0.58,
+    metalness: leader ? 0.24 : 0.16
+  });
+
+  const sideMaterial = new THREE.MeshStandardMaterial({
+    map: sideTexture,
+    emissive: new THREE.Color(accentColor).multiplyScalar(leader ? 0.26 : 0.1),
+    emissiveMap: sideTexture,
+    roughness: 0.6,
+    metalness: 0.12
+  });
+
+  const roofMaterial = new THREE.MeshStandardMaterial({
+    color: leader ? 0xe0a33d : 0x22365f,
+    emissive: new THREE.Color(accentColor).multiplyScalar(leader ? 0.9 : 0.24),
+    roughness: 0.45,
+    metalness: leader ? 0.5 : 0.2
+  });
+
+  return [
+    sideMaterial,
+    sideMaterial,
+    roofMaterial,
+    roofMaterial,
+    frontMaterial,
+    frontMaterial
+  ];
+}
+
+function createMainTower(competitor, options) {
+  const {
+    position,
+    isLeader,
+    commitRatio,
+    contributionRatio,
+    prRatio,
+    reviewRatio,
+    color,
+    accent
+  } = options;
+
+  const seed = hashString(competitor.username);
+  const group = new THREE.Group();
+  group.position.copy(position);
+
+  const baseWidth = 42 + prRatio * 24 + (isLeader ? 12 : 0);
+  const baseDepth = 34 + reviewRatio * 22 + (isLeader ? 10 : 0);
+  const height = 150 + commitRatio * 260 + contributionRatio * 110 + (isLeader ? 90 : 0);
+  const crownHeight = height * (isLeader ? 0.1 : 0.07);
+  const floors = Math.max(10, Math.round(height / 10));
+  const columns = Math.max(4, Math.round(baseWidth / 7));
+  const litRatio = Math.min(0.98, 0.2 + contributionRatio * 0.55 + commitRatio * 0.18);
+
+  const materials = createBuildingMaterials(
+    seed,
+    isLeader ? ["#fff1b7", "#ffd56d", "#ffc14e", "#c7ebff"] : [color, accent, "#dbeaff", "#a8d8ff"],
+    floors,
+    columns,
+    litRatio,
+    accent,
+    isLeader
+  );
+
+  const body = new THREE.Mesh(
+    new THREE.BoxGeometry(baseWidth, height, baseDepth),
+    materials
+  );
+  body.castShadow = true;
+  body.receiveShadow = true;
+  body.position.y = height / 2;
+  body.userData.competitor = competitor;
+  group.add(body);
+
+  const crown = new THREE.Mesh(
+    new THREE.BoxGeometry(baseWidth * 0.74, crownHeight, baseDepth * 0.72),
+    new THREE.MeshStandardMaterial({
+      color: isLeader ? 0xf7c557 : 0x2f4a83,
+      emissive: new THREE.Color(accent).multiplyScalar(isLeader ? 1.2 : 0.35),
+      roughness: 0.42,
+      metalness: 0.38
+    })
+  );
+  crown.position.y = height + crownHeight / 2;
+  crown.castShadow = true;
+  group.add(crown);
+
+  const roofGlow = new THREE.Mesh(
+    new THREE.TorusGeometry(baseWidth * 0.34, isLeader ? 2.6 : 1.4, 12, 42),
+    new THREE.MeshBasicMaterial({
+      color: accent,
+      transparent: true,
+      opacity: isLeader ? 0.7 : 0.35
+    })
+  );
+  roofGlow.rotation.x = Math.PI / 2;
+  roofGlow.position.y = height + crownHeight + (isLeader ? 24 : 14);
+  group.add(roofGlow);
+
+  const label = createLabelSprite(
+    competitor.username,
+    `${competitor.commits || 0} commits`,
+    isLeader ? "#ffdd88" : accent
+  );
+  label.position.set(0, height + crownHeight + (isLeader ? 62 : 42), 0);
+  group.add(label);
+
+  const baseGlow = new THREE.Mesh(
+    new THREE.CircleGeometry(Math.max(baseWidth, baseDepth) * (isLeader ? 0.82 : 0.68), 48),
+    new THREE.MeshBasicMaterial({
+      color: accent,
+      transparent: true,
+      opacity: isLeader ? 0.26 : 0.12
+    })
+  );
+  baseGlow.rotation.x = -Math.PI / 2;
+  baseGlow.position.y = 1.5;
+  group.add(baseGlow);
+
+  let beam = null;
+  if (isLeader) {
+    beam = new THREE.Mesh(
+      new THREE.CylinderGeometry(baseWidth * 0.08, baseWidth * 0.22, 380, 24, 1, true),
+      new THREE.MeshBasicMaterial({
+        color: 0xffd56d,
+        transparent: true,
+        opacity: 0.14,
+        side: THREE.DoubleSide,
+        depthWrite: false
+      })
+    );
+    beam.position.y = height + 180;
+    group.add(beam);
+
+    const spire = new THREE.Mesh(
+      new THREE.CylinderGeometry(3, 6, 72, 16),
+      new THREE.MeshStandardMaterial({
+        color: 0xffd56d,
+        emissive: new THREE.Color("#ffdc8c"),
+        emissiveIntensity: 1.2,
+        roughness: 0.2,
+        metalness: 0.8
+      })
+    );
+    spire.position.y = height + crownHeight + 40;
+    group.add(spire);
+
+    const trophy = new THREE.Mesh(
+      new THREE.OctahedronGeometry(12, 0),
+      new THREE.MeshStandardMaterial({
+        color: 0xffefb2,
+        emissive: new THREE.Color("#ffe7a0"),
+        emissiveIntensity: 1.5,
+        roughness: 0.16,
+        metalness: 0.92
+      })
+    );
+    trophy.position.y = height + crownHeight + 82;
+    group.add(trophy);
+  }
+
+  group.userData = {
+    competitor,
+    body,
+    label,
+    beam,
+    focusHeight: height * 0.55
+  };
+
+  return group;
+}
+
+function createFillerTower({ seed, position, height, width, depth, color, accent, leaderDistrict }) {
+  const rows = Math.max(6, Math.round(height / 14));
+  const columns = Math.max(2, Math.round(width / 8));
+  const materials = createBuildingMaterials(
+    seed,
+    leaderDistrict ? ["#ffe9a7", "#ffd974", "#9fd7ff"] : [color, accent, "#bad8ff"],
+    rows,
+    columns,
+    leaderDistrict ? 0.52 : 0.36,
+    accent,
+    false
+  );
+
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(width, height, depth),
+    materials
+  );
+  mesh.position.copy(position);
+  mesh.position.y += height / 2;
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  return mesh;
+}
+
+function addDistrictFillers(scene, districtCenter, options) {
+  const {
+    seed,
+    baseHeight,
+    color,
+    accent,
+    leaderDistrict
+  } = options;
+
+  const random = createRandom(seed);
+  const offsets = [];
+  const step = 56;
+
+  for (let x = -2; x <= 2; x += 1) {
+    for (let z = -2; z <= 2; z += 1) {
+      if (Math.abs(x) <= 1 && Math.abs(z) <= 1) {
+        continue;
+      }
+
+      offsets.push([x * step + (random() - 0.5) * 10, z * step + (random() - 0.5) * 10]);
+    }
+  }
+
+  offsets.forEach(([xOffset, zOffset], index) => {
+    const height = baseHeight * (0.22 + random() * (leaderDistrict ? 0.46 : 0.34));
+    const width = 18 + random() * (leaderDistrict ? 18 : 12);
+    const depth = 18 + random() * (leaderDistrict ? 16 : 10);
+    const filler = createFillerTower({
+      seed: seed + index * 17,
+      position: new THREE.Vector3(districtCenter.x + xOffset, 0, districtCenter.z + zOffset),
+      height,
+      width,
+      depth,
+      color,
+      accent,
+      leaderDistrict
+    });
+    scene.add(filler);
+  });
+}
+
+function createStars(scene) {
+  const geometry = new THREE.BufferGeometry();
+  const count = 900;
+  const positions = new Float32Array(count * 3);
+
+  for (let index = 0; index < count; index += 1) {
+    const radius = 900 + Math.random() * 1200;
+    const theta = Math.random() * Math.PI * 2;
+    const y = 260 + Math.random() * 520;
+
+    positions[index * 3] = Math.cos(theta) * radius;
+    positions[index * 3 + 1] = y;
+    positions[index * 3 + 2] = Math.sin(theta) * radius;
+  }
+
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+  const material = new THREE.PointsMaterial({
+    color: 0x8fdcff,
+    size: 3,
+    transparent: true,
+    opacity: 0.85,
+    sizeAttenuation: true
+  });
+
+  const points = new THREE.Points(geometry, material);
+  scene.add(points);
+  return points;
+}
+
+function buildCity(scene, competition) {
+  const competitors = [...competition.competitors].sort(byCommits);
+  const maxCommits = Math.max(...competitors.map((competitor) => competitor.commits || 0), 1);
+  const maxContributions = Math.max(...competitors.map((competitor) => competitor.contributions || 0), 1);
+  const maxPullRequests = Math.max(...competitors.map((competitor) => competitor.pullRequests || 0), 1);
+  const maxReviews = Math.max(...competitors.map((competitor) => competitor.reviews || 0), 1);
+
+  const palette = [
+    { color: "#72b8ff", accent: "#9edbff" },
+    { color: "#6f8cff", accent: "#afc0ff" },
+    { color: "#ff9079", accent: "#ffc1b3" },
+    { color: "#b792ff", accent: "#e0ceff" },
+    { color: "#59d99b", accent: "#bff5d5" }
+  ];
+
+  const districts = [
+    new THREE.Vector3(-190, 2, -140),
+    new THREE.Vector3(170, 2, -150),
+    new THREE.Vector3(-160, 2, 170),
+    new THREE.Vector3(200, 2, 180),
+    new THREE.Vector3(0, 2, 0)
+  ];
+
+  const majorTowers = [];
+  const selectables = [];
+
+  createRoad(scene, 1200, 90, new THREE.Vector3(0, 0, 0));
+  createRoad(scene, 90, 1200, new THREE.Vector3(0, 0, 0));
+
+  competitors.forEach((competitor, index) => {
+    const district = districts[index % districts.length].clone();
+    const isLeader = index === 0;
+    const colors = palette[index % palette.length];
+    const commitRatio = (competitor.commits || 0) / maxCommits;
+    const contributionRatio = (competitor.contributions || 0) / maxContributions;
+    const prRatio = (competitor.pullRequests || 0) / maxPullRequests;
+    const reviewRatio = (competitor.reviews || 0) / maxReviews;
+
+    createPlaza(scene, district, isLeader ? 62 : 46, isLeader ? "#ffc85a" : colors.accent);
+
+    const tower = createMainTower(competitor, {
+      position: district,
+      isLeader,
+      commitRatio,
+      contributionRatio,
+      prRatio,
+      reviewRatio,
+      color: colors.color,
+      accent: isLeader ? "#ffc85a" : colors.accent
+    });
+
+    scene.add(tower);
+    majorTowers.push(tower);
+    selectables.push(tower.userData.body);
+
+    const towerHeight = tower.userData.focusHeight * 1.8;
+    addDistrictFillers(scene, district, {
+      seed: hashString(competitor.username),
+      baseHeight: towerHeight,
+      color: colors.color,
+      accent: isLeader ? "#ffc85a" : colors.accent,
+      leaderDistrict: isLeader
+    });
+  });
+
+  return { majorTowers, selectables, competitors };
+}
+
+export function createCityScene(container, competition, { onSelect } = {}) {
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  container.innerHTML = "";
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x040814);
+  scene.fog = new THREE.FogExp2(0x050915, 0.00108);
+
+  const camera = new THREE.PerspectiveCamera(
+    48,
+    container.clientWidth / container.clientHeight,
+    0.1,
+    4000
+  );
+  camera.position.set(540, 390, 560);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.enablePan = false;
+  controls.maxPolarAngle = Math.PI / 2.05;
+  controls.minDistance = 180;
+  controls.maxDistance = 1200;
+  controls.target.set(0, 90, 0);
+
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  composer.addPass(
+    new UnrealBloomPass(
+      new THREE.Vector2(container.clientWidth, container.clientHeight),
+      0.78,
+      0.8,
+      0.22
+    )
+  );
+
+  const ambientLight = new THREE.AmbientLight(0x8ca8ff, 0.68);
+  scene.add(ambientLight);
+
+  const hemiLight = new THREE.HemisphereLight(0x6fb7ff, 0x0c1020, 0.52);
+  scene.add(hemiLight);
+
+  const moonLight = new THREE.DirectionalLight(0xd5e6ff, 1.3);
+  moonLight.position.set(240, 420, 120);
+  moonLight.castShadow = true;
+  moonLight.shadow.mapSize.set(2048, 2048);
+  moonLight.shadow.camera.near = 0.1;
+  moonLight.shadow.camera.far = 1800;
+  moonLight.shadow.camera.left = -900;
+  moonLight.shadow.camera.right = 900;
+  moonLight.shadow.camera.top = 900;
+  moonLight.shadow.camera.bottom = -900;
+  scene.add(moonLight);
+
+  const floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(2200, 2200),
+    new THREE.MeshStandardMaterial({
+      color: 0x060b18,
+      roughness: 0.98,
+      metalness: 0.04
+    })
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  const gridHelper = new THREE.GridHelper(2200, 44, 0x17315f, 0x0f1e3f);
+  gridHelper.position.y = 1;
+  scene.add(gridHelper);
+
+  const horizon = new THREE.Mesh(
+    new THREE.CylinderGeometry(980, 980, 10, 64, 1, true),
+    new THREE.MeshBasicMaterial({
+      color: 0x0a1530,
+      transparent: true,
+      opacity: 0.34,
+      side: THREE.BackSide
+    })
+  );
+  horizon.position.y = 4;
+  scene.add(horizon);
+
+  createStars(scene);
+
+  const { majorTowers, selectables, competitors } = buildCity(scene, competition);
+  const focusMarker = new THREE.Mesh(
+    new THREE.RingGeometry(32, 46, 64),
+    new THREE.MeshBasicMaterial({
+      color: 0xffd467,
+      transparent: true,
+      opacity: 0.8,
+      side: THREE.DoubleSide
+    })
+  );
+  focusMarker.rotation.x = -Math.PI / 2;
+  focusMarker.position.y = 2.2;
+  scene.add(focusMarker);
+
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  const focusTarget = new THREE.Vector3(0, 80, 0);
+  const cameraGoal = new THREE.Vector3().copy(camera.position);
+  const focusState = {
+    tower: majorTowers[0] || null
+  };
+
+  function setFocus(login, immediate = false) {
+    const tower = majorTowers.find((candidate) => candidate.userData.competitor.username === login);
+    if (!tower) {
+      return;
+    }
+
+    focusState.tower = tower;
+    const position = tower.position.clone();
+    const focusHeight = tower.userData.focusHeight || 90;
+    focusTarget.set(position.x, Math.max(42, focusHeight), position.z);
+    focusMarker.position.set(position.x, 2.2, position.z);
+
+    const currentOffset = camera.position.clone().sub(controls.target);
+    currentOffset.normalize();
+    const desiredDistance = 260 + focusHeight * 0.62;
+    cameraGoal.copy(focusTarget).add(currentOffset.multiplyScalar(desiredDistance));
+    cameraGoal.y = Math.max(cameraGoal.y, focusHeight + 110);
+
+    if (immediate) {
+      controls.target.copy(focusTarget);
+      camera.position.copy(cameraGoal);
+    }
+
+    onSelect?.(tower.userData.competitor);
+  }
+
+  const rootPointLight = new THREE.PointLight(0x82d1ff, 2.4, 760, 2);
+  rootPointLight.position.set(0, 320, 0);
+  scene.add(rootPointLight);
+
+  const leaderTower = majorTowers[0];
+  if (leaderTower) {
+    const leaderSpot = new THREE.PointLight(0xffd98c, 4.8, 1100, 2);
+    leaderSpot.position.set(
+      leaderTower.position.x,
+      leaderTower.userData.focusHeight + 160,
+      leaderTower.position.z
+    );
+    scene.add(leaderSpot);
+  }
+
+  function onPointerDown(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    const intersections = raycaster.intersectObjects(selectables, false);
+    if (!intersections.length) {
+      return;
+    }
+
+    const competitor = intersections[0].object.userData.competitor;
+    if (competitor) {
+      setFocus(competitor.username);
+    }
+  }
+
+  renderer.domElement.addEventListener("pointerdown", onPointerDown);
+
+  const clock = new THREE.Clock();
+  let animationFrame = null;
+
+  function animate() {
+    animationFrame = requestAnimationFrame(animate);
+    const elapsed = clock.getElapsedTime();
+
+    controls.target.lerp(focusTarget, 0.05);
+    camera.position.lerp(cameraGoal, 0.035);
+    controls.update();
+
+    majorTowers.forEach((tower, index) => {
+      const glow = tower.children.find((child) => child.geometry instanceof THREE.TorusGeometry);
+      if (glow) {
+        glow.rotation.z += 0.0025 + index * 0.0002;
+      }
+
+      const beam = tower.userData.beam;
+      if (beam) {
+        beam.material.opacity = 0.12 + Math.sin(elapsed * 1.8) * 0.03;
+      }
+
+      const label = tower.userData.label;
+      if (label) {
+        label.position.y = (tower.userData.focusHeight || 80) + 62 + Math.sin(elapsed * 1.4 + index) * 4;
+      }
+    });
+
+    composer.render();
+  }
+
+  function onResize() {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+    composer.setSize(width, height);
+  }
+
+  const resizeObserver = new ResizeObserver(onResize);
+  resizeObserver.observe(container);
+
+  animate();
+  if (competitors[0]) {
+    setFocus(competitors[0].username, true);
+  }
+
+  return {
+    focusCompetitor: setFocus,
+    dispose() {
+      if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+      }
+      resizeObserver.disconnect();
+      renderer.domElement.removeEventListener("pointerdown", onPointerDown);
+      composer.dispose();
+      controls.dispose();
+      renderer.dispose();
+      container.innerHTML = "";
+    }
+  };
+}
