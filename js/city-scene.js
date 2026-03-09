@@ -109,11 +109,13 @@ function createLabelSprite(title, subtitle, tint) {
   const material = new THREE.SpriteMaterial({
     map: texture,
     transparent: true,
-    depthWrite: false
+    depthWrite: false,
+    depthTest: false
   });
 
   const sprite = new THREE.Sprite(material);
   sprite.scale.set(110, 38, 1);
+  sprite.center.set(0.5, 0);
   return sprite;
 }
 
@@ -240,6 +242,99 @@ function createBuildingMaterials(seed, palette, rows, columns, litRatio, accentC
   ];
 }
 
+function createLeaderPartyShip(radius, accent) {
+  const shipGroup = new THREE.Group();
+
+  const saucerBase = new THREE.Mesh(
+    new THREE.CylinderGeometry(radius * 0.34, radius * 0.5, 10, 40),
+    new THREE.MeshStandardMaterial({
+      color: 0xefe6ff,
+      emissive: new THREE.Color("#a770ff"),
+      emissiveIntensity: 0.45,
+      roughness: 0.24,
+      metalness: 0.82
+    })
+  );
+  shipGroup.add(saucerBase);
+
+  const saucerDome = new THREE.Mesh(
+    new THREE.SphereGeometry(radius * 0.22, 28, 20),
+    new THREE.MeshStandardMaterial({
+      color: 0xbfe8ff,
+      emissive: new THREE.Color("#7fd7ff"),
+      emissiveIntensity: 0.9,
+      roughness: 0.12,
+      metalness: 0.28,
+      transparent: true,
+      opacity: 0.92
+    })
+  );
+  saucerDome.position.y = 10;
+  shipGroup.add(saucerDome);
+
+  const lowerRing = new THREE.Mesh(
+    new THREE.TorusGeometry(radius * 0.44, 2.8, 14, 48),
+    new THREE.MeshBasicMaterial({
+      color: accent,
+      transparent: true,
+      opacity: 0.82
+    })
+  );
+  lowerRing.rotation.x = Math.PI / 2;
+  lowerRing.position.y = -1;
+  shipGroup.add(lowerRing);
+
+  const discoHalo = new THREE.Mesh(
+    new THREE.TorusGeometry(radius * 0.62, 3.5, 16, 64),
+    new THREE.MeshBasicMaterial({
+      color: 0xff7bfa,
+      transparent: true,
+      opacity: 0.45
+    })
+  );
+  discoHalo.rotation.x = Math.PI / 2;
+  discoHalo.position.y = -5;
+  shipGroup.add(discoHalo);
+
+  const beam = new THREE.Mesh(
+    new THREE.CylinderGeometry(radius * 0.12, radius * 0.34, 150, 24, 1, true),
+    new THREE.MeshBasicMaterial({
+      color: 0x8ef3ff,
+      transparent: true,
+      opacity: 0.14,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    })
+  );
+  beam.position.y = -78;
+  shipGroup.add(beam);
+
+  const lightDots = new THREE.Group();
+  for (let index = 0; index < 10; index += 1) {
+    const angle = (index / 10) * Math.PI * 2;
+    const light = new THREE.Mesh(
+      new THREE.SphereGeometry(2.4, 12, 12),
+      new THREE.MeshBasicMaterial({
+        color: index % 2 === 0 ? 0xffd86f : 0x7fe1ff,
+        transparent: true,
+        opacity: 0.95
+      })
+    );
+    light.position.set(Math.cos(angle) * radius * 0.4, -2, Math.sin(angle) * radius * 0.4);
+    lightDots.add(light);
+  }
+  shipGroup.add(lightDots);
+
+  shipGroup.userData = {
+    lowerRing,
+    discoHalo,
+    beam,
+    lightDots
+  };
+
+  return shipGroup;
+}
+
 function createMainTower(competitor, options) {
   const {
     position,
@@ -263,7 +358,7 @@ function createMainTower(competitor, options) {
   const floors = Math.max(10, Math.round(height / 10));
   const columns = Math.max(4, Math.round(baseWidth / 7));
   const litRatio = Math.min(0.98, 0.2 + contributionRatio * 0.55 + commitRatio * 0.18);
-  const labelBaseY = height + crownHeight + (isLeader ? 108 : 58);
+  const labelBaseY = height + crownHeight + (isLeader ? 156 : 92);
 
   const materials = createBuildingMaterials(
     seed,
@@ -314,6 +409,7 @@ function createMainTower(competitor, options) {
   let orbCluster = null;
   let crownTier = null;
   let cornerLights = null;
+  let partyShip = null;
   const label = createLabelSprite(
     competitor.username,
     `${competitor.commits || 0} commits`,
@@ -444,6 +540,10 @@ function createMainTower(competitor, options) {
     );
     trophy.position.y = height + crownHeight + 82;
     group.add(trophy);
+
+    partyShip = createLeaderPartyShip(baseWidth, accent);
+    partyShip.position.set(0, height + crownHeight + 118, 0);
+    group.add(partyShip);
   }
 
   group.userData = {
@@ -457,6 +557,7 @@ function createMainTower(competitor, options) {
     roofGlow,
     crownTier,
     cornerLights,
+    partyShip,
     towerTop: height + crownHeight,
     focusHeight: height * 0.55
   };
@@ -873,6 +974,30 @@ export function createCityScene(container, competition, { onSelect } = {}) {
       if (orbCluster) {
         orbCluster.rotation.y += 0.012;
         orbCluster.position.y = Math.sin(elapsed * 1.3) * 4;
+      }
+
+      const partyShip = tower.userData.partyShip;
+      if (partyShip) {
+        const orbitRadius = 44;
+        partyShip.position.x = Math.cos(elapsed * 0.55) * orbitRadius;
+        partyShip.position.z = Math.sin(elapsed * 0.55) * orbitRadius;
+        partyShip.position.y = (tower.userData.towerTop || 200) + 118 + Math.sin(elapsed * 2.1) * 7;
+        partyShip.rotation.y += 0.03;
+
+        const { lowerRing, discoHalo, beam, lightDots } = partyShip.userData;
+        if (lowerRing) {
+          lowerRing.rotation.z += 0.028;
+        }
+        if (discoHalo) {
+          discoHalo.rotation.z -= 0.022;
+          discoHalo.material.opacity = 0.3 + (Math.sin(elapsed * 4.2) + 1) * 0.12;
+        }
+        if (beam) {
+          beam.material.opacity = 0.09 + (Math.sin(elapsed * 5.4) + 1) * 0.05;
+        }
+        if (lightDots) {
+          lightDots.rotation.y -= 0.06;
+        }
       }
 
       const label = tower.userData.label;
