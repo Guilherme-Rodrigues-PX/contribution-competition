@@ -88,6 +88,9 @@ async function fetchCompetitor(login, range, token) {
   }
 
   const contributions = data.user.contributionsCollection;
+  const publicCommits = contributions.totalCommitContributions;
+  const restrictedContributions = contributions.restrictedContributionsCount;
+  const estimatedCommits = publicCommits + restrictedContributions;
 
   return {
     username: data.user.login,
@@ -95,19 +98,20 @@ async function fetchCompetitor(login, range, token) {
     avatar: data.user.avatarUrl,
     profile: data.user.url,
     contributions: contributions.contributionCalendar.totalContributions,
-    commits: contributions.totalCommitContributions,
+    commits: estimatedCommits,
+    publicCommits,
     pullRequests: contributions.totalPullRequestContributions,
     reviews: contributions.totalPullRequestReviewContributions,
     issues: contributions.totalIssueContributions,
-    restrictedContributions: contributions.restrictedContributionsCount
+    restrictedContributions
   };
 }
 
 function sortCompetitors(competitors) {
   return competitors.sort((left, right) => {
     return (
-      right.contributions - left.contributions ||
       right.commits - left.commits ||
+      right.contributions - left.contributions ||
       right.pullRequests - left.pullRequests ||
       left.username.localeCompare(right.username)
     );

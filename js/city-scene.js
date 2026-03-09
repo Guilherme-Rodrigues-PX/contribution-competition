@@ -477,6 +477,10 @@ function createStars(scene) {
   return points;
 }
 
+function easeOutCubic(value) {
+  return 1 - Math.pow(1 - value, 3);
+}
+
 function buildCity(scene, competition) {
   const competitors = [...competition.competitors].sort(byCommits);
   const maxCommits = Math.max(...competitors.map((competitor) => competitor.commits || 0), 1);
@@ -651,7 +655,15 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   const focusTarget = new THREE.Vector3(0, 80, 0);
-  const cameraGoal = new THREE.Vector3().copy(camera.position);
+  const transitionState = {
+    active: false,
+    progress: 1,
+    duration: 0.9,
+    startTarget: controls.target.clone(),
+    endTarget: controls.target.clone(),
+    startPosition: camera.position.clone(),
+    endPosition: camera.position.clone()
+  };
   const focusState = {
     tower: majorTowers[0] || null
   };
@@ -665,18 +677,28 @@ export function createCityScene(container, competition, { onSelect } = {}) {
     focusState.tower = tower;
     const position = tower.position.clone();
     const focusHeight = tower.userData.focusHeight || 90;
-    focusTarget.set(position.x, Math.max(42, focusHeight), position.z);
+    const nextTarget = new THREE.Vector3(position.x, Math.max(42, focusHeight), position.z);
+    focusTarget.copy(nextTarget);
     focusMarker.position.set(position.x, 2.2, position.z);
 
     const currentOffset = camera.position.clone().sub(controls.target);
     currentOffset.normalize();
     const desiredDistance = 260 + focusHeight * 0.62;
-    cameraGoal.copy(focusTarget).add(currentOffset.multiplyScalar(desiredDistance));
-    cameraGoal.y = Math.max(cameraGoal.y, focusHeight + 110);
+    const nextCameraPosition = nextTarget.clone().add(currentOffset.multiplyScalar(desiredDistance));
+    nextCameraPosition.y = Math.max(nextCameraPosition.y, focusHeight + 110);
 
     if (immediate) {
-      controls.target.copy(focusTarget);
-      camera.position.copy(cameraGoal);
+      controls.target.copy(nextTarget);
+      camera.position.copy(nextCameraPosition);
+      transitionState.active = false;
+      transitionState.progress = 1;
+    } else {
+      transitionState.active = true;
+      transitionState.progress = 0;
+      transitionState.startTarget.copy(controls.target);
+      transitionState.endTarget.copy(nextTarget);
+      transitionState.startPosition.copy(camera.position);
+      transitionState.endPosition.copy(nextCameraPosition);
     }
 
     onSelect?.(tower.userData.competitor);
@@ -720,10 +742,31 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
   function animate() {
     animationFrame = requestAnimationFrame(animate);
-    const elapsed = clock.getElapsedTime();
+    const delta = clock.getDelta();
+    const elapsed = clock.elapsedTime;
 
-    controls.target.lerp(focusTarget, 0.05);
-    camera.position.lerp(cameraGoal, 0.035);
+    if (transitionState.active) {
+      transitionState.progress = Math.min(
+        1,
+        transitionState.progress + delta / transitionState.duration
+      );
+      const eased = easeOutCubic(transitionState.progress);
+      camera.position.lerpVectors(
+        transitionState.startPosition,
+        transitionState.endPosition,
+        eased
+      );
+      controls.target.lerpVectors(
+        transitionState.startTarget,
+        transitionState.endTarget,
+        eased
+      );
+
+      if (transitionState.progress >= 1) {
+        transitionState.active = false;
+      }
+    }
+
     controls.update();
 
     majorTowers.forEach((tower, index) => {

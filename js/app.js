@@ -45,7 +45,7 @@ function renderShell(competition, competitors) {
           <h1>${competition.title}</h1>
           <p>${competition.subtitle} Agora em uma cena 3D orbitavel, onde cada dev principal recebe uma torre propria e o lider atual vira o predio mais desejado da cidade.</p>
           <div class="hero-meta">
-            <div class="hero-chip">Ranking principal por commits</div>
+            <div class="hero-chip">Ranking principal por commits estimados</div>
             <div class="hero-chip">Dados gerados por GitHub Actions</div>
             <div class="hero-chip">Ultima atualizacao: ${new Date(competition.updatedAt).toLocaleString("pt-BR")}</div>
           </div>
@@ -59,7 +59,7 @@ function renderShell(competition, competitors) {
           <div class="summary-card panel">
             <span>Commits</span>
             <strong>${formatCompact(totalCommits)}</strong>
-            <small>Metricamestre usada para definir o vencedor.</small>
+            <small>Publicos + restritos quando o GitHub nao abre o detalhamento.</small>
           </div>
           <div class="summary-card panel">
             <span>Reviews</span>
