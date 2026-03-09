@@ -1,0 +1,61 @@
+{
+  "title": "Contribution Competition",
+  "subtitle": "Quem vai dominar o GitHub em 2026?",
+  "year": 2026,
+  "updatedAt": "2026-03-09T00:00:00.000Z",
+  "generatedAt": "2026-03-09T00:00:00.000Z",
+  "range": {
+    "from": "2026-01-01T00:00:00.000Z",
+    "to": "2026-03-09T00:00:00.000Z"
+  },
+  "competitors": [
+    {
+      "username": "Guilherme-Rodrigues-PX",
+      "name": "Guilherme-Rodrigues-PX",
+      "avatar": "https://github.com/Guilherme-Rodrigues-PX.png",
+      "profile": "https://github.com/Guilherme-Rodrigues-PX",
+      "contributions": 0,
+      "commits": 0,
+      "pullRequests": 0,
+      "reviews": 0,
+      "issues": 0,
+      "restrictedContributions": 0
+    },
+    {
+      "username": "PXTarda",
+      "name": "PXTarda",
+      "avatar": "https://github.com/PXTarda.png",
+      "profile": "https://github.com/PXTarda",
+      "contributions": 0,
+      "commits": 0,
+      "pullRequests": 0,
+      "reviews": 0,
+      "issues": 0,
+      "restrictedContributions": 0
+    },
+    {
+      "username": "pedro-romao-px",
+      "name": "pedro-romao-px",
+      "avatar": "https://github.com/pedro-romao-px.png",
+      "profile": "https://github.com/pedro-romao-px",
+      "contributions": 0,
+      "commits": 0,
+      "pullRequests": 0,
+      "reviews": 0,
+      "issues": 0,
+      "restrictedContributions": 0
+    },
+    {
+      "username": "px-paiola",
+      "name": "px-paiola",
+      "avatar": "https://github.com/px-paiola.png",
+      "profile": "https://github.com/px-paiola",
+      "contributions": 0,
+      "commits": 0,
+      "pullRequests": 0,
+      "reviews": 0,
+      "issues": 0,
+      "restrictedContributions": 0
+    }
+  ]
+}
