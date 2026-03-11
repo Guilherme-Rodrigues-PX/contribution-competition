@@ -76,20 +76,6 @@ function renderShell(competition, competitors) {
 
       <section class="city-stage panel">
         <div id="scene" class="city-scene" aria-label="Cena 3D da cidade"></div>
-        <div class="scene-hud">
-          <div class="scene-card">
-            <h2>Explore a cidade</h2>
-            <p>Arraste para orbitar, use o scroll para zoom e clique nos predios principais para travar o foco no dev correspondente.</p>
-          </div>
-          <div class="scene-card">
-            <h2>Como ler</h2>
-            <ul>
-              <li>Altura: puxada principalmente por commits e reforcada por contribuicoes.</li>
-              <li>Largura e profundidade: variam com PRs e reviews.</li>
-              <li>Distrito dourado: reservado para o lider atual.</li>
-            </ul>
-          </div>
-        </div>
       </section>
 
       <section class="dashboard">
