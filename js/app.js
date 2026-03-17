@@ -98,7 +98,6 @@ function renderShell(competition, competitors) {
   const totalContributions = competitors.reduce((sum, c) => sum + (c.contributions || 0), 0);
   const totalCommits = competitors.reduce((sum, c) => sum + (c.commits || 0), 0);
   const totalReviews = competitors.reduce((sum, c) => sum + (c.reviews || 0), 0);
-  const totalLinesAdded = competitors.reduce((sum, c) => sum + (c.linesAdded || 0), 0);
   const leader = competitors[0];
 
   return `
@@ -118,27 +117,22 @@ function renderShell(competition, competitors) {
           <div class="summary-card panel">
             <span>Contribuicoes</span>
             <strong>${formatCompact(totalContributions)}</strong>
-            <small>Volume total da cidade no ano.</small>
+            <small>Volume total no ano.</small>
           </div>
           <div class="summary-card panel">
             <span>Commits</span>
             <strong>${formatCompact(totalCommits)}</strong>
-            <small>Publicos + restritos quando o GitHub nao abre o detalhamento.</small>
+            <small>Publicos + restritos.</small>
           </div>
           <div class="summary-card panel">
             <span>Reviews</span>
             <strong>${formatCompact(totalReviews)}</strong>
-            <small>Atividade que aumenta a pulsacao do skyline.</small>
-          </div>
-          <div class="summary-card panel">
-            <span>Linhas de codigo</span>
-            <strong>+${formatCompact(totalLinesAdded)}</strong>
-            <small>Linhas adicionadas nos repositorios da org.</small>
+            <small>Atividade de code review.</small>
           </div>
           <div class="summary-card panel">
             <span>Lider atual</span>
             <strong>${leader ? leader.username : "-"}</strong>
-            <small>${leader ? `${formatNumber(leader.commits || 0)} commits no topo da cidade.` : "Sem lider definido."}</small>
+            <small>${leader ? `${formatNumber(leader.commits || 0)} commits.` : "Sem lider."}</small>
           </div>
         </div>
       </section>
@@ -264,7 +258,7 @@ function drawHistoryChart(canvas, competitors) {
 
   const width = rect.width;
   const height = rect.height;
-  const pad = { top: 20, right: 20, bottom: 40, left: 60 };
+  const pad = { top: 20, right: 160, bottom: 40, left: 60 };
   const chartW = width - pad.left - pad.right;
   const chartH = height - pad.top - pad.bottom;
 

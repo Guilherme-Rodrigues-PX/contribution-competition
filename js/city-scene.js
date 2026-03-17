@@ -771,18 +771,23 @@ function buildCity(scene, competition) {
   ];
 
   const districts = [
-    new THREE.Vector3(-190, 2, -140),
-    new THREE.Vector3(170, 2, -150),
-    new THREE.Vector3(-160, 2, 170),
-    new THREE.Vector3(200, 2, 180),
-    new THREE.Vector3(0, 2, 0)
+    new THREE.Vector3(0, 2, 0),
+    new THREE.Vector3(-220, 2, -170),
+    new THREE.Vector3(210, 2, -180),
+    new THREE.Vector3(-200, 2, 190),
+    new THREE.Vector3(230, 2, 200),
+    new THREE.Vector3(-420, 2, -10),
+    new THREE.Vector3(420, 2, 10),
+    new THREE.Vector3(0, 2, -350),
+    new THREE.Vector3(0, 2, 380),
+    new THREE.Vector3(-400, 2, -340)
   ];
 
   const majorTowers = [];
   const selectables = [];
 
-  createRoad(scene, 1200, 90, new THREE.Vector3(0, 0, 0));
-  createRoad(scene, 90, 1200, new THREE.Vector3(0, 0, 0));
+  createRoad(scene, 1800, 90, new THREE.Vector3(0, 0, 0));
+  createRoad(scene, 90, 1800, new THREE.Vector3(0, 0, 0));
 
   competitors.forEach((competitor, index) => {
     const district = districts[index % districts.length].clone();
@@ -885,7 +890,7 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   scene.add(moonLight);
 
   const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(2200, 2200),
+    new THREE.PlaneGeometry(3200, 3200),
     new THREE.MeshStandardMaterial({
       color: 0x060b18,
       roughness: 0.98,
@@ -896,7 +901,7 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   floor.receiveShadow = true;
   scene.add(floor);
 
-  const gridHelper = new THREE.GridHelper(2200, 44, 0x17315f, 0x0f1e3f);
+  const gridHelper = new THREE.GridHelper(3200, 64, 0x17315f, 0x0f1e3f);
   gridHelper.position.y = 1;
   scene.add(gridHelper);
 
