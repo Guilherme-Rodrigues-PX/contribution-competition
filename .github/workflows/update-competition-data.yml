@@ -30,6 +30,7 @@ jobs:
         env:
           COMPETITION_GITHUB_TOKEN: ${{ secrets.COMPETITION_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMPETITION_WEBHOOK_URL: ${{ secrets.COMPETITION_WEBHOOK_URL }}
         run: node scripts/build-competition-data.mjs
 
       - name: Commit updated data

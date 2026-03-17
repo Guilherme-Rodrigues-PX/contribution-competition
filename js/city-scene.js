@@ -664,6 +664,97 @@ function easeOutCubic(value) {
   return 1 - Math.pow(1 - value, 3);
 }
 
+function easeOutBack(value) {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(value - 1, 3) + c1 * Math.pow(value - 1, 2);
+}
+
+function createFireworks(scene) {
+  const systems = [];
+
+  function launch(position, color) {
+    const count = 120;
+    const positions = new Float32Array(count * 3);
+    const velocities = [];
+    const colors = new Float32Array(count * 3);
+    const baseColor = new THREE.Color(color);
+    const accentColor = new THREE.Color(color).offsetHSL(0.1, 0, 0.2);
+
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = position.x;
+      positions[i * 3 + 1] = position.y;
+      positions[i * 3 + 2] = position.z;
+
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI;
+      const speed = 80 + Math.random() * 180;
+      velocities.push(
+        Math.sin(phi) * Math.cos(theta) * speed,
+        Math.cos(phi) * speed * 0.8 + 60,
+        Math.sin(phi) * Math.sin(theta) * speed
+      );
+
+      const c = Math.random() > 0.5 ? baseColor : accentColor;
+      colors[i * 3] = c.r;
+      colors[i * 3 + 1] = c.g;
+      colors[i * 3 + 2] = c.b;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: 5,
+      vertexColors: true,
+      transparent: true,
+      opacity: 1,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      sizeAttenuation: true
+    });
+
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+    systems.push({ points, velocities, age: 0, maxAge: 2.2 });
+  }
+
+  function update(delta) {
+    for (let i = systems.length - 1; i >= 0; i--) {
+      const sys = systems[i];
+      sys.age += delta;
+      if (sys.age >= sys.maxAge) {
+        scene.remove(sys.points);
+        sys.points.geometry.dispose();
+        sys.points.material.dispose();
+        systems.splice(i, 1);
+        continue;
+      }
+
+      const positions = sys.points.geometry.attributes.position.array;
+      const gravity = -120 * delta;
+      const drag = 1 - delta * 1.2;
+
+      for (let j = 0; j < positions.length / 3; j++) {
+        sys.velocities[j * 3] *= drag;
+        sys.velocities[j * 3 + 1] += gravity;
+        sys.velocities[j * 3 + 1] *= drag;
+        sys.velocities[j * 3 + 2] *= drag;
+
+        positions[j * 3] += sys.velocities[j * 3] * delta;
+        positions[j * 3 + 1] += sys.velocities[j * 3 + 1] * delta;
+        positions[j * 3 + 2] += sys.velocities[j * 3 + 2] * delta;
+      }
+
+      sys.points.geometry.attributes.position.needsUpdate = true;
+      sys.points.material.opacity = 1 - (sys.age / sys.maxAge);
+    }
+  }
+
+  return { launch, update };
+}
+
 function buildCity(scene, competition) {
   const competitors = [...competition.competitors].sort(byCommits);
   const maxCommits = Math.max(...competitors.map((competitor) => competitor.commits || 0), 1);
@@ -824,6 +915,43 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   createStars(scene);
 
   const { majorTowers, selectables, competitors } = buildCity(scene, competition);
+
+  const fireworks = createFireworks(scene);
+
+  // Building grow animation
+  const growAnims = [];
+  majorTowers.forEach((tower, index) => {
+    tower.scale.y = 0.001;
+    tower.userData._originalY = tower.position.y;
+    growAnims.push({
+      tower,
+      delay: index * 0.18,
+      duration: 1.2,
+      elapsed: 0,
+      done: false
+    });
+  });
+
+  // Day/Night mode
+  const nightPreset = {
+    background: 0x040814,
+    fog: 0x050915,
+    ambient: 0.68,
+    hemi: 0.52,
+    moon: 1.3,
+    bloom: 0.78
+  };
+  const dayPreset = {
+    background: 0x87ceeb,
+    fog: 0xa8d8ea,
+    ambient: 1.6,
+    hemi: 1.4,
+    moon: 2.2,
+    bloom: 0.15
+  };
+  let isNight = true;
+  let dayNightTransition = { active: false, progress: 1, from: nightPreset, to: nightPreset };
+
   const focusMarker = new THREE.Mesh(
     new THREE.RingGeometry(32, 46, 64),
     new THREE.MeshBasicMaterial({
@@ -917,6 +1045,24 @@ export function createCityScene(container, competition, { onSelect } = {}) {
     const competitor = intersections[0].object.userData.competitor;
     if (competitor) {
       setFocus(competitor.username);
+
+      // Fireworks on leader tower click
+      const clickedTower = majorTowers.find((t) => t.userData.competitor.username === competitor.username);
+      if (clickedTower && competitor.username === competitors[0]?.username) {
+        const top = clickedTower.userData.towerTop || 300;
+        const pos = clickedTower.position.clone();
+        pos.y = top + 40;
+        const colors = ["#ffd56d", "#ff7bfa", "#89d7ff", "#6fdd8b", "#ff9079"];
+        for (let burst = 0; burst < 3; burst++) {
+          setTimeout(() => {
+            const offset = pos.clone();
+            offset.x += (Math.random() - 0.5) * 60;
+            offset.y += Math.random() * 80;
+            offset.z += (Math.random() - 0.5) * 60;
+            fireworks.launch(offset, colors[Math.floor(Math.random() * colors.length)]);
+          }, burst * 300);
+        }
+      }
     }
   }
 
@@ -953,6 +1099,44 @@ export function createCityScene(container, competition, { onSelect } = {}) {
     }
 
     controls.update();
+
+    // Building grow animation
+    for (const anim of growAnims) {
+      if (anim.done) continue;
+      anim.elapsed += delta;
+      const t = Math.max(0, (anim.elapsed - anim.delay) / anim.duration);
+      if (t <= 0) continue;
+      const clamped = Math.min(1, t);
+      anim.tower.scale.y = easeOutBack(clamped);
+      if (clamped >= 1) anim.done = true;
+    }
+
+    // Fireworks
+    fireworks.update(delta);
+
+    // Day/Night transition
+    if (dayNightTransition.active) {
+      dayNightTransition.progress = Math.min(1, dayNightTransition.progress + delta / 1.5);
+      const t = easeOutCubic(dayNightTransition.progress);
+      const from = dayNightTransition.from;
+      const to = dayNightTransition.to;
+
+      const bgFrom = new THREE.Color(from.background);
+      const bgTo = new THREE.Color(to.background);
+      scene.background.copy(bgFrom.lerp(bgTo, t));
+
+      const fogFrom = new THREE.Color(from.fog);
+      const fogTo = new THREE.Color(to.fog);
+      scene.fog.color.copy(fogFrom.lerp(fogTo, t));
+
+      ambientLight.intensity = from.ambient + (to.ambient - from.ambient) * t;
+      hemiLight.intensity = from.hemi + (to.hemi - from.hemi) * t;
+      moonLight.intensity = from.moon + (to.moon - from.moon) * t;
+
+      if (dayNightTransition.progress >= 1) {
+        dayNightTransition.active = false;
+      }
+    }
 
     majorTowers.forEach((tower, index) => {
       const glow = tower.userData.roofGlow;
@@ -1028,6 +1212,35 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
   return {
     focusCompetitor: setFocus,
+    toggleDayNight() {
+      isNight = !isNight;
+      dayNightTransition.active = true;
+      dayNightTransition.progress = 0;
+      dayNightTransition.from = isNight ? dayPreset : nightPreset;
+      dayNightTransition.to = isNight ? nightPreset : dayPreset;
+      return isNight;
+    },
+    screenshot() {
+      composer.render();
+      return renderer.domElement.toDataURL("image/png");
+    },
+    launchFireworks(username) {
+      const tower = majorTowers.find((t) => t.userData.competitor.username === username);
+      if (!tower) return;
+      const top = tower.userData.towerTop || 300;
+      const pos = tower.position.clone();
+      pos.y = top + 40;
+      const colors = ["#ffd56d", "#ff7bfa", "#89d7ff", "#6fdd8b", "#ff9079"];
+      for (let burst = 0; burst < 5; burst++) {
+        setTimeout(() => {
+          const offset = pos.clone();
+          offset.x += (Math.random() - 0.5) * 80;
+          offset.y += Math.random() * 100;
+          offset.z += (Math.random() - 0.5) * 80;
+          fireworks.launch(offset, colors[Math.floor(Math.random() * colors.length)]);
+        }, burst * 250);
+      }
+    },
     dispose() {
       if (animationFrame !== null) {
         cancelAnimationFrame(animationFrame);
