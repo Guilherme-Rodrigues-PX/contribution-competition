@@ -28,7 +28,6 @@ function byCommits(left, right) {
   return (
     (right.commits || 0) - (left.commits || 0) ||
     (right.contributions || 0) - (left.contributions || 0) ||
-    (right.pullRequests || 0) - (left.pullRequests || 0) ||
     left.username.localeCompare(right.username)
   );
 }
@@ -341,8 +340,6 @@ function createMainTower(competitor, options) {
     isLeader,
     commitRatio,
     contributionRatio,
-    prRatio,
-    reviewRatio,
     color,
     accent
   } = options;
@@ -351,8 +348,8 @@ function createMainTower(competitor, options) {
   const group = new THREE.Group();
   group.position.copy(position);
 
-  const baseWidth = 42 + prRatio * 24 + (isLeader ? 18 : 0);
-  const baseDepth = 34 + reviewRatio * 22 + (isLeader ? 14 : 0);
+  const baseWidth = 42 + commitRatio * 24 + (isLeader ? 18 : 0);
+  const baseDepth = 34 + contributionRatio * 22 + (isLeader ? 14 : 0);
   const height = 150 + commitRatio * 260 + contributionRatio * 110 + (isLeader ? 130 : 0);
   const crownHeight = height * (isLeader ? 0.1 : 0.07);
   const floors = Math.max(10, Math.round(height / 10));
@@ -759,8 +756,6 @@ function buildCity(scene, competition) {
   const competitors = [...competition.competitors].sort(byCommits);
   const maxCommits = Math.max(...competitors.map((competitor) => competitor.commits || 0), 1);
   const maxContributions = Math.max(...competitors.map((competitor) => competitor.contributions || 0), 1);
-  const maxPullRequests = Math.max(...competitors.map((competitor) => competitor.pullRequests || 0), 1);
-  const maxReviews = Math.max(...competitors.map((competitor) => competitor.reviews || 0), 1);
 
   const palette = [
     { color: "#72b8ff", accent: "#9edbff" },
@@ -795,8 +790,6 @@ function buildCity(scene, competition) {
     const colors = palette[index % palette.length];
     const commitRatio = (competitor.commits || 0) / maxCommits;
     const contributionRatio = (competitor.contributions || 0) / maxContributions;
-    const prRatio = (competitor.pullRequests || 0) / maxPullRequests;
-    const reviewRatio = (competitor.reviews || 0) / maxReviews;
 
     createPlaza(scene, district, isLeader ? 62 : 46, isLeader ? "#ffc85a" : colors.accent);
 
@@ -805,8 +798,6 @@ function buildCity(scene, competition) {
       isLeader,
       commitRatio,
       contributionRatio,
-      prRatio,
-      reviewRatio,
       color: colors.color,
       accent: isLeader ? "#ffc85a" : colors.accent
     });

@@ -13,23 +13,11 @@ const SORT_FUNCTIONS = {
       (right.commits || 0) - (left.commits || 0) ||
       left.username.localeCompare(right.username);
   },
-  pullRequests(left, right) {
-    return (right.pullRequests || 0) - (left.pullRequests || 0) ||
-      (right.commits || 0) - (left.commits || 0) ||
-      left.username.localeCompare(right.username);
-  },
-  reviews(left, right) {
-    return (right.reviews || 0) - (left.reviews || 0) ||
-      (right.commits || 0) - (left.commits || 0) ||
-      left.username.localeCompare(right.username);
-  }
 };
 
 const METRIC_LABELS = {
   commits: "Commits",
-  contributions: "Contribuicoes",
-  pullRequests: "Pull Requests",
-  reviews: "Reviews"
+  contributions: "Contribuicoes"
 };
 
 function formatCompact(value) {
@@ -47,18 +35,10 @@ function metricValue(competitor, metric) {
 function computeBadges(competitor, competitors) {
   const badges = [];
   const maxCommits = Math.max(...competitors.map((c) => c.commits || 0));
-  const maxPRs = Math.max(...competitors.map((c) => c.pullRequests || 0));
-  const maxReviews = Math.max(...competitors.map((c) => c.reviews || 0));
   const maxContribs = Math.max(...competitors.map((c) => c.contributions || 0));
 
   if ((competitor.commits || 0) === maxCommits && maxCommits > 0) {
     badges.push({ label: "Lider em commits", css: "badge--gold" });
-  }
-  if ((competitor.pullRequests || 0) === maxPRs && maxPRs > 0) {
-    badges.push({ label: "Maquina de PRs", css: "badge--cyan" });
-  }
-  if ((competitor.reviews || 0) === maxReviews && maxReviews > 0) {
-    badges.push({ label: "Code Reviewer", css: "badge--purple" });
   }
   if ((competitor.contributions || 0) === maxContribs && maxContribs > 0) {
     badges.push({ label: "Mais ativo", css: "badge--orange" });
@@ -87,7 +67,6 @@ function winnerCopy(competitor, leader) {
 function renderShell(competition, competitors) {
   const totalContributions = competitors.reduce((sum, c) => sum + (c.contributions || 0), 0);
   const totalCommits = competitors.reduce((sum, c) => sum + (c.commits || 0), 0);
-  const totalReviews = competitors.reduce((sum, c) => sum + (c.reviews || 0), 0);
   const leader = competitors[0];
 
   return `
@@ -113,11 +92,6 @@ function renderShell(competition, competitors) {
             <span>Commits</span>
             <strong>${formatCompact(totalCommits)}</strong>
             <small>Publicos + restritos.</small>
-          </div>
-          <div class="summary-card panel">
-            <span>Reviews</span>
-            <strong>${formatCompact(totalReviews)}</strong>
-            <small>Atividade de code review.</small>
           </div>
           <div class="summary-card panel">
             <span>Lider atual</span>
@@ -195,14 +169,6 @@ function renderFocusPanel(competitor, leader, competitors) {
       <div class="stat-tile">
         <strong>${formatNumber(competitor.contributions || 0)}</strong>
         <span>Contribuicoes</span>
-      </div>
-      <div class="stat-tile">
-        <strong>${formatNumber(competitor.pullRequests || 0)}</strong>
-        <span>Pull requests</span>
-      </div>
-      <div class="stat-tile">
-        <strong>${formatNumber(competitor.reviews || 0)}</strong>
-        <span>Reviews</span>
       </div>
     </div>
     <a class="focus-link" href="${competitor.profile}" target="_blank" rel="noopener noreferrer">Abrir perfil no GitHub</a>
