@@ -339,7 +339,6 @@ function createMainTower(competitor, options) {
     position,
     isLeader,
     commitRatio,
-    contributionRatio,
     color,
     accent
   } = options;
@@ -349,12 +348,12 @@ function createMainTower(competitor, options) {
   group.position.copy(position);
 
   const baseWidth = 42 + commitRatio * 24 + (isLeader ? 18 : 0);
-  const baseDepth = 34 + contributionRatio * 22 + (isLeader ? 14 : 0);
-  const height = 150 + commitRatio * 260 + contributionRatio * 110 + (isLeader ? 130 : 0);
+  const baseDepth = 34 + commitRatio * 22 + (isLeader ? 14 : 0);
+  const height = 150 + commitRatio * 370 + (isLeader ? 130 : 0);
   const crownHeight = height * (isLeader ? 0.1 : 0.07);
   const floors = Math.max(10, Math.round(height / 10));
   const columns = Math.max(4, Math.round(baseWidth / 7));
-  const litRatio = Math.min(0.98, 0.2 + contributionRatio * 0.55 + commitRatio * 0.18);
+  const litRatio = Math.min(0.98, 0.2 + commitRatio * 0.73);
   const labelBaseY = height + crownHeight + (isLeader ? 156 : 92);
 
   const materials = createBuildingMaterials(
@@ -755,8 +754,6 @@ function createFireworks(scene) {
 function buildCity(scene, competition) {
   const competitors = [...competition.competitors].sort(byCommits);
   const maxCommits = Math.max(...competitors.map((competitor) => competitor.commits || 0), 1);
-  const maxContributions = Math.max(...competitors.map((competitor) => competitor.contributions || 0), 1);
-
   const palette = [
     { color: "#72b8ff", accent: "#9edbff" },
     { color: "#6f8cff", accent: "#afc0ff" },
@@ -789,7 +786,6 @@ function buildCity(scene, competition) {
     const isLeader = index === 0;
     const colors = palette[index % palette.length];
     const commitRatio = (competitor.commits || 0) / maxCommits;
-    const contributionRatio = (competitor.contributions || 0) / maxContributions;
 
     createPlaza(scene, district, isLeader ? 62 : 46, isLeader ? "#ffc85a" : colors.accent);
 
@@ -797,7 +793,6 @@ function buildCity(scene, competition) {
       position: district,
       isLeader,
       commitRatio,
-      contributionRatio,
       color: colors.color,
       accent: isLeader ? "#ffc85a" : colors.accent
     });

@@ -2,23 +2,10 @@ import { createCityScene } from "./city-scene.js";
 
 const DATA_PATH = "./data/competition.json";
 
-const SORT_FUNCTIONS = {
-  commits(left, right) {
-    return (right.commits || 0) - (left.commits || 0) ||
-      (right.contributions || 0) - (left.contributions || 0) ||
-      left.username.localeCompare(right.username);
-  },
-  contributions(left, right) {
-    return (right.contributions || 0) - (left.contributions || 0) ||
-      (right.commits || 0) - (left.commits || 0) ||
-      left.username.localeCompare(right.username);
-  },
-};
-
-const METRIC_LABELS = {
-  commits: "Commits",
-  contributions: "Contribuicoes"
-};
+function sortByCommits(left, right) {
+  return (right.commits || 0) - (left.commits || 0) ||
+    left.username.localeCompare(right.username);
+}
 
 function formatCompact(value) {
   return new Intl.NumberFormat("pt-BR", { notation: "compact", maximumFractionDigits: 1 }).format(value);
@@ -28,20 +15,12 @@ function formatNumber(value) {
   return new Intl.NumberFormat("pt-BR").format(value);
 }
 
-function metricValue(competitor, metric) {
-  return competitor[metric] || 0;
-}
-
 function computeBadges(competitor, competitors) {
   const badges = [];
   const maxCommits = Math.max(...competitors.map((c) => c.commits || 0));
-  const maxContribs = Math.max(...competitors.map((c) => c.contributions || 0));
 
   if ((competitor.commits || 0) === maxCommits && maxCommits > 0) {
     badges.push({ label: "Lider em commits", css: "badge--gold" });
-  }
-  if ((competitor.contributions || 0) === maxContribs && maxContribs > 0) {
-    badges.push({ label: "Mais ativo", css: "badge--orange" });
   }
   if ((competitor.commits || 0) >= 1000) {
     badges.push({ label: "Mil commits", css: "badge--gold" });
@@ -65,7 +44,6 @@ function winnerCopy(competitor, leader) {
 }
 
 function renderShell(competition, competitors) {
-  const totalContributions = competitors.reduce((sum, c) => sum + (c.contributions || 0), 0);
   const totalCommits = competitors.reduce((sum, c) => sum + (c.commits || 0), 0);
   const leader = competitors[0];
 
@@ -77,21 +55,21 @@ function renderShell(competition, competitors) {
           <h1>${competition.title}</h1>
           <p>${competition.subtitle} Agora em uma cena 3D orbitavel, onde cada dev principal recebe uma torre propria e o lider atual vira o predio mais desejado da cidade.</p>
           <div class="hero-meta">
-            <div class="hero-chip">Ranking principal por commits estimados</div>
+            <div class="hero-chip">Ranking por commits estimados</div>
             <div class="hero-chip">Dados gerados por GitHub Actions</div>
             <div class="hero-chip">Ultima atualizacao: ${new Date(competition.updatedAt).toLocaleString("pt-BR")}</div>
           </div>
         </div>
         <div class="summary-grid">
           <div class="summary-card panel">
-            <span>Contribuicoes</span>
-            <strong>${formatCompact(totalContributions)}</strong>
-            <small>Volume total no ano.</small>
-          </div>
-          <div class="summary-card panel">
-            <span>Commits</span>
+            <span>Total de commits</span>
             <strong>${formatCompact(totalCommits)}</strong>
             <small>Publicos + restritos.</small>
+          </div>
+          <div class="summary-card panel">
+            <span>Competidores</span>
+            <strong>${competitors.length}</strong>
+            <small>Devs na disputa.</small>
           </div>
           <div class="summary-card panel">
             <span>Lider atual</span>
@@ -112,7 +90,7 @@ function renderShell(competition, competitors) {
       <section class="chart-section panel">
         <div class="chart-header">
           <h2>Evolucao Semanal</h2>
-          <p>Contribuicoes acumuladas ao longo do ano.</p>
+          <p>Commits acumulados ao longo do ano.</p>
         </div>
         <canvas id="history-chart" width="1200" height="320"></canvas>
       </section>
@@ -122,12 +100,11 @@ function renderShell(competition, competitors) {
         <section class="leaderboard panel">
           <div class="leaderboard-head">
             <div>
-              <h2>Skyline Principal</h2>
+              <h2>Ranking de Commits</h2>
               <p>Os predios clicaveis correspondem aos devs reais da competicao.</p>
             </div>
             <p>${competitors.length} torres nomeadas</p>
           </div>
-          <div class="metric-filter" id="metric-filter"></div>
           <div id="leaderboard-list" class="leaderboard-list"></div>
         </section>
       </section>
@@ -166,33 +143,22 @@ function renderFocusPanel(competitor, leader, competitors) {
         <strong>${formatNumber(competitor.commits || 0)}</strong>
         <span>Commits</span>
       </div>
-      <div class="stat-tile">
-        <strong>${formatNumber(competitor.contributions || 0)}</strong>
-        <span>Contribuicoes</span>
-      </div>
     </div>
     <a class="focus-link" href="${competitor.profile}" target="_blank" rel="noopener noreferrer">Abrir perfil no GitHub</a>
   `;
 }
 
-function renderLeaderboard(competitors, selectedUsername, metric) {
+function renderLeaderboard(competitors, selectedUsername) {
   return competitors.map((competitor, index) => `
     <button class="leaderboard-row ${competitor.username === selectedUsername ? "is-active" : ""}" data-username="${competitor.username}">
       <div class="leaderboard-rank">${index + 1}</div>
       <img src="${competitor.avatar}" alt="${competitor.username}">
       <div>
         <strong>${competitor.username}</strong>
-        <span>${formatNumber(competitor.contributions || 0)} contribuicoes</span>
       </div>
-      <em>${formatNumber(metricValue(competitor, metric))} ${METRIC_LABELS[metric].toLowerCase()}</em>
+      <em>${formatNumber(competitor.commits || 0)} commits</em>
     </button>
   `).join("");
-}
-
-function renderMetricFilter(activeMetric) {
-  return Object.entries(METRIC_LABELS).map(([key, label]) =>
-    `<button class="metric-btn ${key === activeMetric ? "is-active" : ""}" data-metric="${key}">${label}</button>`
-  ).join("");
 }
 
 function drawHistoryChart(canvas, competitors) {
@@ -325,8 +291,7 @@ async function loadCompetitionData() {
 
 async function init() {
   const competition = await loadCompetitionData();
-  let currentMetric = "commits";
-  let competitors = [...competition.competitors].sort(SORT_FUNCTIONS[currentMetric]);
+  const competitors = [...competition.competitors].sort(sortByCommits);
   const leader = competitors[0];
 
   document.title = `Contribution City ${competition.year}`;
@@ -334,13 +299,12 @@ async function init() {
 
   const focusPanel = document.getElementById("focus-panel");
   const leaderboardList = document.getElementById("leaderboard-list");
-  const metricFilter = document.getElementById("metric-filter");
   let selected = leader;
 
   function updateSelection(next) {
     selected = next;
     focusPanel.innerHTML = renderFocusPanel(selected, leader, competitors);
-    leaderboardList.innerHTML = renderLeaderboard(competitors, selected.username, currentMetric);
+    leaderboardList.innerHTML = renderLeaderboard(competitors, selected.username);
     leaderboardList.querySelectorAll("[data-username]").forEach((button) => {
       button.addEventListener("click", () => {
         const username = button.getAttribute("data-username");
@@ -348,18 +312,6 @@ async function init() {
         if (!competitor) return;
         updateSelection(competitor);
         city.focusCompetitor(competitor.username);
-      });
-    });
-  }
-
-  function updateMetricFilter() {
-    metricFilter.innerHTML = renderMetricFilter(currentMetric);
-    metricFilter.querySelectorAll("[data-metric]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        currentMetric = btn.getAttribute("data-metric");
-        competitors = [...competition.competitors].sort(SORT_FUNCTIONS[currentMetric]);
-        updateMetricFilter();
-        updateSelection(selected);
       });
     });
   }
@@ -392,7 +344,6 @@ async function init() {
     resizeObserver.observe(chartCanvas.parentElement);
   }
 
-  updateMetricFilter();
   updateSelection(leader);
   city.focusCompetitor(leader.username, true);
 }
