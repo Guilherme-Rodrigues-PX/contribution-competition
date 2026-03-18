@@ -120,84 +120,6 @@ async function fetchCompetitor(login, range, token) {
   };
 }
 
-async function githubRest(urlPath, token) {
-  const response = await fetch(`https://api.github.com${urlPath}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github+json',
-      'User-Agent': 'contribution-competition'
-    }
-  });
-
-  if (response.status === 202) {
-    return null; // stats being computed, caller should retry
-  }
-
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`GitHub REST ${response.status} ${urlPath}: ${body}`);
-  }
-
-  return response.json();
-}
-
-async function githubRestPaginated(urlPath, token) {
-  const results = [];
-  let page = 1;
-  while (true) {
-    const separator = urlPath.includes('?') ? '&' : '?';
-    const data = await githubRest(`${urlPath}${separator}per_page=100&page=${page}`, token);
-    if (!data || data.length === 0) break;
-    results.push(...data);
-    if (data.length < 100) break;
-    page++;
-  }
-  return results;
-}
-
-async function fetchRepoStats(org, repo, token, maxRetries = 8) {
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    const data = await githubRest(`/repos/${org}/${repo}/stats/contributors`, token);
-    if (data !== null) return data;
-    const delay = Math.min(2000 * Math.pow(2, attempt), 30000);
-    console.log(`Estatisticas de ${org}/${repo} sendo computadas, tentativa ${attempt + 1}/${maxRetries}, aguardando ${delay / 1000}s...`);
-    await new Promise((resolve) => setTimeout(resolve, delay));
-  }
-  console.warn(`Estatisticas nao prontas para ${org}/${repo} apos ${maxRetries} tentativas, pulando.`);
-  return [];
-}
-
-async function fetchLinesOfCode(org, range, competitors, token) {
-  const logins = new Set(competitors.map((c) => c.username.toLowerCase()));
-  const linesMap = new Map(competitors.map((c) => [c.username.toLowerCase(), { added: 0, deleted: 0 }]));
-
-  const repos = await githubRestPaginated(`/orgs/${org}/repos?type=all`, token);
-  console.log(`Buscando linhas de codigo em ${repos.length} repositorios da org ${org}...`);
-
-  const yearStart = range.from.getTime() / 1000;
-  const yearEnd = range.to.getTime() / 1000;
-
-  for (const repo of repos) {
-    const stats = await fetchRepoStats(org, repo.name, token);
-    if (!stats || !Array.isArray(stats)) continue;
-
-    for (const contributor of stats) {
-      const login = contributor.author?.login?.toLowerCase();
-      if (!login || !logins.has(login)) continue;
-
-      const entry = linesMap.get(login);
-      for (const week of contributor.weeks) {
-        if (week.w >= yearStart && week.w <= yearEnd) {
-          entry.added += week.a;
-          entry.deleted += week.d;
-        }
-      }
-    }
-  }
-
-  return linesMap;
-}
-
 function sortCompetitors(competitors) {
   return competitors.sort((left, right) => {
     return (
@@ -220,15 +142,6 @@ async function main() {
   const competitors = await Promise.all(
     config.competitors.map((login) => fetchCompetitor(login, range, token))
   );
-
-  if (config.organization) {
-    const linesMap = await fetchLinesOfCode(config.organization, range, competitors, token);
-    for (const competitor of competitors) {
-      const lines = linesMap.get(competitor.username.toLowerCase()) || { added: 0, deleted: 0 };
-      competitor.linesAdded = lines.added;
-      competitor.linesDeleted = lines.deleted;
-    }
-  }
 
   const generatedAt = new Date().toISOString();
 

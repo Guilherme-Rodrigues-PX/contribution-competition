@@ -13,11 +13,6 @@ const SORT_FUNCTIONS = {
       (right.commits || 0) - (left.commits || 0) ||
       left.username.localeCompare(right.username);
   },
-  linesAdded(left, right) {
-    return (right.linesAdded || 0) - (left.linesAdded || 0) ||
-      (right.commits || 0) - (left.commits || 0) ||
-      left.username.localeCompare(right.username);
-  },
   pullRequests(left, right) {
     return (right.pullRequests || 0) - (left.pullRequests || 0) ||
       (right.commits || 0) - (left.commits || 0) ||
@@ -33,7 +28,6 @@ const SORT_FUNCTIONS = {
 const METRIC_LABELS = {
   commits: "Commits",
   contributions: "Contribuicoes",
-  linesAdded: "Linhas adicionadas",
   pullRequests: "Pull Requests",
   reviews: "Reviews"
 };
@@ -55,7 +49,6 @@ function computeBadges(competitor, competitors) {
   const maxCommits = Math.max(...competitors.map((c) => c.commits || 0));
   const maxPRs = Math.max(...competitors.map((c) => c.pullRequests || 0));
   const maxReviews = Math.max(...competitors.map((c) => c.reviews || 0));
-  const maxLines = Math.max(...competitors.map((c) => c.linesAdded || 0));
   const maxContribs = Math.max(...competitors.map((c) => c.contributions || 0));
 
   if ((competitor.commits || 0) === maxCommits && maxCommits > 0) {
@@ -66,9 +59,6 @@ function computeBadges(competitor, competitors) {
   }
   if ((competitor.reviews || 0) === maxReviews && maxReviews > 0) {
     badges.push({ label: "Code Reviewer", css: "badge--purple" });
-  }
-  if ((competitor.linesAdded || 0) === maxLines && maxLines > 0) {
-    badges.push({ label: "Escritor prolifico", css: "badge--green" });
   }
   if ((competitor.contributions || 0) === maxContribs && maxContribs > 0) {
     badges.push({ label: "Mais ativo", css: "badge--orange" });
@@ -214,14 +204,6 @@ function renderFocusPanel(competitor, leader, competitors) {
         <strong>${formatNumber(competitor.reviews || 0)}</strong>
         <span>Reviews</span>
       </div>
-      <div class="stat-tile stat-tile--added">
-        <strong>+${formatNumber(competitor.linesAdded || 0)}</strong>
-        <span>Linhas adicionadas</span>
-      </div>
-      <div class="stat-tile stat-tile--deleted">
-        <strong>-${formatNumber(competitor.linesDeleted || 0)}</strong>
-        <span>Linhas removidas</span>
-      </div>
     </div>
     <a class="focus-link" href="${competitor.profile}" target="_blank" rel="noopener noreferrer">Abrir perfil no GitHub</a>
   `;
@@ -234,7 +216,7 @@ function renderLeaderboard(competitors, selectedUsername, metric) {
       <img src="${competitor.avatar}" alt="${competitor.username}">
       <div>
         <strong>${competitor.username}</strong>
-        <span>${formatNumber(competitor.contributions || 0)} contribuicoes • +${formatCompact(competitor.linesAdded || 0)} linhas</span>
+        <span>${formatNumber(competitor.contributions || 0)} contribuicoes</span>
       </div>
       <em>${formatNumber(metricValue(competitor, metric))} ${METRIC_LABELS[metric].toLowerCase()}</em>
     </button>
