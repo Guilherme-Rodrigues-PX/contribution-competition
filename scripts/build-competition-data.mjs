@@ -155,13 +155,15 @@ async function githubRestPaginated(urlPath, token) {
   return results;
 }
 
-async function fetchRepoStats(org, repo, token, maxRetries = 3) {
+async function fetchRepoStats(org, repo, token, maxRetries = 8) {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     const data = await githubRest(`/repos/${org}/${repo}/stats/contributors`, token);
     if (data !== null) return data;
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const delay = Math.min(2000 * Math.pow(2, attempt), 30000);
+    console.log(`Estatisticas de ${org}/${repo} sendo computadas, tentativa ${attempt + 1}/${maxRetries}, aguardando ${delay / 1000}s...`);
+    await new Promise((resolve) => setTimeout(resolve, delay));
   }
-  console.warn(`Estatisticas nao prontas para ${org}/${repo}, pulando.`);
+  console.warn(`Estatisticas nao prontas para ${org}/${repo} apos ${maxRetries} tentativas, pulando.`);
   return [];
 }
 

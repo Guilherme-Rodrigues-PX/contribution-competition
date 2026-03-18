@@ -140,7 +140,6 @@ function renderShell(competition, competitors) {
       <section class="city-stage panel">
         <div id="scene" class="city-scene" aria-label="Cena 3D da cidade"></div>
         <div class="scene-toolbar">
-          <button id="btn-day-night" class="toolbar-btn" title="Alternar dia/noite">Dia/Noite</button>
           <button id="btn-fireworks" class="toolbar-btn" title="Soltar fogos no lider">Fogos</button>
           <button id="btn-screenshot" class="toolbar-btn" title="Salvar screenshot">Screenshot</button>
         </div>
@@ -425,11 +424,6 @@ async function init() {
   });
 
   // Toolbar buttons
-  document.getElementById("btn-day-night").addEventListener("click", () => {
-    const isNight = city.toggleDayNight();
-    document.getElementById("btn-day-night").textContent = isNight ? "Dia/Noite" : "Dia/Noite";
-  });
-
   document.getElementById("btn-fireworks").addEventListener("click", () => {
     if (leader) city.launchFireworks(leader.username);
   });

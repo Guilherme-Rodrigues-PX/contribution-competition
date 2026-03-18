@@ -937,26 +937,6 @@ export function createCityScene(container, competition, { onSelect } = {}) {
     });
   });
 
-  // Day/Night mode
-  const nightPreset = {
-    background: 0x040814,
-    fog: 0x050915,
-    ambient: 0.68,
-    hemi: 0.52,
-    moon: 1.3,
-    bloom: 0.78
-  };
-  const dayPreset = {
-    background: 0x87ceeb,
-    fog: 0xa8d8ea,
-    ambient: 1.6,
-    hemi: 1.4,
-    moon: 2.2,
-    bloom: 0.15
-  };
-  let isNight = true;
-  let dayNightTransition = { active: false, progress: 1, from: nightPreset, to: nightPreset };
-
   const focusMarker = new THREE.Mesh(
     new THREE.RingGeometry(32, 46, 64),
     new THREE.MeshBasicMaterial({
@@ -1119,30 +1099,6 @@ export function createCityScene(container, competition, { onSelect } = {}) {
     // Fireworks
     fireworks.update(delta);
 
-    // Day/Night transition
-    if (dayNightTransition.active) {
-      dayNightTransition.progress = Math.min(1, dayNightTransition.progress + delta / 1.5);
-      const t = easeOutCubic(dayNightTransition.progress);
-      const from = dayNightTransition.from;
-      const to = dayNightTransition.to;
-
-      const bgFrom = new THREE.Color(from.background);
-      const bgTo = new THREE.Color(to.background);
-      scene.background.copy(bgFrom.lerp(bgTo, t));
-
-      const fogFrom = new THREE.Color(from.fog);
-      const fogTo = new THREE.Color(to.fog);
-      scene.fog.color.copy(fogFrom.lerp(fogTo, t));
-
-      ambientLight.intensity = from.ambient + (to.ambient - from.ambient) * t;
-      hemiLight.intensity = from.hemi + (to.hemi - from.hemi) * t;
-      moonLight.intensity = from.moon + (to.moon - from.moon) * t;
-
-      if (dayNightTransition.progress >= 1) {
-        dayNightTransition.active = false;
-      }
-    }
-
     majorTowers.forEach((tower, index) => {
       const glow = tower.userData.roofGlow;
       if (glow) {
@@ -1217,14 +1173,6 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
   return {
     focusCompetitor: setFocus,
-    toggleDayNight() {
-      isNight = !isNight;
-      dayNightTransition.active = true;
-      dayNightTransition.progress = 0;
-      dayNightTransition.from = isNight ? dayPreset : nightPreset;
-      dayNightTransition.to = isNight ? nightPreset : dayPreset;
-      return isNight;
-    },
     screenshot() {
       composer.render();
       return renderer.domElement.toDataURL("image/png");
