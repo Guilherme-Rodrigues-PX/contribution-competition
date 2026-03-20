@@ -177,7 +177,7 @@ function drawHistoryChart(canvas, competitors) {
 
   ctx.clearRect(0, 0, width, height);
 
-  const chartColors = ["#ffd56d", "#89d7ff", "#ff9079", "#b792ff", "#6fdd8b", "#ff7bfa", "#72b8ff", "#59d99b"];
+  const chartColors = ["#1e3a5f", "#f0a500", "#0ea5e9", "#e74c3c", "#22c55e", "#8b5cf6", "#f97316", "#7ab8e8"];
 
   // Build cumulative weekly series per competitor
   const allSeries = competitors.map((competitor) => {
