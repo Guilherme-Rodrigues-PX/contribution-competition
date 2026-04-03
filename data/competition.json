@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-04-02T10:12:19.105Z",
-  "generatedAt": "2026-04-02T10:12:19.105Z",
+  "updatedAt": "2026-04-03T10:04:55.104Z",
+  "generatedAt": "2026-04-03T10:04:55.104Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-04-02T10:12:18.411Z"
+    "to": "2026-04-03T10:04:54.140Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "PXTarda",
       "avatar": "https://avatars.githubusercontent.com/u/236474935?s=200&u=1c80de24a30a77bf285c355d82e747892b940167&v=4",
       "profile": "https://github.com/PXTarda",
-      "contributions": 1276,
-      "commits": 1275,
+      "contributions": 1290,
+      "commits": 1289,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1275,
+      "restrictedContributions": 1289,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -76,7 +76,7 @@
         },
         {
           "week": "2026-03-29",
-          "contributions": 101
+          "contributions": 115
         }
       ]
     },
@@ -85,13 +85,13 @@
       "name": "Guilherme-Rodrigues-PX",
       "avatar": "https://avatars.githubusercontent.com/u/187324256?s=200&u=2a6e0f1dcbdfdcee811cff5626a9d6247e046c76&v=4",
       "profile": "https://github.com/Guilherme-Rodrigues-PX",
-      "contributions": 953,
-      "commits": 951,
+      "contributions": 960,
+      "commits": 958,
       "publicCommits": 26,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 925,
+      "restrictedContributions": 932,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -143,26 +143,26 @@
         },
         {
           "week": "2026-03-22",
-          "contributions": 119
+          "contributions": 123
         },
         {
           "week": "2026-03-29",
-          "contributions": 25
+          "contributions": 28
         }
       ]
     },
     {
       "username": "rafaelfiales",
       "name": "Rafael Fiales",
-      "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=01316c6bd1b73f62a1ce03308f1d2b24f85e53b9&v=4",
+      "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 717,
-      "commits": 715,
+      "contributions": 723,
+      "commits": 723,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 715,
+      "restrictedContributions": 723,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -218,7 +218,7 @@
         },
         {
           "week": "2026-03-29",
-          "contributions": 33
+          "contributions": 39
         }
       ]
     },
@@ -227,13 +227,13 @@
       "name": "px-paiola",
       "avatar": "https://avatars.githubusercontent.com/u/241786967?s=200&v=4",
       "profile": "https://github.com/px-paiola",
-      "contributions": 548,
-      "commits": 548,
+      "contributions": 582,
+      "commits": 582,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 548,
+      "restrictedContributions": 582,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -289,7 +289,7 @@
         },
         {
           "week": "2026-03-29",
-          "contributions": 22
+          "contributions": 56
         }
       ]
     },
@@ -298,13 +298,13 @@
       "name": "pedro-romao-px",
       "avatar": "https://avatars.githubusercontent.com/u/190663628?s=200&v=4",
       "profile": "https://github.com/pedro-romao-px",
-      "contributions": 461,
-      "commits": 461,
+      "contributions": 467,
+      "commits": 467,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 461,
+      "restrictedContributions": 467,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -360,7 +360,7 @@
         },
         {
           "week": "2026-03-29",
-          "contributions": 35
+          "contributions": 41
         }
       ]
     },
