@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-04-03T10:04:55.104Z",
-  "generatedAt": "2026-04-03T10:04:55.104Z",
+  "updatedAt": "2026-04-04T09:55:16.250Z",
+  "generatedAt": "2026-04-04T09:55:16.250Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-04-03T10:04:54.140Z"
+    "to": "2026-04-04T09:55:15.523Z"
   },
   "competitors": [
     {
@@ -156,13 +156,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 723,
-      "commits": 723,
+      "contributions": 757,
+      "commits": 757,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 723,
+      "restrictedContributions": 757,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -218,7 +218,7 @@
         },
         {
           "week": "2026-03-29",
-          "contributions": 39
+          "contributions": 73
         }
       ]
     },
