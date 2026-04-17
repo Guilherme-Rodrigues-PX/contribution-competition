@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-04-16T18:54:55.538Z",
-  "generatedAt": "2026-04-16T18:54:55.538Z",
+  "updatedAt": "2026-04-17T10:35:12.027Z",
+  "generatedAt": "2026-04-17T10:35:12.027Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-04-16T18:54:54.847Z"
+    "to": "2026-04-17T10:35:11.280Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "PXTarda",
       "avatar": "https://avatars.githubusercontent.com/u/236474935?s=200&u=1c80de24a30a77bf285c355d82e747892b940167&v=4",
       "profile": "https://github.com/PXTarda",
-      "contributions": 1468,
-      "commits": 1467,
+      "contributions": 1483,
+      "commits": 1482,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1467,
+      "restrictedContributions": 1482,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -84,7 +84,7 @@
         },
         {
           "week": "2026-04-12",
-          "contributions": 79
+          "contributions": 94
         }
       ]
     },
@@ -172,13 +172,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 907,
-      "commits": 907,
+      "contributions": 908,
+      "commits": 908,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 907,
+      "restrictedContributions": 908,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -242,7 +242,7 @@
         },
         {
           "week": "2026-04-12",
-          "contributions": 36
+          "contributions": 37
         }
       ]
     },
@@ -251,13 +251,13 @@
       "name": "px-paiola",
       "avatar": "https://avatars.githubusercontent.com/u/241786967?s=200&v=4",
       "profile": "https://github.com/px-paiola",
-      "contributions": 740,
-      "commits": 740,
+      "contributions": 742,
+      "commits": 742,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 740,
+      "restrictedContributions": 742,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -321,7 +321,7 @@
         },
         {
           "week": "2026-04-12",
-          "contributions": 65
+          "contributions": 67
         }
       ]
     },
@@ -330,13 +330,13 @@
       "name": "pedro-romao-px",
       "avatar": "https://avatars.githubusercontent.com/u/190663628?s=200&v=4",
       "profile": "https://github.com/pedro-romao-px",
-      "contributions": 689,
-      "commits": 689,
+      "contributions": 691,
+      "commits": 691,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 689,
+      "restrictedContributions": 691,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -400,7 +400,7 @@
         },
         {
           "week": "2026-04-12",
-          "contributions": 63
+          "contributions": 65
         }
       ]
     },
