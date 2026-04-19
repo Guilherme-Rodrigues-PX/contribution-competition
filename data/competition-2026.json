@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-04-18T10:03:15.329Z",
-  "generatedAt": "2026-04-18T10:03:15.329Z",
+  "updatedAt": "2026-04-19T10:02:34.208Z",
+  "generatedAt": "2026-04-19T10:02:34.208Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-04-18T10:03:14.837Z"
+    "to": "2026-04-19T10:02:33.592Z"
   },
   "competitors": [
     {
@@ -85,6 +85,10 @@
         {
           "week": "2026-04-12",
           "contributions": 111
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -164,6 +168,10 @@
         {
           "week": "2026-04-12",
           "contributions": 130
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -243,6 +251,10 @@
         {
           "week": "2026-04-12",
           "contributions": 37
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -322,6 +334,10 @@
         {
           "week": "2026-04-12",
           "contributions": 73
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -401,6 +417,10 @@
         {
           "week": "2026-04-12",
           "contributions": 96
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -480,6 +500,10 @@
         {
           "week": "2026-04-12",
           "contributions": 6
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -558,6 +582,10 @@
         },
         {
           "week": "2026-04-12",
+          "contributions": 0
+        },
+        {
+          "week": "2026-04-19",
           "contributions": 0
         }
       ]
@@ -638,6 +666,10 @@
         {
           "week": "2026-04-12",
           "contributions": 1
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -717,6 +749,10 @@
         {
           "week": "2026-04-12",
           "contributions": 0
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
         }
       ]
     },
@@ -795,6 +831,10 @@
         },
         {
           "week": "2026-04-12",
+          "contributions": 0
+        },
+        {
+          "week": "2026-04-19",
           "contributions": 0
         }
       ]
