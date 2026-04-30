@@ -825,7 +825,7 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x040814);
-  scene.fog = new THREE.FogExp2(0x050915, 0.00108);
+  scene.fog = new THREE.FogExp2(0x050915, 0.0006);
 
   const camera = new THREE.PerspectiveCamera(
     48,
@@ -833,7 +833,7 @@ export function createCityScene(container, competition, { onSelect } = {}) {
     0.1,
     4000
   );
-  camera.position.set(540, 390, 560);
+  camera.position.set(880, 640, 920);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -843,7 +843,7 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   controls.zoomSpeed = 1.35;
   controls.maxPolarAngle = Math.PI / 2.05;
   controls.minDistance = 180;
-  controls.maxDistance = 1200;
+  controls.maxDistance = 2200;
   controls.target.set(0, 90, 0);
 
   const composer = new EffectComposer(renderer);
