@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-04-30T11:07:05.426Z",
-  "generatedAt": "2026-04-30T11:07:05.426Z",
+  "updatedAt": "2026-04-30T21:47:56.967Z",
+  "generatedAt": "2026-04-30T21:47:56.967Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-04-30T11:07:04.551Z"
+    "to": "2026-04-30T21:47:56.389Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "PXTarda",
       "avatar": "https://avatars.githubusercontent.com/u/236474935?s=200&u=1c80de24a30a77bf285c355d82e747892b940167&v=4",
       "profile": "https://github.com/PXTarda",
-      "contributions": 1618,
-      "commits": 1617,
+      "contributions": 1630,
+      "commits": 1629,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1617,
+      "restrictedContributions": 1629,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -92,7 +92,7 @@
         },
         {
           "week": "2026-04-26",
-          "contributions": 19
+          "contributions": 31
         }
       ]
     },
@@ -101,13 +101,13 @@
       "name": "Guilherme-Rodrigues-PX",
       "avatar": "https://avatars.githubusercontent.com/u/187324256?s=200&u=2a6e0f1dcbdfdcee811cff5626a9d6247e046c76&v=4",
       "profile": "https://github.com/Guilherme-Rodrigues-PX",
-      "contributions": 1357,
-      "commits": 1355,
+      "contributions": 1394,
+      "commits": 1392,
       "publicCommits": 27,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1328,
+      "restrictedContributions": 1365,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -179,7 +179,7 @@
         },
         {
           "week": "2026-04-26",
-          "contributions": 60
+          "contributions": 97
         }
       ]
     },
@@ -275,13 +275,13 @@
       "name": "px-paiola",
       "avatar": "https://avatars.githubusercontent.com/u/241786967?s=200&v=4",
       "profile": "https://github.com/px-paiola",
-      "contributions": 804,
-      "commits": 804,
+      "contributions": 806,
+      "commits": 806,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 804,
+      "restrictedContributions": 806,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -353,7 +353,7 @@
         },
         {
           "week": "2026-04-26",
-          "contributions": 11
+          "contributions": 13
         }
       ]
     },
@@ -449,13 +449,13 @@
       "name": "Felipe Fukuoka",
       "avatar": "https://avatars.githubusercontent.com/u/190751833?s=200&u=cb977e5f3b0d0e9f0c45829a83e60e764fa952ef&v=4",
       "profile": "https://github.com/ffukuokaPX",
-      "contributions": 408,
-      "commits": 408,
+      "contributions": 429,
+      "commits": 429,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 408,
+      "restrictedContributions": 429,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -527,7 +527,7 @@
         },
         {
           "week": "2026-04-26",
-          "contributions": 8
+          "contributions": 29
         }
       ]
     },
@@ -536,13 +536,13 @@
       "name": "meleratiPX",
       "avatar": "https://avatars.githubusercontent.com/u/213462447?s=200&u=830c2675cbb8290ee0ad3ae2e2b0e178283c9723&v=4",
       "profile": "https://github.com/meleratiPX",
-      "contributions": 230,
-      "commits": 230,
+      "contributions": 232,
+      "commits": 232,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 230,
+      "restrictedContributions": 232,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -614,7 +614,7 @@
         },
         {
           "week": "2026-04-26",
-          "contributions": 2
+          "contributions": 4
         }
       ]
     },
