@@ -334,10 +334,22 @@ function createLeaderPartyShip(radius, accent) {
   return shipGroup;
 }
 
-const NON_LEADER_STYLES = ["classic", "brutalist", "modern", "artdeco", "tiered"];
+const NON_LEADER_STYLES = [
+  "classic",
+  "brutalist",
+  "modern",
+  "artdeco",
+  "tiered",
+  "cylindrical",
+  "exoskeleton",
+  "eco",
+  "spire",
+  "monolith",
+  "offset"
+];
 
-function pickTowerStyle(seed) {
-  return NON_LEADER_STYLES[seed % NON_LEADER_STYLES.length];
+function pickTowerStyle(index) {
+  return NON_LEADER_STYLES[index % NON_LEADER_STYLES.length];
 }
 
 function getStyleConfig(style, color, accent) {
@@ -389,6 +401,78 @@ function getStyleConfig(style, color, accent) {
         emissiveScale: 0.18,
         litMul: 0.8,
         columnsMul: 0.9
+      };
+    case "cylindrical":
+      return {
+        palette: ["#8ff4ff", "#5eb4ff", "#d8fbff"],
+        wallColor: "#10243c",
+        windowOff: "#07101e",
+        crownColor: 0x64d8ff,
+        roughness: 0.28,
+        metalness: 0.52,
+        emissiveScale: 0.28,
+        litMul: 1.2,
+        columnsMul: 1.7
+      };
+    case "exoskeleton":
+      return {
+        palette: ["#ff9a48", "#ffd0a4", "#79c8ff"],
+        wallColor: "#181716",
+        windowOff: "#090807",
+        crownColor: 0xcc5f24,
+        roughness: 0.5,
+        metalness: 0.36,
+        emissiveScale: 0.24,
+        litMul: 0.75,
+        columnsMul: 0.8
+      };
+    case "eco":
+      return {
+        palette: ["#9affb9", "#69db88", "#d9ffd7"],
+        wallColor: "#183323",
+        windowOff: "#07170e",
+        crownColor: 0x4fb86e,
+        roughness: 0.72,
+        metalness: 0.1,
+        emissiveScale: 0.18,
+        litMul: 0.85,
+        columnsMul: 1.05
+      };
+    case "spire":
+      return {
+        palette: ["#b59cff", "#7bd7ff", "#f3e8ff"],
+        wallColor: "#171132",
+        windowOff: "#080615",
+        crownColor: 0x7f6dff,
+        roughness: 0.25,
+        metalness: 0.62,
+        emissiveScale: 0.34,
+        litMul: 1.15,
+        columnsMul: 1.3
+      };
+    case "monolith":
+      return {
+        palette: ["#ff7d73", "#ffbd9b", "#86a8ff"],
+        wallColor: "#262b34",
+        windowOff: "#10131a",
+        crownColor: 0x3a414e,
+        roughness: 0.86,
+        metalness: 0.08,
+        emissiveScale: 0.14,
+        litMul: 0.55,
+        columnsMul: 0.65
+      };
+    case "offset":
+      return {
+        palette: ["#ff8fe5", "#8fdcff", "#ffd7fb"],
+        wallColor: "#201735",
+        windowOff: "#0c0818",
+        crownColor: 0x8c55cc,
+        roughness: 0.38,
+        metalness: 0.34,
+        emissiveScale: 0.3,
+        litMul: 1.0,
+        columnsMul: 1.2
       };
     case "classic":
     default:
@@ -656,6 +740,294 @@ function buildStyledTowerStructure({ style, baseWidth, baseDepth, height, crownH
     };
   }
 
+  if (style === "cylindrical") {
+    const radius = Math.max(baseWidth, baseDepth) * 0.42;
+    const body = new THREE.Mesh(
+      new THREE.CylinderGeometry(radius, radius * 1.08, height, 28),
+      materials[4]
+    );
+    body.position.y = height / 2;
+    bodies.push(body);
+
+    const ringMaterial = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(accent),
+      transparent: true,
+      opacity: 0.55
+    });
+    for (let i = 1; i <= 4; i += 1) {
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(radius * (1.02 + i * 0.015), 1.2, 8, 48),
+        ringMaterial
+      );
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = height * (i / 5);
+      decorations.push(ring);
+    }
+
+    const dome = new THREE.Mesh(
+      new THREE.SphereGeometry(radius * 0.72, 24, 14, 0, Math.PI * 2, 0, Math.PI / 2),
+      new THREE.MeshStandardMaterial({
+        color: config.crownColor,
+        emissive: new THREE.Color(accent).multiplyScalar(0.65),
+        roughness: 0.22,
+        metalness: 0.58
+      })
+    );
+    dome.position.y = height;
+    decorations.push(dome);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + radius * 0.72,
+      topWidth: radius * 2,
+      topDepth: radius * 2
+    };
+  }
+
+  if (style === "exoskeleton") {
+    const coreW = baseWidth * 0.64;
+    const coreD = baseDepth * 0.64;
+    const core = new THREE.Mesh(
+      new THREE.BoxGeometry(coreW, height, coreD),
+      materials
+    );
+    core.position.y = height / 2;
+    bodies.push(core);
+
+    const frameMaterial = new THREE.MeshStandardMaterial({
+      color: 0xd36d30,
+      emissive: new THREE.Color("#ff7838").multiplyScalar(0.45),
+      roughness: 0.34,
+      metalness: 0.66
+    });
+    const legPositions = [
+      [baseWidth * 0.48, baseDepth * 0.48],
+      [-baseWidth * 0.48, baseDepth * 0.48],
+      [baseWidth * 0.48, -baseDepth * 0.48],
+      [-baseWidth * 0.48, -baseDepth * 0.48]
+    ];
+    legPositions.forEach(([x, z]) => {
+      const leg = new THREE.Mesh(new THREE.BoxGeometry(4, height * 0.96, 4), frameMaterial);
+      leg.position.set(x, height * 0.48, z);
+      decorations.push(leg);
+    });
+    for (let i = 1; i <= 4; i += 1) {
+      const deck = new THREE.Mesh(
+        new THREE.BoxGeometry(baseWidth * 1.05, 4, baseDepth * 1.05),
+        frameMaterial
+      );
+      deck.position.y = height * (i / 5);
+      decorations.push(deck);
+    }
+
+    const crown = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.9, crownHeight * 0.55, baseDepth * 0.9),
+      frameMaterial
+    );
+    crown.position.y = height + crownHeight * 0.28;
+    decorations.push(crown);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight * 0.55,
+      topWidth: baseWidth,
+      topDepth: baseDepth
+    };
+  }
+
+  if (style === "eco") {
+    const tiers = [
+      { r: 0.58, h: 0.30 },
+      { r: 0.50, h: 0.25 },
+      { r: 0.42, h: 0.22 },
+      { r: 0.34, h: 0.18 }
+    ];
+    let y = 0;
+    let lastRadius = 0;
+    for (const tier of tiers) {
+      const tierH = height * tier.h;
+      const radius = Math.max(baseWidth, baseDepth) * tier.r;
+      const body = new THREE.Mesh(
+        new THREE.CylinderGeometry(radius * 0.92, radius, tierH, 18),
+        materials[4]
+      );
+      body.position.y = y + tierH / 2;
+      bodies.push(body);
+
+      const garden = new THREE.Mesh(
+        new THREE.TorusGeometry(radius * 0.96, 2.2, 8, 36),
+        new THREE.MeshStandardMaterial({
+          color: 0x66d47d,
+          emissive: new THREE.Color("#48d36f").multiplyScalar(0.35),
+          roughness: 0.82,
+          metalness: 0.02
+        })
+      );
+      garden.rotation.x = Math.PI / 2;
+      garden.position.y = y + tierH;
+      decorations.push(garden);
+      y += tierH;
+      lastRadius = radius;
+    }
+
+    const glassCap = new THREE.Mesh(
+      new THREE.SphereGeometry(lastRadius * 0.7, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2),
+      new THREE.MeshStandardMaterial({
+        color: 0x9fffc0,
+        emissive: new THREE.Color("#69ff98").multiplyScalar(0.42),
+        roughness: 0.36,
+        metalness: 0.18
+      })
+    );
+    glassCap.position.y = height;
+    decorations.push(glassCap);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + lastRadius * 0.7,
+      topWidth: lastRadius * 2,
+      topDepth: lastRadius * 2
+    };
+  }
+
+  if (style === "spire") {
+    const body = new THREE.Mesh(
+      new THREE.ConeGeometry(baseWidth * 0.56, height, 4),
+      materials[4]
+    );
+    body.rotation.y = Math.PI / 4;
+    body.position.y = height / 2;
+    bodies.push(body);
+
+    const edgeMaterial = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(accent),
+      transparent: true,
+      opacity: 0.62
+    });
+    for (let i = 0; i < 4; i += 1) {
+      const fin = new THREE.Mesh(
+        new THREE.BoxGeometry(2.4, height * 0.78, 2.4),
+        edgeMaterial
+      );
+      const angle = Math.PI / 4 + i * Math.PI / 2;
+      fin.position.set(
+        Math.cos(angle) * baseWidth * 0.34,
+        height * 0.45,
+        Math.sin(angle) * baseWidth * 0.34
+      );
+      decorations.push(fin);
+    }
+
+    const needle = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.8, 2.4, crownHeight * 3.6, 12),
+      new THREE.MeshStandardMaterial({
+        color: config.crownColor,
+        emissive: new THREE.Color(accent).multiplyScalar(0.85),
+        roughness: 0.2,
+        metalness: 0.78
+      })
+    );
+    needle.position.y = height + crownHeight * 1.8;
+    decorations.push(needle);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight * 3.6,
+      topWidth: baseWidth * 0.7,
+      topDepth: baseWidth * 0.7
+    };
+  }
+
+  if (style === "monolith") {
+    const slabs = [
+      { w: 0.92, d: 1.0, h: 0.32, x: -0.06, z: 0.03 },
+      { w: 1.0, d: 0.84, h: 0.30, x: 0.08, z: -0.08 },
+      { w: 0.78, d: 0.92, h: 0.24, x: -0.02, z: 0.08 },
+      { w: 0.62, d: 0.72, h: 0.14, x: 0.10, z: 0.00 }
+    ];
+    let y = 0;
+    let lastW = 0;
+    let lastD = 0;
+    slabs.forEach((slabInfo) => {
+      const h = height * slabInfo.h;
+      const w = baseWidth * slabInfo.w;
+      const d = baseDepth * slabInfo.d;
+      const slab = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), materials);
+      slab.position.set(baseWidth * slabInfo.x, y + h / 2, baseDepth * slabInfo.z);
+      bodies.push(slab);
+      y += h;
+      lastW = w;
+      lastD = d;
+    });
+
+    const cutGlow = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.72, 3, baseDepth * 0.08),
+      new THREE.MeshBasicMaterial({
+        color: new THREE.Color(accent),
+        transparent: true,
+        opacity: 0.65
+      })
+    );
+    cutGlow.position.set(0, height * 0.56, baseDepth * 0.49);
+    decorations.push(cutGlow);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height,
+      topWidth: lastW,
+      topDepth: lastD
+    };
+  }
+
+  if (style === "offset") {
+    const lower = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.72, height * 0.62, baseDepth * 0.72),
+      materials
+    );
+    lower.position.set(-baseWidth * 0.12, height * 0.31, 0);
+    bodies.push(lower);
+
+    const upper = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.58, height * 0.52, baseDepth * 0.58),
+      materials
+    );
+    upper.position.set(baseWidth * 0.16, height * 0.74, 0);
+    upper.rotation.y = Math.PI / 10;
+    bodies.push(upper);
+
+    const sail = new THREE.Mesh(
+      new THREE.ConeGeometry(baseWidth * 0.28, crownHeight * 3.2, 3),
+      new THREE.MeshStandardMaterial({
+        color: config.crownColor,
+        emissive: new THREE.Color(accent).multiplyScalar(0.72),
+        roughness: 0.24,
+        metalness: 0.64
+      })
+    );
+    sail.position.set(baseWidth * 0.32, height + crownHeight * 1.6, 0);
+    sail.rotation.y = Math.PI / 6;
+    decorations.push(sail);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight * 3.2,
+      topWidth: baseWidth * 0.7,
+      topDepth: baseDepth * 0.7
+    };
+  }
+
   // classic
   const main = new THREE.Mesh(
     new THREE.BoxGeometry(baseWidth, height, baseDepth),
@@ -837,7 +1209,8 @@ function createMainTower(competitor, options) {
     isLeader,
     commitRatio,
     color,
-    accent
+    accent,
+    towerStyle
   } = options;
 
   const seed = hashString(competitor.username);
@@ -852,7 +1225,7 @@ function createMainTower(competitor, options) {
   const columns = Math.max(4, Math.round(baseWidth / 7));
   const litRatio = Math.min(0.98, 0.2 + commitRatio * 0.73);
 
-  const style = isLeader ? "leader" : pickTowerStyle(seed);
+  const style = isLeader ? "leader" : towerStyle;
   const bodies = [];
   let topY;
   let topWidth;
@@ -1327,16 +1700,29 @@ function buildCity(scene, competition) {
 
   const districts = [...baseDistricts];
   const ringSpacing = 210;
+  const minDistrictSpacing = 180;
   while (districts.length < competitors.length) {
     const extraIndex = districts.length - baseDistricts.length;
-    const angle = extraIndex * 2.399963229728653;
-    const ring = Math.floor(extraIndex / 8) + 2;
-    const radius = ring * ringSpacing;
-    districts.push(new THREE.Vector3(
-      Math.cos(angle) * radius,
-      2,
-      Math.sin(angle) * radius
-    ));
+    let attempt = 0;
+    let candidate;
+
+    do {
+      const candidateIndex = extraIndex + attempt;
+      const angle = candidateIndex * 2.399963229728653;
+      const ring = Math.floor(candidateIndex / 8) + 3;
+      const radius = ring * ringSpacing;
+      candidate = new THREE.Vector3(
+        Math.cos(angle) * radius,
+        2,
+        Math.sin(angle) * radius
+      );
+      attempt += 1;
+    } while (
+      attempt < 64 &&
+      districts.some((district) => district.distanceTo(candidate) < minDistrictSpacing)
+    );
+
+    districts.push(candidate);
   }
 
   const majorTowers = [];
@@ -1350,6 +1736,7 @@ function buildCity(scene, competition) {
     const isLeader = index === 0;
     const colors = palette[index % palette.length];
     const commitRatio = (competitor.commits || 0) / maxCommits;
+    const towerStyle = isLeader ? "leader" : pickTowerStyle(index - 1);
 
     createPlaza(scene, district, isLeader ? 62 : 46, isLeader ? "#ffc85a" : colors.accent);
 
@@ -1358,7 +1745,8 @@ function buildCity(scene, competition) {
       isLeader,
       commitRatio,
       color: colors.color,
-      accent: isLeader ? "#ffc85a" : colors.accent
+      accent: isLeader ? "#ffc85a" : colors.accent,
+      towerStyle
     });
 
     scene.add(tower);
