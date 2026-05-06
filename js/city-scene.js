@@ -1058,6 +1058,200 @@ function buildStyledTowerStructure({ style, baseWidth, baseDepth, height, crownH
   };
 }
 
+function createSignatureFeature({ style, baseWidth, baseDepth, height, crownHeight, topWidth, topDepth, apexY, accent, commitRatio }) {
+  const group = new THREE.Group();
+  const prestige = 0.8 + commitRatio * 1.8;
+  const accentColor = new THREE.Color(accent);
+  const lightMaterial = new THREE.MeshBasicMaterial({
+    color: accentColor,
+    transparent: true,
+    opacity: Math.min(0.82, 0.36 + commitRatio * 0.42)
+  });
+  const metalMaterial = new THREE.MeshStandardMaterial({
+    color: accentColor.clone().offsetHSL(0, -0.08, -0.08),
+    emissive: accentColor.clone().multiplyScalar(0.45 + commitRatio * 0.45),
+    roughness: 0.26,
+    metalness: 0.72
+  });
+
+  function add(mesh) {
+    mesh.castShadow = true;
+    group.add(mesh);
+    return mesh;
+  }
+
+  if (style === "classic") {
+    const spireHeight = crownHeight * (3.2 + prestige);
+    const positions = [
+      [topWidth * 0.52, topDepth * 0.52],
+      [-topWidth * 0.52, topDepth * 0.52],
+      [topWidth * 0.52, -topDepth * 0.52],
+      [-topWidth * 0.52, -topDepth * 0.52]
+    ];
+    positions.forEach(([x, z]) => {
+      const tower = add(new THREE.Mesh(
+        new THREE.CylinderGeometry(2.6, 4.8, spireHeight * 0.72, 10),
+        metalMaterial
+      ));
+      tower.position.set(x, height + spireHeight * 0.36, z);
+
+      const needle = add(new THREE.Mesh(
+        new THREE.ConeGeometry(5.6, spireHeight * 0.48, 10),
+        metalMaterial
+      ));
+      needle.position.set(x, height + spireHeight * 0.96, z);
+    });
+  }
+
+  if (style === "brutalist") {
+    for (let i = 0; i < 3; i += 1) {
+      const bridge = add(new THREE.Mesh(
+        new THREE.BoxGeometry(baseWidth * (1.1 + i * 0.12), 5, baseDepth * 0.12),
+        lightMaterial
+      ));
+      bridge.position.set(0, height * (0.34 + i * 0.18), baseDepth * (0.46 + i * 0.06));
+    }
+
+    const crownBlock = add(new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 1.08, crownHeight * prestige, baseDepth * 0.58),
+      metalMaterial
+    ));
+    crownBlock.position.set(baseWidth * 0.16, height + crownHeight * prestige * 0.5, 0);
+  }
+
+  if (style === "modern") {
+    const sail = add(new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.12, height * (0.78 + commitRatio * 0.25), baseDepth * 1.55),
+      lightMaterial
+    ));
+    sail.position.set(-baseWidth * 0.42, height * 0.52, 0);
+    sail.rotation.y = -Math.PI / 6;
+
+    const crownRing = add(new THREE.Mesh(
+      new THREE.TorusGeometry(topWidth * (0.58 + commitRatio * 0.16), 1.8 + commitRatio * 2.2, 10, 54),
+      lightMaterial
+    ));
+    crownRing.rotation.x = Math.PI / 2;
+    crownRing.position.y = apexY + 12;
+  }
+
+  if (style === "artdeco") {
+    const finCount = 8;
+    for (let i = 0; i < finCount; i += 1) {
+      const angle = (i / finCount) * Math.PI * 2;
+      const fin = add(new THREE.Mesh(
+        new THREE.BoxGeometry(2.8, height * (0.34 + commitRatio * 0.22), 5.4),
+        metalMaterial
+      ));
+      fin.position.set(Math.cos(angle) * topWidth * 0.54, height * 0.82, Math.sin(angle) * topDepth * 0.54);
+      fin.rotation.y = -angle;
+    }
+
+    const sunburst = add(new THREE.Mesh(
+      new THREE.TorusGeometry(topWidth * 0.42, 2.4, 10, 48),
+      lightMaterial
+    ));
+    sunburst.rotation.x = Math.PI / 2;
+    sunburst.position.y = apexY - crownHeight * 0.45;
+  }
+
+  if (style === "tiered") {
+    for (let i = 0; i < 3; i += 1) {
+      const roof = add(new THREE.Mesh(
+        new THREE.CylinderGeometry(topWidth * (0.78 - i * 0.13), topWidth * (0.92 - i * 0.13), 5.5, 4),
+        metalMaterial
+      ));
+      roof.rotation.y = Math.PI / 4;
+      roof.position.y = height * (0.58 + i * 0.14);
+    }
+  }
+
+  if (style === "cylindrical") {
+    for (let i = 0; i < 3; i += 1) {
+      const orbit = add(new THREE.Mesh(
+        new THREE.TorusGeometry(topWidth * (0.56 + i * 0.12 + commitRatio * 0.1), 1.4, 8, 64),
+        lightMaterial
+      ));
+      orbit.rotation.x = Math.PI / 2.25;
+      orbit.rotation.z = i * Math.PI / 5;
+      orbit.position.y = height * (0.44 + i * 0.16);
+    }
+  }
+
+  if (style === "exoskeleton") {
+    const braceHeight = height * 0.42;
+    for (let i = 0; i < 4; i += 1) {
+      const brace = add(new THREE.Mesh(
+        new THREE.BoxGeometry(4.5, braceHeight, 4.5),
+        metalMaterial
+      ));
+      brace.position.set((i % 2 === 0 ? 1 : -1) * baseWidth * 0.46, height * (0.28 + i * 0.13), (i < 2 ? 1 : -1) * baseDepth * 0.46);
+      brace.rotation.z = (i % 2 === 0 ? 1 : -1) * Math.PI / 9;
+    }
+  }
+
+  if (style === "eco") {
+    const canopyMaterial = new THREE.MeshStandardMaterial({
+      color: 0x6dff8d,
+      emissive: new THREE.Color("#56dd74").multiplyScalar(0.38 + commitRatio * 0.35),
+      roughness: 0.78,
+      metalness: 0.04
+    });
+    for (let i = 0; i < 5; i += 1) {
+      const pod = add(new THREE.Mesh(
+        new THREE.SphereGeometry(baseWidth * (0.08 + commitRatio * 0.02), 12, 8),
+        canopyMaterial
+      ));
+      const angle = i * 1.256;
+      pod.position.set(Math.cos(angle) * baseWidth * 0.48, height * (0.3 + i * 0.12), Math.sin(angle) * baseDepth * 0.48);
+    }
+  }
+
+  if (style === "spire") {
+    const halo = add(new THREE.Mesh(
+      new THREE.TorusGeometry(topWidth * (0.74 + commitRatio * 0.2), 2.2, 10, 64),
+      lightMaterial
+    ));
+    halo.rotation.x = Math.PI / 2;
+    halo.position.y = apexY - crownHeight * 1.2;
+
+    const beacon = add(new THREE.Mesh(
+      new THREE.OctahedronGeometry(7 + commitRatio * 8, 0),
+      new THREE.MeshBasicMaterial({ color: accentColor })
+    ));
+    beacon.position.y = apexY + 8;
+  }
+
+  if (style === "monolith") {
+    for (let i = 0; i < 4; i += 1) {
+      const fissure = add(new THREE.Mesh(
+        new THREE.BoxGeometry(baseWidth * (0.52 + i * 0.06), 3.2, 2.4),
+        lightMaterial
+      ));
+      fissure.position.set((i % 2 === 0 ? -1 : 1) * baseWidth * 0.08, height * (0.26 + i * 0.17), baseDepth * 0.51);
+      fissure.rotation.z = (i % 2 === 0 ? -1 : 1) * Math.PI / 36;
+    }
+  }
+
+  if (style === "offset") {
+    const shard = add(new THREE.Mesh(
+      new THREE.ConeGeometry(baseWidth * 0.22, crownHeight * (4.2 + prestige), 3),
+      lightMaterial
+    ));
+    shard.position.set(-baseWidth * 0.36, apexY - crownHeight * 0.4, baseDepth * 0.22);
+    shard.rotation.z = -Math.PI / 10;
+
+    const skyDeck = add(new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 1.05, 4, baseDepth * 0.2),
+      metalMaterial
+    ));
+    skyDeck.position.set(0, height * 0.64, 0);
+    skyDeck.rotation.y = Math.PI / 7;
+  }
+
+  return group.children.length ? group : null;
+}
+
 function createAirplane(seed) {
   const accents = ["#ff7b7b", "#9afcff", "#ffd57a", "#aef0a0", "#ff9eff", "#ffae5a"];
   const accent = accents[seed % accents.length];
@@ -1267,10 +1461,50 @@ function createMainTower(competitor, options) {
     crown.castShadow = true;
     group.add(crown);
 
+    const royalMaterial = new THREE.MeshStandardMaterial({
+      color: 0xffd56d,
+      emissive: new THREE.Color("#ffd56d"),
+      emissiveIntensity: 1.1,
+      roughness: 0.18,
+      metalness: 0.86
+    });
+    for (let i = 0; i < 8; i += 1) {
+      const angle = (i / 8) * Math.PI * 2;
+      const rib = new THREE.Mesh(
+        new THREE.BoxGeometry(4.5, height * 0.76, 5.5),
+        royalMaterial
+      );
+      rib.position.set(
+        Math.cos(angle) * baseWidth * 0.54,
+        height * 0.5,
+        Math.sin(angle) * baseDepth * 0.54
+      );
+      rib.rotation.y = -angle;
+      rib.castShadow = true;
+      group.add(rib);
+    }
+
+    const royalCrown = new THREE.Group();
+    for (let i = 0; i < 6; i += 1) {
+      const angle = (i / 6) * Math.PI * 2;
+      const spike = new THREE.Mesh(
+        new THREE.ConeGeometry(5.5, crownHeight * 2.8, 12),
+        royalMaterial
+      );
+      spike.position.set(
+        Math.cos(angle) * baseWidth * 0.34,
+        height + crownHeight * 1.65,
+        Math.sin(angle) * baseDepth * 0.34
+      );
+      spike.castShadow = true;
+      royalCrown.add(spike);
+    }
+    group.add(royalCrown);
+
     topY = height;
     topWidth = baseWidth;
     topDepth = baseDepth;
-    apexY = height + crownHeight;
+    apexY = height + crownHeight * 3.05;
   } else {
     const config = getStyleConfig(style, color, accent);
     const materials = createStyledMaterials(seed, floors, columns, litRatio, accent, config);
@@ -1303,10 +1537,26 @@ function createMainTower(competitor, options) {
     topWidth = struct.topWidth;
     topDepth = struct.topDepth;
     apexY = struct.apexY;
+
+    const signature = createSignatureFeature({
+      style,
+      baseWidth,
+      baseDepth,
+      height,
+      crownHeight,
+      topWidth,
+      topDepth,
+      apexY,
+      accent,
+      commitRatio
+    });
+    if (signature) {
+      group.add(signature);
+    }
   }
 
   const labelBaseY = isLeader
-    ? height + crownHeight + 156
+    ? apexY + 80
     : Math.max(apexY + 32, height + crownHeight + 92);
 
   const roofGlow = new THREE.Mesh(
@@ -1476,7 +1726,7 @@ function createMainTower(competitor, options) {
     crownTier,
     cornerLights,
     partyShip,
-    towerTop: topY + crownHeight,
+    towerTop: Math.max(topY + crownHeight, apexY),
     apexY,
     focusHeight: height * 0.55
   };
