@@ -334,6 +334,503 @@ function createLeaderPartyShip(radius, accent) {
   return shipGroup;
 }
 
+const NON_LEADER_STYLES = ["classic", "brutalist", "modern", "artdeco", "tiered"];
+
+function pickTowerStyle(seed) {
+  return NON_LEADER_STYLES[seed % NON_LEADER_STYLES.length];
+}
+
+function getStyleConfig(style, color, accent) {
+  switch (style) {
+    case "brutalist":
+      return {
+        palette: ["#a89c8a", "#9a8e7a", "#bba896"],
+        wallColor: "#5a5145",
+        windowOff: "#1d1812",
+        crownColor: 0x3a3024,
+        roughness: 0.92,
+        metalness: 0.04,
+        emissiveScale: 0.05,
+        litMul: 0.4,
+        columnsMul: 0.55
+      };
+    case "modern":
+      return {
+        palette: ["#9adfff", "#7ec0ee", "#cdf2ff", "#dde6ff"],
+        wallColor: "#1a2740",
+        windowOff: "#0a1224",
+        crownColor: 0x2a4366,
+        roughness: 0.32,
+        metalness: 0.46,
+        emissiveScale: 0.22,
+        litMul: 1.1,
+        columnsMul: 1.45
+      };
+    case "artdeco":
+      return {
+        palette: ["#ffe4a3", "#f0c878", "#fff0c8"],
+        wallColor: "#2a2010",
+        windowOff: "#1a1408",
+        crownColor: 0xc89a4e,
+        roughness: 0.42,
+        metalness: 0.34,
+        emissiveScale: 0.20,
+        litMul: 0.9,
+        columnsMul: 1.0
+      };
+    case "tiered":
+      return {
+        palette: ["#ff9a6e", "#ffb88c", "#ffd9c4"],
+        wallColor: "#3a2418",
+        windowOff: "#241410",
+        crownColor: 0xa84e2e,
+        roughness: 0.5,
+        metalness: 0.18,
+        emissiveScale: 0.18,
+        litMul: 0.8,
+        columnsMul: 0.9
+      };
+    case "classic":
+    default:
+      return {
+        palette: [color, accent, "#dbeaff", "#a8d8ff"],
+        wallColor: "#111b35",
+        windowOff: "#0b1226",
+        crownColor: 0x2f4a83,
+        roughness: 0.58,
+        metalness: 0.16,
+        emissiveScale: 0.16,
+        litMul: 1.0,
+        columnsMul: 1.0
+      };
+  }
+}
+
+function createStyledMaterials(seed, floors, columns, litRatio, accent, config) {
+  const adjLit = Math.min(0.98, litRatio * config.litMul);
+  const adjColumns = Math.max(2, Math.round(columns * config.columnsMul));
+
+  const wallTexture = createPixelWindowTexture({
+    seed,
+    rows: floors,
+    columns: adjColumns,
+    litRatio: adjLit,
+    palette: config.palette,
+    wallColor: config.wallColor,
+    windowOff: config.windowOff
+  });
+
+  const sideTexture = createPixelWindowTexture({
+    seed: seed + 91,
+    rows: floors,
+    columns: Math.max(2, Math.round(adjColumns * 0.7)),
+    litRatio: Math.max(0.05, adjLit * 0.85),
+    palette: config.palette,
+    wallColor: config.wallColor,
+    windowOff: config.windowOff
+  });
+
+  const front = new THREE.MeshStandardMaterial({
+    map: wallTexture,
+    emissive: new THREE.Color(accent).multiplyScalar(config.emissiveScale),
+    emissiveMap: wallTexture,
+    roughness: config.roughness,
+    metalness: config.metalness
+  });
+
+  const side = new THREE.MeshStandardMaterial({
+    map: sideTexture,
+    emissive: new THREE.Color(accent).multiplyScalar(config.emissiveScale * 0.62),
+    emissiveMap: sideTexture,
+    roughness: Math.min(1, config.roughness + 0.02),
+    metalness: config.metalness * 0.7
+  });
+
+  const roof = new THREE.MeshStandardMaterial({
+    color: config.crownColor,
+    emissive: new THREE.Color(accent).multiplyScalar(config.emissiveScale * 1.4),
+    roughness: 0.45,
+    metalness: 0.2
+  });
+
+  return [side, side, roof, roof, front, front];
+}
+
+function buildStyledTowerStructure({ style, baseWidth, baseDepth, height, crownHeight, materials, config, accent, seed }) {
+  const random = createRandom(seed + 7);
+  const bodies = [];
+  const decorations = [];
+
+  if (style === "brutalist") {
+    const slabs = 3;
+    const slabH = height / slabs;
+    for (let i = 0; i < slabs; i += 1) {
+      const w = baseWidth * (1 - i * 0.04);
+      const d = baseDepth * (1 - i * 0.04);
+      const offX = (random() - 0.5) * baseWidth * 0.18;
+      const offZ = (random() - 0.5) * baseDepth * 0.18;
+      const slab = new THREE.Mesh(
+        new THREE.BoxGeometry(w, slabH * 0.94, d),
+        materials
+      );
+      slab.position.set(offX, slabH * (i + 0.5), offZ);
+      bodies.push(slab);
+    }
+
+    const cap = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.8, crownHeight * 0.6, baseDepth * 0.8),
+      new THREE.MeshStandardMaterial({
+        color: 0x2e2618,
+        roughness: 0.92,
+        metalness: 0.04
+      })
+    );
+    cap.position.y = height + crownHeight * 0.3;
+    decorations.push(cap);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight * 0.6,
+      topWidth: baseWidth * 0.92,
+      topDepth: baseDepth * 0.92
+    };
+  }
+
+  if (style === "modern") {
+    const slimW = baseWidth * 0.78;
+    const slimD = baseDepth * 0.78;
+    const main = new THREE.Mesh(
+      new THREE.BoxGeometry(slimW, height, slimD),
+      materials
+    );
+    main.position.y = height / 2;
+    bodies.push(main);
+
+    const taper = new THREE.Mesh(
+      new THREE.BoxGeometry(slimW * 0.85, crownHeight * 0.6, slimD * 0.85),
+      new THREE.MeshStandardMaterial({
+        color: 0x1c2a44,
+        emissive: new THREE.Color(accent).multiplyScalar(0.5),
+        roughness: 0.32,
+        metalness: 0.5
+      })
+    );
+    taper.position.y = height + crownHeight * 0.3;
+    decorations.push(taper);
+
+    const antennaH = crownHeight * 4.5;
+    const antenna = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.5, 1.4, antennaH, 12),
+      new THREE.MeshStandardMaterial({
+        color: 0xc8d6e6,
+        emissive: new THREE.Color(accent).multiplyScalar(0.7),
+        roughness: 0.3,
+        metalness: 0.85
+      })
+    );
+    antenna.position.y = height + crownHeight * 0.6 + antennaH / 2;
+    decorations.push(antenna);
+
+    const beacon = new THREE.Mesh(
+      new THREE.SphereGeometry(1.6, 14, 14),
+      new THREE.MeshBasicMaterial({ color: 0xff4040 })
+    );
+    beacon.position.y = height + crownHeight * 0.6 + antennaH + 1.5;
+    decorations.push(beacon);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight * 0.6 + antennaH + 4,
+      topWidth: slimW,
+      topDepth: slimD
+    };
+  }
+
+  if (style === "artdeco") {
+    const tiers = [
+      { w: 1.0, d: 1.0, h: 0.55 },
+      { w: 0.78, d: 0.78, h: 0.28 },
+      { w: 0.55, d: 0.55, h: 0.17 }
+    ];
+    let y = 0;
+    let lastW = 0;
+    let lastD = 0;
+    for (const t of tiers) {
+      const w = baseWidth * t.w;
+      const d = baseDepth * t.d;
+      const h = height * t.h;
+      const tier = new THREE.Mesh(
+        new THREE.BoxGeometry(w, h, d),
+        materials
+      );
+      tier.position.y = y + h / 2;
+      bodies.push(tier);
+      y += h;
+      lastW = w;
+      lastD = d;
+    }
+
+    const drum = new THREE.Mesh(
+      new THREE.CylinderGeometry(lastW * 0.32, lastW * 0.42, crownHeight * 0.85, 18),
+      new THREE.MeshStandardMaterial({
+        color: 0xd4a85a,
+        emissive: new THREE.Color("#ffcd6a").multiplyScalar(0.5),
+        roughness: 0.32,
+        metalness: 0.74
+      })
+    );
+    drum.position.y = height + crownHeight * 0.42;
+    decorations.push(drum);
+
+    const spireH = crownHeight * 3.4;
+    const spire = new THREE.Mesh(
+      new THREE.ConeGeometry(lastW * 0.18, spireH, 14),
+      new THREE.MeshStandardMaterial({
+        color: 0xffd97a,
+        emissive: new THREE.Color("#ffd366").multiplyScalar(0.7),
+        roughness: 0.25,
+        metalness: 0.82
+      })
+    );
+    spire.position.y = height + crownHeight * 0.85 + spireH / 2;
+    decorations.push(spire);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight * 0.85 + spireH,
+      topWidth: lastW,
+      topDepth: lastD
+    };
+  }
+
+  if (style === "tiered") {
+    const tiers = [
+      { w: 1.0, d: 1.0, h: 0.36 },
+      { w: 0.82, d: 0.82, h: 0.26 },
+      { w: 0.64, d: 0.64, h: 0.20 },
+      { w: 0.46, d: 0.46, h: 0.18 }
+    ];
+    let y = 0;
+    let lastW = 0;
+    let lastD = 0;
+    for (const t of tiers) {
+      const w = baseWidth * t.w;
+      const d = baseDepth * t.d;
+      const h = height * t.h;
+      const tier = new THREE.Mesh(
+        new THREE.BoxGeometry(w, h, d),
+        materials
+      );
+      tier.position.y = y + h / 2;
+      bodies.push(tier);
+      y += h;
+      lastW = w;
+      lastD = d;
+    }
+
+    const dome = new THREE.Mesh(
+      new THREE.SphereGeometry(lastW * 0.42, 20, 14, 0, Math.PI * 2, 0, Math.PI / 2),
+      new THREE.MeshStandardMaterial({
+        color: 0xb55a3a,
+        emissive: new THREE.Color("#ff8c5a").multiplyScalar(0.45),
+        roughness: 0.4,
+        metalness: 0.32
+      })
+    );
+    dome.position.y = height;
+    decorations.push(dome);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + lastW * 0.42,
+      topWidth: lastW,
+      topDepth: lastD
+    };
+  }
+
+  // classic
+  const main = new THREE.Mesh(
+    new THREE.BoxGeometry(baseWidth, height, baseDepth),
+    materials
+  );
+  main.position.y = height / 2;
+  bodies.push(main);
+
+  const crown = new THREE.Mesh(
+    new THREE.BoxGeometry(baseWidth * 0.74, crownHeight, baseDepth * 0.72),
+    new THREE.MeshStandardMaterial({
+      color: config.crownColor,
+      emissive: new THREE.Color(accent).multiplyScalar(0.35),
+      roughness: 0.42,
+      metalness: 0.38
+    })
+  );
+  crown.position.y = height + crownHeight / 2;
+  decorations.push(crown);
+
+  return {
+    bodies,
+    decorations,
+    topY: height,
+    apexY: height + crownHeight,
+    topWidth: baseWidth,
+    topDepth: baseDepth
+  };
+}
+
+function createAirplane(seed) {
+  const accents = ["#ff7b7b", "#9afcff", "#ffd57a", "#aef0a0", "#ff9eff", "#ffae5a"];
+  const accent = accents[seed % accents.length];
+
+  const group = new THREE.Group();
+
+  const fuselageMaterial = new THREE.MeshStandardMaterial({
+    color: 0xeef2f8,
+    emissive: 0x1a2032,
+    roughness: 0.42,
+    metalness: 0.55
+  });
+  const trimMaterial = new THREE.MeshStandardMaterial({
+    color: 0x4a5468,
+    roughness: 0.5,
+    metalness: 0.4
+  });
+
+  const fuselage = new THREE.Mesh(
+    new THREE.CylinderGeometry(2.2, 2.2, 28, 14),
+    fuselageMaterial
+  );
+  fuselage.rotation.x = Math.PI / 2;
+  group.add(fuselage);
+
+  const nose = new THREE.Mesh(
+    new THREE.ConeGeometry(2.2, 4, 14),
+    fuselageMaterial
+  );
+  nose.position.set(0, 0, -16);
+  nose.rotation.x = -Math.PI / 2;
+  group.add(nose);
+
+  const wings = new THREE.Mesh(
+    new THREE.BoxGeometry(28, 0.8, 6),
+    trimMaterial
+  );
+  wings.position.set(0, -0.5, 0);
+  group.add(wings);
+
+  const hStab = new THREE.Mesh(
+    new THREE.BoxGeometry(10, 0.6, 3),
+    trimMaterial
+  );
+  hStab.position.set(0, 0.4, 12);
+  group.add(hStab);
+
+  const vStab = new THREE.Mesh(
+    new THREE.BoxGeometry(0.6, 5, 4),
+    trimMaterial
+  );
+  vStab.position.set(0, 2.5, 12.5);
+  group.add(vStab);
+
+  const lightR = new THREE.Mesh(
+    new THREE.SphereGeometry(0.7, 8, 8),
+    new THREE.MeshBasicMaterial({ color: 0xff2a2a })
+  );
+  lightR.position.set(14.2, -0.3, 0);
+  group.add(lightR);
+
+  const lightG = new THREE.Mesh(
+    new THREE.SphereGeometry(0.7, 8, 8),
+    new THREE.MeshBasicMaterial({ color: 0x2aff5a })
+  );
+  lightG.position.set(-14.2, -0.3, 0);
+  group.add(lightG);
+
+  const beacon = new THREE.Mesh(
+    new THREE.SphereGeometry(0.8, 10, 10),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  );
+  beacon.position.set(0, 3.0, 8);
+  group.add(beacon);
+
+  const strobeMat = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(accent),
+    transparent: true,
+    opacity: 0.85
+  });
+  const strobe = new THREE.Mesh(
+    new THREE.SphereGeometry(0.6, 10, 10),
+    strobeMat
+  );
+  strobe.position.set(0, -2.6, -2);
+  group.add(strobe);
+
+  group.userData = { beacon, strobe, accent };
+  return group;
+}
+
+function createAirTraffic(scene, count) {
+  const planes = [];
+  for (let i = 0; i < count; i += 1) {
+    const plane = createAirplane(i + 1);
+
+    const altitude = 460 + ((i * 73) % 280);
+    const pathRadius = 880 + ((i * 137) % 420);
+    const angularSpeedBase = 0.045 + (((i * 13) % 7) / 7) * 0.05;
+    const angularSpeed = angularSpeedBase * (i % 2 === 0 ? 1 : -1);
+    const angleOffset = (i * 0.62) % (Math.PI * 2);
+    const tilt = (((i * 31) % 17) / 17 - 0.5) * 0.22;
+    const bobAmp = 5 + (i % 4) * 1.4;
+
+    plane.userData.path = { altitude, pathRadius, angularSpeed, angleOffset, tilt, bobAmp };
+    scene.add(plane);
+    planes.push(plane);
+  }
+
+  const aheadVec = new THREE.Vector3();
+
+  return {
+    planes,
+    update(elapsed) {
+      planes.forEach((plane) => {
+        const { altitude, pathRadius, angularSpeed, angleOffset, tilt, bobAmp } = plane.userData.path;
+        const angle = angleOffset + elapsed * angularSpeed;
+        const x = Math.cos(angle) * pathRadius;
+        const z = Math.sin(angle) * pathRadius;
+        const y = altitude + Math.sin(elapsed * 0.5 + angleOffset) * bobAmp;
+        plane.position.set(x, y, z);
+
+        const aheadAngle = angle + Math.sign(angularSpeed) * 0.05;
+        aheadVec.set(
+          Math.cos(aheadAngle) * pathRadius,
+          y,
+          Math.sin(aheadAngle) * pathRadius
+        );
+        plane.lookAt(aheadVec);
+        plane.rotation.z += tilt * Math.sin(elapsed * 0.3 + angleOffset);
+
+        if (plane.userData.beacon) {
+          const t = (elapsed * 1.4 + angleOffset) % 1.6;
+          const lit = t < 0.12 ? 1.0 : 0.18;
+          plane.userData.beacon.material.color.setRGB(lit, lit, lit);
+        }
+        if (plane.userData.strobe) {
+          const pulse = (Math.sin(elapsed * 4.5 + angleOffset * 3) + 1) * 0.5;
+          plane.userData.strobe.material.opacity = 0.35 + pulse * 0.6;
+        }
+      });
+    }
+  };
+}
+
 function createMainTower(competitor, options) {
   const {
     position,
@@ -354,43 +851,93 @@ function createMainTower(competitor, options) {
   const floors = Math.max(10, Math.round(height / 10));
   const columns = Math.max(4, Math.round(baseWidth / 7));
   const litRatio = Math.min(0.98, 0.2 + commitRatio * 0.73);
-  const labelBaseY = height + crownHeight + (isLeader ? 156 : 92);
 
-  const materials = createBuildingMaterials(
-    seed,
-    isLeader ? ["#fff1b7", "#ffd56d", "#ffc14e", "#c7ebff"] : [color, accent, "#dbeaff", "#a8d8ff"],
-    floors,
-    columns,
-    litRatio,
-    accent,
-    isLeader
-  );
+  const style = isLeader ? "leader" : pickTowerStyle(seed);
+  const bodies = [];
+  let topY;
+  let topWidth;
+  let topDepth;
+  let apexY;
 
-  const body = new THREE.Mesh(
-    new THREE.BoxGeometry(baseWidth, height, baseDepth),
-    materials
-  );
-  body.castShadow = true;
-  body.receiveShadow = true;
-  body.position.y = height / 2;
-  body.userData.competitor = competitor;
-  group.add(body);
+  if (isLeader) {
+    const materials = createBuildingMaterials(
+      seed,
+      ["#fff1b7", "#ffd56d", "#ffc14e", "#c7ebff"],
+      floors,
+      columns,
+      litRatio,
+      accent,
+      true
+    );
 
-  const crown = new THREE.Mesh(
-    new THREE.BoxGeometry(baseWidth * 0.74, crownHeight, baseDepth * 0.72),
-    new THREE.MeshStandardMaterial({
-      color: isLeader ? 0xf7c557 : 0x2f4a83,
-      emissive: new THREE.Color(accent).multiplyScalar(isLeader ? 1.2 : 0.35),
-      roughness: 0.42,
-      metalness: 0.38
-    })
-  );
-  crown.position.y = height + crownHeight / 2;
-  crown.castShadow = true;
-  group.add(crown);
+    const body = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth, height, baseDepth),
+      materials
+    );
+    body.castShadow = true;
+    body.receiveShadow = true;
+    body.position.y = height / 2;
+    body.userData.competitor = competitor;
+    group.add(body);
+    bodies.push(body);
+
+    const crown = new THREE.Mesh(
+      new THREE.BoxGeometry(baseWidth * 0.74, crownHeight, baseDepth * 0.72),
+      new THREE.MeshStandardMaterial({
+        color: 0xf7c557,
+        emissive: new THREE.Color(accent).multiplyScalar(1.2),
+        roughness: 0.42,
+        metalness: 0.38
+      })
+    );
+    crown.position.y = height + crownHeight / 2;
+    crown.castShadow = true;
+    group.add(crown);
+
+    topY = height;
+    topWidth = baseWidth;
+    topDepth = baseDepth;
+    apexY = height + crownHeight;
+  } else {
+    const config = getStyleConfig(style, color, accent);
+    const materials = createStyledMaterials(seed, floors, columns, litRatio, accent, config);
+    const struct = buildStyledTowerStructure({
+      style,
+      baseWidth,
+      baseDepth,
+      height,
+      crownHeight,
+      materials,
+      config,
+      accent,
+      seed
+    });
+
+    struct.bodies.forEach((mesh) => {
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.userData.competitor = competitor;
+      group.add(mesh);
+      bodies.push(mesh);
+    });
+
+    struct.decorations.forEach((mesh) => {
+      mesh.castShadow = true;
+      group.add(mesh);
+    });
+
+    topY = struct.topY;
+    topWidth = struct.topWidth;
+    topDepth = struct.topDepth;
+    apexY = struct.apexY;
+  }
+
+  const labelBaseY = isLeader
+    ? height + crownHeight + 156
+    : Math.max(apexY + 32, height + crownHeight + 92);
 
   const roofGlow = new THREE.Mesh(
-    new THREE.TorusGeometry(baseWidth * 0.34, isLeader ? 2.6 : 1.4, 12, 42),
+    new THREE.TorusGeometry(topWidth * 0.34, isLeader ? 2.6 : 1.4, 12, 42),
     new THREE.MeshBasicMaterial({
       color: accent,
       transparent: true,
@@ -398,7 +945,7 @@ function createMainTower(competitor, options) {
     })
   );
   roofGlow.rotation.x = Math.PI / 2;
-  roofGlow.position.y = height + crownHeight + (isLeader ? 24 : 14);
+  roofGlow.position.y = topY + (isLeader ? crownHeight + 24 : crownHeight + 14);
   group.add(roofGlow);
 
   let haloRing = null;
@@ -544,7 +1091,9 @@ function createMainTower(competitor, options) {
 
   group.userData = {
     competitor,
-    body,
+    body: bodies[0],
+    bodies,
+    style,
     label,
     labelBaseY,
     beam,
@@ -554,7 +1103,8 @@ function createMainTower(competitor, options) {
     crownTier,
     cornerLights,
     partyShip,
-    towerTop: height + crownHeight,
+    towerTop: topY + crownHeight,
+    apexY,
     focusHeight: height * 0.55
   };
 
@@ -762,7 +1312,7 @@ function buildCity(scene, competition) {
     { color: "#59d99b", accent: "#bff5d5" }
   ];
 
-  const districts = [
+  const baseDistricts = [
     new THREE.Vector3(0, 2, 0),
     new THREE.Vector3(-220, 2, -170),
     new THREE.Vector3(210, 2, -180),
@@ -775,6 +1325,20 @@ function buildCity(scene, competition) {
     new THREE.Vector3(-400, 2, -340)
   ];
 
+  const districts = [...baseDistricts];
+  const ringSpacing = 210;
+  while (districts.length < competitors.length) {
+    const extraIndex = districts.length - baseDistricts.length;
+    const angle = extraIndex * 2.399963229728653;
+    const ring = Math.floor(extraIndex / 8) + 2;
+    const radius = ring * ringSpacing;
+    districts.push(new THREE.Vector3(
+      Math.cos(angle) * radius,
+      2,
+      Math.sin(angle) * radius
+    ));
+  }
+
   const majorTowers = [];
   const selectables = [];
 
@@ -782,7 +1346,7 @@ function buildCity(scene, competition) {
   createRoad(scene, 90, 1800, new THREE.Vector3(0, 0, 0));
 
   competitors.forEach((competitor, index) => {
-    const district = districts[index % districts.length].clone();
+    const district = districts[index].clone();
     const isLeader = index === 0;
     const colors = palette[index % palette.length];
     const commitRatio = (competitor.commits || 0) / maxCommits;
@@ -799,7 +1363,7 @@ function buildCity(scene, competition) {
 
     scene.add(tower);
     majorTowers.push(tower);
-    selectables.push(tower.userData.body);
+    selectables.push(...(tower.userData.bodies || [tower.userData.body]));
 
     const towerHeight = tower.userData.focusHeight * 1.8;
     addDistrictFillers(scene, district, {
@@ -908,6 +1472,7 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   const { majorTowers, selectables, competitors } = buildCity(scene, competition);
 
   const fireworks = createFireworks(scene);
+  const airTraffic = createAirTraffic(scene, 7);
 
   // Building grow animation
   const growAnims = [];
@@ -1084,6 +1649,9 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
     // Fireworks
     fireworks.update(delta);
+
+    // Air traffic
+    airTraffic.update(elapsed);
 
     majorTowers.forEach((tower, index) => {
       const glow = tower.userData.roofGlow;
