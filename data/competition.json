@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-05-09T10:17:20.989Z",
-  "generatedAt": "2026-05-09T10:17:20.989Z",
+  "updatedAt": "2026-05-10T10:38:57.026Z",
+  "generatedAt": "2026-05-10T10:38:57.026Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-05-09T10:17:20.306Z"
+    "to": "2026-05-10T10:38:56.325Z"
   },
   "competitors": [
     {
@@ -97,6 +97,10 @@
         {
           "week": "2026-05-03",
           "contributions": 78
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -188,6 +192,10 @@
         {
           "week": "2026-05-03",
           "contributions": 98
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -279,6 +287,10 @@
         {
           "week": "2026-05-03",
           "contributions": 24
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -370,6 +382,10 @@
         {
           "week": "2026-05-03",
           "contributions": 31
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -461,6 +477,10 @@
         {
           "week": "2026-05-03",
           "contributions": 1
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -552,6 +572,10 @@
         {
           "week": "2026-05-03",
           "contributions": 61
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -643,6 +667,10 @@
         {
           "week": "2026-05-03",
           "contributions": 6
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -734,6 +762,10 @@
         {
           "week": "2026-05-03",
           "contributions": 49
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -825,6 +857,10 @@
         {
           "week": "2026-05-03",
           "contributions": 1
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -916,6 +952,10 @@
         {
           "week": "2026-05-03",
           "contributions": 18
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -1007,6 +1047,10 @@
         {
           "week": "2026-05-03",
           "contributions": 4
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 0
         }
       ]
     },
@@ -1097,6 +1141,10 @@
         },
         {
           "week": "2026-05-03",
+          "contributions": 0
+        },
+        {
+          "week": "2026-05-10",
           "contributions": 0
         }
       ]
