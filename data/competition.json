@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-05-17T10:40:03.027Z",
-  "generatedAt": "2026-05-17T10:40:03.027Z",
+  "updatedAt": "2026-05-18T12:47:55.320Z",
+  "generatedAt": "2026-05-18T12:47:55.320Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-05-17T10:40:02.272Z"
+    "to": "2026-05-18T12:47:54.382Z"
   },
   "competitors": [
     {
@@ -707,13 +707,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 236,
-      "commits": 235,
+      "contributions": 237,
+      "commits": 236,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 235,
+      "restrictedContributions": 236,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -793,11 +793,11 @@
         },
         {
           "week": "2026-05-10",
-          "contributions": 159
+          "contributions": 158
         },
         {
           "week": "2026-05-17",
-          "contributions": 0
+          "contributions": 2
         }
       ]
     },
