@@ -345,7 +345,12 @@ const NON_LEADER_STYLES = [
   "eco",
   "spire",
   "monolith",
-  "offset"
+  "offset",
+  "crystal",
+  "twist",
+  "pagoda",
+  "lattice",
+  "diamond"
 ];
 
 function pickTowerStyle(index) {
@@ -473,6 +478,66 @@ function getStyleConfig(style, color, accent) {
         emissiveScale: 0.3,
         litMul: 1.0,
         columnsMul: 1.2
+      };
+    case "crystal":
+      return {
+        palette: ["#a3f0ff", "#7ad0ff", "#dffaff", "#bafff0"],
+        wallColor: "#0c1b2c",
+        windowOff: "#040a14",
+        crownColor: 0x9fe9ff,
+        roughness: 0.18,
+        metalness: 0.78,
+        emissiveScale: 0.38,
+        litMul: 1.25,
+        columnsMul: 1.0
+      };
+    case "twist":
+      return {
+        palette: ["#ffb86b", "#ffd9a8", "#ff7be1", "#ffc4f0"],
+        wallColor: "#1d1230",
+        windowOff: "#0a0518",
+        crownColor: 0xff7bd3,
+        roughness: 0.36,
+        metalness: 0.48,
+        emissiveScale: 0.32,
+        litMul: 1.05,
+        columnsMul: 1.15
+      };
+    case "pagoda":
+      return {
+        palette: ["#ff7a55", "#ffd0a8", "#ffe1b4", "#ff9a78"],
+        wallColor: "#321a14",
+        windowOff: "#1a0a08",
+        crownColor: 0xd44a2a,
+        roughness: 0.6,
+        metalness: 0.18,
+        emissiveScale: 0.22,
+        litMul: 0.85,
+        columnsMul: 0.9
+      };
+    case "lattice":
+      return {
+        palette: ["#c0ff5e", "#7eff9c", "#e6ffb8"],
+        wallColor: "#0e1a14",
+        windowOff: "#040806",
+        crownColor: 0x7fe04a,
+        roughness: 0.42,
+        metalness: 0.4,
+        emissiveScale: 0.28,
+        litMul: 1.1,
+        columnsMul: 1.3
+      };
+    case "diamond":
+      return {
+        palette: ["#e7c9ff", "#b289ff", "#fff0ff", "#9d6dff"],
+        wallColor: "#150924",
+        windowOff: "#06030f",
+        crownColor: 0xb27dff,
+        roughness: 0.22,
+        metalness: 0.7,
+        emissiveScale: 0.36,
+        litMul: 1.15,
+        columnsMul: 1.0
       };
     case "classic":
     default:
@@ -1028,6 +1093,291 @@ function buildStyledTowerStructure({ style, baseWidth, baseDepth, height, crownH
     };
   }
 
+  if (style === "crystal") {
+    const shardCount = 5;
+    let y = 0;
+    let lastSize = Math.max(baseWidth, baseDepth) * 0.46;
+    const shardGeoms = [
+      THREE.IcosahedronGeometry,
+      THREE.OctahedronGeometry,
+      THREE.DodecahedronGeometry
+    ];
+    for (let i = 0; i < shardCount; i += 1) {
+      const taper = 1 - i * 0.14;
+      const size = Math.max(baseWidth, baseDepth) * 0.46 * taper;
+      const h = height * (0.22 - i * 0.03);
+      const GeomClass = shardGeoms[i % shardGeoms.length];
+      const shard = new THREE.Mesh(
+        new GeomClass(size, 0),
+        materials[4]
+      );
+      shard.scale.set(1, 1.4 + i * 0.18, 1);
+      shard.rotation.y = i * 0.41 + random() * 0.6;
+      shard.position.y = y + size * 0.7;
+      bodies.push(shard);
+      y += h + size * 0.7;
+      lastSize = size;
+    }
+
+    const prismMaterial = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(accent),
+      emissive: new THREE.Color(accent).multiplyScalar(0.8),
+      transparent: true,
+      opacity: 0.55,
+      roughness: 0.12,
+      metalness: 0.32
+    });
+    const cap = new THREE.Mesh(
+      new THREE.OctahedronGeometry(lastSize * 0.9, 0),
+      prismMaterial
+    );
+    cap.position.y = y + lastSize * 0.6;
+    cap.rotation.y = Math.PI / 4;
+    decorations.push(cap);
+
+    return {
+      bodies,
+      decorations,
+      topY: y,
+      apexY: y + lastSize * 1.4,
+      topWidth: lastSize * 1.6,
+      topDepth: lastSize * 1.6
+    };
+  }
+
+  if (style === "twist") {
+    const slices = 14;
+    const sliceH = height / slices;
+    const totalTwist = Math.PI * 0.9;
+    for (let i = 0; i < slices; i += 1) {
+      const taper = 1 - (i / slices) * 0.42;
+      const w = baseWidth * 0.78 * taper;
+      const d = baseDepth * 0.78 * taper;
+      const slice = new THREE.Mesh(
+        new THREE.BoxGeometry(w, sliceH * 1.02, d),
+        materials
+      );
+      slice.position.y = sliceH * (i + 0.5);
+      slice.rotation.y = (i / slices) * totalTwist;
+      bodies.push(slice);
+    }
+
+    const crystalCap = new THREE.Mesh(
+      new THREE.ConeGeometry(baseWidth * 0.32, crownHeight * 2.6, 6),
+      new THREE.MeshStandardMaterial({
+        color: config.crownColor,
+        emissive: new THREE.Color(accent).multiplyScalar(0.7),
+        roughness: 0.2,
+        metalness: 0.7
+      })
+    );
+    crystalCap.position.y = height + crownHeight * 1.3;
+    crystalCap.rotation.y = totalTwist;
+    decorations.push(crystalCap);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight * 2.6,
+      topWidth: baseWidth * 0.56,
+      topDepth: baseDepth * 0.56
+    };
+  }
+
+  if (style === "pagoda") {
+    const tiers = 6;
+    let y = 0;
+    let lastW = 0;
+    let lastD = 0;
+    for (let i = 0; i < tiers; i += 1) {
+      const taper = 1 - i * 0.11;
+      const w = baseWidth * taper;
+      const d = baseDepth * taper;
+      const tierH = height * (0.13 + i * 0.005);
+      const body = new THREE.Mesh(
+        new THREE.BoxGeometry(w * 0.78, tierH, d * 0.78),
+        materials
+      );
+      body.position.y = y + tierH / 2;
+      bodies.push(body);
+
+      const roof = new THREE.Mesh(
+        new THREE.ConeGeometry(Math.max(w, d) * 0.62, tierH * 0.55, 4),
+        new THREE.MeshStandardMaterial({
+          color: config.crownColor,
+          emissive: new THREE.Color(accent).multiplyScalar(0.4),
+          roughness: 0.42,
+          metalness: 0.36
+        })
+      );
+      roof.rotation.y = Math.PI / 4;
+      roof.position.y = y + tierH + tierH * 0.25;
+      decorations.push(roof);
+
+      y += tierH + tierH * 0.42;
+      lastW = w;
+      lastD = d;
+    }
+
+    const finial = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.8, 2.6, crownHeight * 2.4, 10),
+      new THREE.MeshStandardMaterial({
+        color: 0xffd56d,
+        emissive: new THREE.Color("#ffd56d").multiplyScalar(0.85),
+        roughness: 0.22,
+        metalness: 0.82
+      })
+    );
+    finial.position.y = y + crownHeight * 1.2;
+    decorations.push(finial);
+
+    const orb = new THREE.Mesh(
+      new THREE.SphereGeometry(3.4, 14, 14),
+      new THREE.MeshBasicMaterial({ color: 0xffe27a })
+    );
+    orb.position.y = y + crownHeight * 2.5;
+    decorations.push(orb);
+
+    return {
+      bodies,
+      decorations,
+      topY: y,
+      apexY: y + crownHeight * 2.5,
+      topWidth: lastW,
+      topDepth: lastD
+    };
+  }
+
+  if (style === "lattice") {
+    const coreW = baseWidth * 0.5;
+    const coreD = baseDepth * 0.5;
+    const core = new THREE.Mesh(
+      new THREE.BoxGeometry(coreW, height, coreD),
+      materials
+    );
+    core.position.y = height / 2;
+    bodies.push(core);
+
+    const beamMaterial = new THREE.MeshStandardMaterial({
+      color: config.crownColor,
+      emissive: new THREE.Color(accent).multiplyScalar(0.55),
+      roughness: 0.32,
+      metalness: 0.7
+    });
+    const corners = [
+      [baseWidth * 0.48, baseDepth * 0.48],
+      [-baseWidth * 0.48, baseDepth * 0.48],
+      [baseWidth * 0.48, -baseDepth * 0.48],
+      [-baseWidth * 0.48, -baseDepth * 0.48]
+    ];
+    corners.forEach(([x, z]) => {
+      const post = new THREE.Mesh(
+        new THREE.CylinderGeometry(2, 2.4, height * 1.02, 8),
+        beamMaterial
+      );
+      post.position.set(x, height / 2, z);
+      decorations.push(post);
+    });
+
+    const diagCount = 8;
+    for (let i = 0; i < diagCount; i += 1) {
+      const yLevel = height * (i / diagCount) + height * 0.06;
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(Math.max(baseWidth, baseDepth) * 0.62, 1.2, 6, 4),
+        beamMaterial
+      );
+      ring.rotation.x = Math.PI / 2;
+      ring.rotation.z = Math.PI / 4;
+      ring.position.y = yLevel;
+      decorations.push(ring);
+    }
+
+    for (let i = 0; i < 14; i += 1) {
+      const angle = (i / 14) * Math.PI * 2 + random() * 0.4;
+      const yLevel = height * random();
+      const node = new THREE.Mesh(
+        new THREE.SphereGeometry(2.8, 10, 10),
+        new THREE.MeshBasicMaterial({ color: new THREE.Color(accent) })
+      );
+      node.position.set(
+        Math.cos(angle) * baseWidth * 0.5,
+        yLevel,
+        Math.sin(angle) * baseDepth * 0.5
+      );
+      decorations.push(node);
+    }
+
+    const cap = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(baseWidth * 0.28, 0),
+      beamMaterial
+    );
+    cap.position.y = height + crownHeight;
+    decorations.push(cap);
+
+    return {
+      bodies,
+      decorations,
+      topY: height,
+      apexY: height + crownHeight + baseWidth * 0.28,
+      topWidth: baseWidth,
+      topDepth: baseDepth
+    };
+  }
+
+  if (style === "diamond") {
+    const segments = 5;
+    let y = 0;
+    let lastSize = 0;
+    for (let i = 0; i < segments; i += 1) {
+      const taper = 1 - i * 0.14;
+      const size = baseWidth * 0.5 * taper;
+      const segH = height * (0.24 - i * 0.025);
+      const oct = new THREE.Mesh(
+        new THREE.OctahedronGeometry(size, 0),
+        materials[4]
+      );
+      oct.scale.set(1, segH / size, 1);
+      oct.rotation.y = (i % 2) * Math.PI / 4;
+      oct.position.y = y + segH / 2;
+      bodies.push(oct);
+      y += segH * 0.86;
+      lastSize = size;
+    }
+
+    const beam = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.8, 0.8, height * 1.05, 8),
+      new THREE.MeshBasicMaterial({
+        color: new THREE.Color(accent),
+        transparent: true,
+        opacity: 0.5
+      })
+    );
+    beam.position.y = height / 2;
+    decorations.push(beam);
+
+    const apex = new THREE.Mesh(
+      new THREE.OctahedronGeometry(lastSize * 0.9, 0),
+      new THREE.MeshStandardMaterial({
+        color: config.crownColor,
+        emissive: new THREE.Color(accent).multiplyScalar(0.95),
+        roughness: 0.16,
+        metalness: 0.78
+      })
+    );
+    apex.position.y = y + lastSize * 1.0;
+    decorations.push(apex);
+
+    return {
+      bodies,
+      decorations,
+      topY: y,
+      apexY: y + lastSize * 1.8,
+      topWidth: lastSize * 2,
+      topDepth: lastSize * 2
+    };
+  }
+
   // classic
   const main = new THREE.Mesh(
     new THREE.BoxGeometry(baseWidth, height, baseDepth),
@@ -1247,6 +1597,123 @@ function createSignatureFeature({ style, baseWidth, baseDepth, height, crownHeig
     ));
     skyDeck.position.set(0, height * 0.64, 0);
     skyDeck.rotation.y = Math.PI / 7;
+  }
+
+  if (style === "crystal") {
+    for (let i = 0; i < 6; i += 1) {
+      const angle = (i / 6) * Math.PI * 2;
+      const shard = add(new THREE.Mesh(
+        new THREE.TetrahedronGeometry(5 + commitRatio * 3, 0),
+        lightMaterial
+      ));
+      shard.position.set(
+        Math.cos(angle) * topWidth * 0.62,
+        height * (0.35 + (i % 3) * 0.18),
+        Math.sin(angle) * topDepth * 0.62
+      );
+      shard.rotation.y = angle;
+    }
+
+    const halo = add(new THREE.Mesh(
+      new THREE.TorusGeometry(topWidth * 0.8, 1.6, 8, 64),
+      lightMaterial
+    ));
+    halo.rotation.x = Math.PI / 2;
+    halo.position.y = apexY - crownHeight;
+  }
+
+  if (style === "twist") {
+    const ribbonCount = 3;
+    for (let i = 0; i < ribbonCount; i += 1) {
+      const offset = (i / ribbonCount) * Math.PI * 2;
+      const ribbon = add(new THREE.Mesh(
+        new THREE.TorusGeometry(baseWidth * 0.46, 1.8, 6, 96, Math.PI * 1.6),
+        lightMaterial
+      ));
+      ribbon.rotation.x = Math.PI / 2;
+      ribbon.rotation.z = offset;
+      ribbon.position.y = height * 0.5;
+      ribbon.scale.y = height / (baseWidth * 0.9);
+    }
+
+    const apexOrb = add(new THREE.Mesh(
+      new THREE.OctahedronGeometry(6 + commitRatio * 6, 0),
+      new THREE.MeshBasicMaterial({ color: accentColor })
+    ));
+    apexOrb.position.y = apexY + 6;
+  }
+
+  if (style === "pagoda") {
+    for (let i = 0; i < 4; i += 1) {
+      const lantern = add(new THREE.Mesh(
+        new THREE.SphereGeometry(3 + commitRatio * 1.6, 14, 12),
+        new THREE.MeshBasicMaterial({
+          color: 0xffa64a,
+          transparent: true,
+          opacity: 0.85
+        })
+      ));
+      const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
+      lantern.position.set(
+        Math.cos(angle) * baseWidth * 0.46,
+        height * (0.32 + i * 0.16),
+        Math.sin(angle) * baseDepth * 0.46
+      );
+    }
+
+    const archGate = add(new THREE.Mesh(
+      new THREE.TorusGeometry(baseWidth * 0.34, 2.2, 8, 24, Math.PI),
+      metalMaterial
+    ));
+    archGate.rotation.x = Math.PI;
+    archGate.position.set(0, baseWidth * 0.34 + 4, baseDepth * 0.52);
+  }
+
+  if (style === "lattice") {
+    const cageMaterial = new THREE.MeshBasicMaterial({
+      color: accentColor,
+      transparent: true,
+      opacity: 0.45,
+      wireframe: true
+    });
+    const cage = add(new THREE.Mesh(
+      new THREE.IcosahedronGeometry(baseWidth * 0.62, 1),
+      cageMaterial
+    ));
+    cage.position.y = height * 0.55;
+    cage.scale.y = height / (baseWidth * 1.2);
+
+    const seed = add(new THREE.Mesh(
+      new THREE.DodecahedronGeometry(8 + commitRatio * 5, 0),
+      new THREE.MeshBasicMaterial({ color: accentColor })
+    ));
+    seed.position.y = apexY + 4;
+  }
+
+  if (style === "diamond") {
+    for (let i = 0; i < 5; i += 1) {
+      const flake = add(new THREE.Mesh(
+        new THREE.OctahedronGeometry(3.2 + commitRatio * 2.2, 0),
+        new THREE.MeshBasicMaterial({ color: accentColor })
+      ));
+      const angle = i * 1.4;
+      const r = baseWidth * (0.48 + (i % 2) * 0.08);
+      flake.position.set(Math.cos(angle) * r, height * (0.28 + i * 0.14), Math.sin(angle) * r);
+    }
+
+    const aura = add(new THREE.Mesh(
+      new THREE.TorusGeometry(baseWidth * 0.42, 1.4, 6, 48),
+      lightMaterial
+    ));
+    aura.rotation.x = Math.PI / 2;
+    aura.position.y = apexY - 4;
+
+    const aura2 = add(new THREE.Mesh(
+      new THREE.TorusGeometry(baseWidth * 0.34, 1.0, 6, 48),
+      lightMaterial
+    ));
+    aura2.rotation.x = Math.PI / 3;
+    aura2.position.y = apexY - 4;
   }
 
   return group.children.length ? group : null;
@@ -1829,6 +2296,460 @@ function createStars(scene) {
   return points;
 }
 
+function createNeonPulses(scene) {
+  const pulses = [];
+  const length = 1800;
+  const pulseColors = [0x89d7ff, 0xff7bfa, 0xffd56d, 0x6fdd8b];
+
+  const configs = [
+    { axis: "x", color: pulseColors[0], lane: -16 },
+    { axis: "x", color: pulseColors[1], lane: 16 },
+    { axis: "z", color: pulseColors[2], lane: -16 },
+    { axis: "z", color: pulseColors[3], lane: 16 }
+  ];
+
+  configs.forEach((cfg, index) => {
+    const mat = new THREE.MeshBasicMaterial({
+      color: cfg.color,
+      transparent: true,
+      opacity: 0.85,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+    const w = cfg.axis === "x" ? 60 : 4;
+    const d = cfg.axis === "x" ? 4 : 60;
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, 0.6, d), mat);
+    if (cfg.axis === "x") {
+      mesh.position.set(-length / 2, 1.6, cfg.lane);
+    } else {
+      mesh.position.set(cfg.lane, 1.6, -length / 2);
+    }
+    mesh.userData = { axis: cfg.axis, length, speed: 240 + index * 40, phase: index * 0.4 };
+    scene.add(mesh);
+    pulses.push(mesh);
+  });
+
+  return {
+    pulses,
+    update(elapsed) {
+      pulses.forEach((p) => {
+        const { axis, length, speed, phase } = p.userData;
+        const travel = ((elapsed * speed) % (length * 1.6)) - length * 0.8;
+        if (axis === "x") {
+          p.position.x = travel;
+        } else {
+          p.position.z = travel;
+        }
+        p.material.opacity = 0.55 + (Math.sin(elapsed * 4 + phase) + 1) * 0.18;
+      });
+    }
+  };
+}
+
+function createMoon(scene) {
+  const group = new THREE.Group();
+
+  const moon = new THREE.Mesh(
+    new THREE.SphereGeometry(110, 40, 40),
+    new THREE.MeshStandardMaterial({
+      color: 0xfff4d4,
+      emissive: new THREE.Color("#ffe6a0"),
+      emissiveIntensity: 1.4,
+      roughness: 0.6,
+      metalness: 0.05
+    })
+  );
+  group.add(moon);
+
+  const halo1 = new THREE.Mesh(
+    new THREE.SphereGeometry(140, 32, 32),
+    new THREE.MeshBasicMaterial({
+      color: 0xffe6a0,
+      transparent: true,
+      opacity: 0.18,
+      depthWrite: false
+    })
+  );
+  group.add(halo1);
+
+  const halo2 = new THREE.Mesh(
+    new THREE.SphereGeometry(180, 28, 28),
+    new THREE.MeshBasicMaterial({
+      color: 0xffd57a,
+      transparent: true,
+      opacity: 0.08,
+      depthWrite: false
+    })
+  );
+  group.add(halo2);
+
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(160, 1.6, 8, 96),
+    new THREE.MeshBasicMaterial({
+      color: 0xfff0c8,
+      transparent: true,
+      opacity: 0.42
+    })
+  );
+  ring.rotation.x = Math.PI / 2.4;
+  group.add(ring);
+
+  group.position.set(-1100, 760, -1300);
+  scene.add(group);
+
+  return { group, ring };
+}
+
+function createHotAirBalloon(seed) {
+  const palettes = [
+    ["#ff6f91", "#ffd07a"],
+    ["#7ad7ff", "#c7f0ff"],
+    ["#ffd56d", "#ff9079"],
+    ["#b792ff", "#ffaef2"],
+    ["#6fdd8b", "#d6ffb8"]
+  ];
+  const colors = palettes[seed % palettes.length];
+
+  const group = new THREE.Group();
+
+  const envelope = new THREE.Mesh(
+    new THREE.SphereGeometry(22, 24, 20),
+    new THREE.MeshStandardMaterial({
+      color: colors[0],
+      emissive: new THREE.Color(colors[0]).multiplyScalar(0.35),
+      roughness: 0.6,
+      metalness: 0.05
+    })
+  );
+  envelope.scale.set(1, 1.18, 1);
+  envelope.position.y = 24;
+  group.add(envelope);
+
+  const stripe = new THREE.Mesh(
+    new THREE.SphereGeometry(22.2, 24, 20, 0, Math.PI * 2, Math.PI * 0.36, Math.PI * 0.18),
+    new THREE.MeshStandardMaterial({
+      color: colors[1],
+      emissive: new THREE.Color(colors[1]).multiplyScalar(0.45),
+      roughness: 0.5,
+      metalness: 0.06
+    })
+  );
+  stripe.scale.set(1, 1.18, 1);
+  stripe.position.y = 24;
+  group.add(stripe);
+
+  const basket = new THREE.Mesh(
+    new THREE.BoxGeometry(10, 7, 10),
+    new THREE.MeshStandardMaterial({
+      color: 0x6b3d22,
+      roughness: 0.85,
+      metalness: 0.05
+    })
+  );
+  basket.position.y = -8;
+  group.add(basket);
+
+  const ropeMaterial = new THREE.LineBasicMaterial({ color: 0x2a1a10 });
+  [[5, 5], [-5, 5], [5, -5], [-5, -5]].forEach(([x, z]) => {
+    const geom = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(x, -5, z),
+      new THREE.Vector3(x * 0.4, 8, z * 0.4)
+    ]);
+    group.add(new THREE.Line(geom, ropeMaterial));
+  });
+
+  const burner = new THREE.Mesh(
+    new THREE.SphereGeometry(2, 10, 10),
+    new THREE.MeshBasicMaterial({ color: 0xffb84a })
+  );
+  burner.position.y = 0;
+  group.add(burner);
+
+  group.userData.burner = burner;
+  return group;
+}
+
+function createBalloons(scene, count) {
+  const balloons = [];
+  for (let i = 0; i < count; i += 1) {
+    const balloon = createHotAirBalloon(i + 1);
+    balloon.userData.path = {
+      radius: 540 + ((i * 67) % 380),
+      altitude: 280 + ((i * 47) % 200),
+      angularSpeed: 0.025 + ((i * 11) % 9) / 9 * 0.025,
+      angleOffset: (i * 1.27) % (Math.PI * 2),
+      bobAmp: 8 + (i % 5) * 2,
+      bobSpeed: 0.4 + (i % 4) * 0.12
+    };
+    scene.add(balloon);
+    balloons.push(balloon);
+  }
+
+  return {
+    balloons,
+    update(elapsed) {
+      balloons.forEach((balloon) => {
+        const { radius, altitude, angularSpeed, angleOffset, bobAmp, bobSpeed } = balloon.userData.path;
+        const angle = angleOffset + elapsed * angularSpeed;
+        balloon.position.set(
+          Math.cos(angle) * radius,
+          altitude + Math.sin(elapsed * bobSpeed + angleOffset) * bobAmp,
+          Math.sin(angle) * radius
+        );
+        balloon.rotation.y = -angle + Math.PI / 2;
+        if (balloon.userData.burner) {
+          const flicker = 0.5 + Math.sin(elapsed * 8 + angleOffset * 4) * 0.3;
+          balloon.userData.burner.material.color.setRGB(1, 0.65 + flicker * 0.2, 0.18 + flicker * 0.18);
+        }
+      });
+    }
+  };
+}
+
+function createDrone(accent) {
+  const group = new THREE.Group();
+
+  const body = new THREE.Mesh(
+    new THREE.BoxGeometry(6, 1.6, 6),
+    new THREE.MeshStandardMaterial({
+      color: 0x222a3a,
+      emissive: new THREE.Color(accent).multiplyScalar(0.6),
+      roughness: 0.3,
+      metalness: 0.7
+    })
+  );
+  group.add(body);
+
+  const armMat = new THREE.MeshStandardMaterial({
+    color: 0x1a2238,
+    roughness: 0.5,
+    metalness: 0.5
+  });
+  const arms = [
+    [4, 0, 4],
+    [-4, 0, 4],
+    [4, 0, -4],
+    [-4, 0, -4]
+  ];
+  const rotors = [];
+  arms.forEach(([x, y, z]) => {
+    const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 4, 6), armMat);
+    arm.position.set(x * 0.5, y, z * 0.5);
+    arm.rotation.z = Math.PI / 4;
+    group.add(arm);
+
+    const rotor = new THREE.Mesh(
+      new THREE.CylinderGeometry(2.4, 2.4, 0.2, 12),
+      new THREE.MeshBasicMaterial({
+        color: 0x88c4ff,
+        transparent: true,
+        opacity: 0.32
+      })
+    );
+    rotor.position.set(x, 1.4, z);
+    group.add(rotor);
+    rotors.push(rotor);
+  });
+
+  const led = new THREE.Mesh(
+    new THREE.SphereGeometry(0.7, 10, 10),
+    new THREE.MeshBasicMaterial({ color: new THREE.Color(accent) })
+  );
+  led.position.set(0, -1, 3);
+  group.add(led);
+
+  group.userData = { rotors, led };
+  return group;
+}
+
+function createDroneSwarm(scene, count, leaderPos) {
+  const accents = ["#ff7bfa", "#89d7ff", "#ffd56d", "#6fdd8b"];
+  const drones = [];
+  for (let i = 0; i < count; i += 1) {
+    const drone = createDrone(accents[i % accents.length]);
+    drone.userData.path = {
+      center: leaderPos.clone(),
+      orbitRadius: 90 + ((i * 13) % 80),
+      orbitHeight: 180 + ((i * 17) % 260),
+      angularSpeed: 0.55 + (((i * 7) % 5) / 5) * 0.55,
+      angleOffset: (i / count) * Math.PI * 2,
+      vertSpeed: 0.6 + (i % 3) * 0.2,
+      vertAmp: 30 + (i % 4) * 14
+    };
+    scene.add(drone);
+    drones.push(drone);
+  }
+
+  return {
+    drones,
+    update(elapsed) {
+      drones.forEach((drone) => {
+        const { center, orbitRadius, orbitHeight, angularSpeed, angleOffset, vertSpeed, vertAmp } = drone.userData.path;
+        const angle = angleOffset + elapsed * angularSpeed;
+        drone.position.set(
+          center.x + Math.cos(angle) * orbitRadius,
+          orbitHeight + Math.sin(elapsed * vertSpeed + angleOffset) * vertAmp,
+          center.z + Math.sin(angle) * orbitRadius
+        );
+        drone.rotation.y = -angle + Math.PI / 2;
+        drone.userData.rotors.forEach((r, idx) => {
+          r.rotation.y += 0.6 + idx * 0.05;
+        });
+        const led = drone.userData.led;
+        if (led) {
+          const pulse = 0.5 + Math.sin(elapsed * 6 + angleOffset * 3) * 0.5;
+          led.material.opacity = 0.4 + pulse * 0.6;
+        }
+      });
+    }
+  };
+}
+
+function createSearchlights(scene, count) {
+  const lights = [];
+  const radius = 760;
+  for (let i = 0; i < count; i += 1) {
+    const angle = (i / count) * Math.PI * 2;
+    const x = Math.cos(angle) * radius;
+    const z = Math.sin(angle) * radius;
+
+    const base = new THREE.Mesh(
+      new THREE.CylinderGeometry(8, 10, 14, 12),
+      new THREE.MeshStandardMaterial({
+        color: 0x1c2438,
+        roughness: 0.5,
+        metalness: 0.6
+      })
+    );
+    base.position.set(x, 7, z);
+    scene.add(base);
+
+    const housing = new THREE.Mesh(
+      new THREE.BoxGeometry(10, 8, 14),
+      new THREE.MeshStandardMaterial({
+        color: 0x2a3852,
+        roughness: 0.36,
+        metalness: 0.72
+      })
+    );
+    housing.position.set(x, 18, z);
+    scene.add(housing);
+
+    const beamColor = i % 2 === 0 ? 0x9adfff : 0xffd56d;
+    const beam = new THREE.Mesh(
+      new THREE.CylinderGeometry(2, 60, 620, 24, 1, true),
+      new THREE.MeshBasicMaterial({
+        color: beamColor,
+        transparent: true,
+        opacity: 0.16,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+      })
+    );
+    beam.position.set(0, 310, 0);
+    const pivot = new THREE.Group();
+    pivot.position.set(x, 18, z);
+    pivot.add(beam);
+    pivot.userData = {
+      tiltBase: -Math.PI / 4 + (i * 0.13),
+      yawSpeed: 0.18 + (i % 3) * 0.08,
+      tiltSpeed: 0.32 + (i % 4) * 0.06,
+      phase: i * 0.7
+    };
+    scene.add(pivot);
+    lights.push(pivot);
+  }
+
+  return {
+    lights,
+    update(elapsed) {
+      lights.forEach((pivot) => {
+        const { tiltBase, yawSpeed, tiltSpeed, phase } = pivot.userData;
+        pivot.rotation.y = elapsed * yawSpeed + phase;
+        pivot.rotation.x = tiltBase + Math.sin(elapsed * tiltSpeed + phase) * 0.32;
+      });
+    }
+  };
+}
+
+function createHologramBillboards(scene, count) {
+  const billboards = [];
+  const messages = ["// COMMIT", "★ 2026 ★", "PUSH IT", "GH:OPEN", "+++ DEV"];
+  const tints = ["#89d7ff", "#ff7bfa", "#ffd56d", "#6fdd8b", "#ff9079"];
+
+  for (let i = 0; i < count; i += 1) {
+    const canvas = document.createElement("canvas");
+    canvas.width = 512;
+    canvas.height = 160;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, 512, 160);
+    ctx.fillStyle = "rgba(8, 16, 32, 0.0)";
+    ctx.fillRect(0, 0, 512, 160);
+    ctx.font = "800 92px 'Space Mono', monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const tint = tints[i % tints.length];
+    ctx.fillStyle = tint;
+    ctx.shadowColor = tint;
+    ctx.shadowBlur = 24;
+    ctx.fillText(messages[i % messages.length], 256, 80);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.minFilter = THREE.LinearFilter;
+
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+      opacity: 0.85,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(140, 44), material);
+    const angle = (i / count) * Math.PI * 2 + 0.4;
+    const radius = 520 + ((i * 53) % 240);
+    plane.position.set(Math.cos(angle) * radius, 220 + ((i * 31) % 160), Math.sin(angle) * radius);
+    plane.userData = {
+      baseY: plane.position.y,
+      bobSpeed: 0.4 + (i % 3) * 0.15,
+      phase: i * 0.8
+    };
+    scene.add(plane);
+
+    const glow = new THREE.Mesh(
+      new THREE.PlaneGeometry(160, 56),
+      new THREE.MeshBasicMaterial({
+        color: new THREE.Color(tint),
+        transparent: true,
+        opacity: 0.12,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+      })
+    );
+    glow.position.copy(plane.position);
+    glow.userData = plane.userData;
+    scene.add(glow);
+
+    billboards.push(plane, glow);
+  }
+
+  return {
+    billboards,
+    update(elapsed, cameraPosition) {
+      billboards.forEach((board) => {
+        const { baseY, bobSpeed, phase } = board.userData;
+        board.position.y = baseY + Math.sin(elapsed * bobSpeed + phase) * 6;
+        if (cameraPosition) {
+          board.lookAt(cameraPosition);
+        }
+      });
+    }
+  };
+}
+
 function easeOutCubic(value) {
   return 1 - Math.pow(1 - value, 3);
 }
@@ -2106,11 +3027,20 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   scene.add(horizon);
 
   createStars(scene);
+  const moon = createMoon(scene);
 
   const { majorTowers, selectables, competitors } = buildCity(scene, competition);
 
   const fireworks = createFireworks(scene);
   const airTraffic = createAirTraffic(scene, 7);
+  const balloons = createBalloons(scene, 6);
+  const searchlights = createSearchlights(scene, 6);
+  const hologramBillboards = createHologramBillboards(scene, 8);
+  const neonPulses = createNeonPulses(scene);
+  const leaderTowerForDrones = majorTowers[0];
+  const droneSwarm = leaderTowerForDrones
+    ? createDroneSwarm(scene, 8, leaderTowerForDrones.position)
+    : { update() {} };
 
   // Building grow animation
   const growAnims = [];
@@ -2290,6 +3220,16 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
     // Air traffic
     airTraffic.update(elapsed);
+
+    // Ambient sky elements
+    balloons.update(elapsed);
+    searchlights.update(elapsed);
+    droneSwarm.update(elapsed);
+    hologramBillboards.update(elapsed, camera.position);
+    neonPulses.update(elapsed);
+    if (moon.ring) {
+      moon.ring.rotation.z += 0.0015;
+    }
 
     majorTowers.forEach((tower, index) => {
       const glow = tower.userData.roofGlow;
