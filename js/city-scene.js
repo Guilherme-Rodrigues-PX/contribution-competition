@@ -2605,74 +2605,6 @@ function createDroneSwarm(scene, count, leaderPos) {
   };
 }
 
-function createSearchlights(scene, count) {
-  const lights = [];
-  const radius = 760;
-  for (let i = 0; i < count; i += 1) {
-    const angle = (i / count) * Math.PI * 2;
-    const x = Math.cos(angle) * radius;
-    const z = Math.sin(angle) * radius;
-
-    const base = new THREE.Mesh(
-      new THREE.CylinderGeometry(8, 10, 14, 12),
-      new THREE.MeshStandardMaterial({
-        color: 0x1c2438,
-        roughness: 0.5,
-        metalness: 0.6
-      })
-    );
-    base.position.set(x, 7, z);
-    scene.add(base);
-
-    const housing = new THREE.Mesh(
-      new THREE.BoxGeometry(10, 8, 14),
-      new THREE.MeshStandardMaterial({
-        color: 0x2a3852,
-        roughness: 0.36,
-        metalness: 0.72
-      })
-    );
-    housing.position.set(x, 18, z);
-    scene.add(housing);
-
-    const beamColor = i % 2 === 0 ? 0x9adfff : 0xffd56d;
-    const beam = new THREE.Mesh(
-      new THREE.CylinderGeometry(2, 60, 620, 24, 1, true),
-      new THREE.MeshBasicMaterial({
-        color: beamColor,
-        transparent: true,
-        opacity: 0.16,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending
-      })
-    );
-    beam.position.set(0, 310, 0);
-    const pivot = new THREE.Group();
-    pivot.position.set(x, 18, z);
-    pivot.add(beam);
-    pivot.userData = {
-      tiltBase: -Math.PI / 4 + (i * 0.13),
-      yawSpeed: 0.18 + (i % 3) * 0.08,
-      tiltSpeed: 0.32 + (i % 4) * 0.06,
-      phase: i * 0.7
-    };
-    scene.add(pivot);
-    lights.push(pivot);
-  }
-
-  return {
-    lights,
-    update(elapsed) {
-      lights.forEach((pivot) => {
-        const { tiltBase, yawSpeed, tiltSpeed, phase } = pivot.userData;
-        pivot.rotation.y = elapsed * yawSpeed + phase;
-        pivot.rotation.x = tiltBase + Math.sin(elapsed * tiltSpeed + phase) * 0.32;
-      });
-    }
-  };
-}
-
 function createHologramBillboards(scene, count) {
   const billboards = [];
   const messages = ["// COMMIT", "★ 2026 ★", "PUSH IT", "GH:OPEN", "+++ DEV"];
@@ -3034,7 +2966,6 @@ export function createCityScene(container, competition, { onSelect } = {}) {
   const fireworks = createFireworks(scene);
   const airTraffic = createAirTraffic(scene, 7);
   const balloons = createBalloons(scene, 6);
-  const searchlights = createSearchlights(scene, 6);
   const hologramBillboards = createHologramBillboards(scene, 8);
   const neonPulses = createNeonPulses(scene);
   const leaderTowerForDrones = majorTowers[0];
@@ -3223,7 +3154,6 @@ export function createCityScene(container, competition, { onSelect } = {}) {
 
     // Ambient sky elements
     balloons.update(elapsed);
-    searchlights.update(elapsed);
     droneSwarm.update(elapsed);
     hologramBillboards.update(elapsed, camera.position);
     neonPulses.update(elapsed);
