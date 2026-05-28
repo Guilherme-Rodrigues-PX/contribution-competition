@@ -76,7 +76,7 @@ function computeStats(competitor, competitors, totalCommits, daysElapsed) {
 
 function computeBadges(competitor, stats, isLeader) {
   const badges = [];
-  if (isLeader) badges.push({ label: "Lider", css: "badge--gold" });
+  if (isLeader) badges.push({ label: "Líder", css: "badge--gold" });
   if (stats.commits >= 1500) badges.push({ label: "1500+", css: "badge--gold" });
   else if (stats.commits >= 1000) badges.push({ label: "1000+", css: "badge--cyan" });
   else if (stats.commits >= 500) badges.push({ label: "500+", css: "badge--purple" });
@@ -130,14 +130,14 @@ function buildSparkline(weekly, color, width = 220, height = 38) {
 // ---------------- Renderers ----------------
 
 function winnerCopy(competitor, leader, stats) {
-  if (!competitor) return "Clique em um predio para ver a ficha completa.";
+  if (!competitor) return "Clique em um prédio para ver a ficha completa.";
   if (competitor.username === leader.username) {
-    return `Lider absoluto da skyline com ${formatNumber(stats.commits)} commits. Mantem a media de ${formatNumber(stats.weeklyAvg)} por semana e atingiu pico de ${formatNumber(stats.peakWeek)} numa unica semana.`;
+    return `Líder absoluto da skyline com ${formatNumber(stats.commits)} commits. Mantém a média de ${formatNumber(stats.weeklyAvg)} por semana e atingiu pico de ${formatNumber(stats.peakWeek)} numa única semana.`;
   }
   if (stats.gapToLeader < 200) {
-    return `Esta a apenas ${formatNumber(stats.gapToLeader)} commits do topo. No ritmo atual, projeta ${formatNumber(stats.projected)} ate o fim do ano - o titulo ainda esta em aberto.`;
+    return `Está a apenas ${formatNumber(stats.gapToLeader)} commits do topo. No ritmo atual, projeta ${formatNumber(stats.projected)} até o fim do ano — o título ainda está em aberto.`;
   }
-  return `Distante ${formatNumber(stats.gapToLeader)} do lider, mas pode fechar o gap com semanas como a de pico (${formatNumber(stats.peakWeek)} commits). Projecao atual: ${formatNumber(stats.projected)} no fim de 2026.`;
+  return `Distante ${formatNumber(stats.gapToLeader)} do líder, mas pode fechar o gap com semanas como a de pico (${formatNumber(stats.peakWeek)} commits). Projeção atual: ${formatNumber(stats.projected)} no fim de 2026.`;
 }
 
 function renderShell(competition, competitors, stats, allStats) {
@@ -188,7 +188,7 @@ function renderShell(competition, competitors, stats, allStats) {
         <div class="hero-left">
           <div class="hero-badge">Contribution City ${competition.year}</div>
           <h1>${competition.title}</h1>
-          <p class="hero-sub">${competition.subtitle} Cada dev vira um arranha-ceu numa skyline 3D, com metricas em tempo real puxadas direto do GitHub.</p>
+          <p class="hero-sub">${competition.subtitle} Cada dev vira um arranha-céu numa skyline 3D, com métricas em tempo real puxadas direto do GitHub.</p>
           <div class="hero-meta">
             <div class="hero-chip"><strong>${competitors.length}</strong> competidores</div>
             <div class="hero-chip"><strong>${formatNumber(totalCommits)}</strong> commits totais</div>
@@ -216,17 +216,17 @@ function renderShell(competition, competitors, stats, allStats) {
         <div class="kpi-card panel kpi--gold">
           <div class="kpi-label">Commits totais</div>
           <div class="kpi-value">${formatNumber(totalCommits)}</div>
-          <div class="kpi-foot">Media de <strong>${formatNumber(avgPerDev)}</strong> por dev</div>
+          <div class="kpi-foot">Média de <strong>${formatNumber(avgPerDev)}</strong> por dev</div>
         </div>
         <div class="kpi-card panel kpi--cyan">
-          <div class="kpi-label">Lider atual</div>
+          <div class="kpi-label">Líder atual</div>
           <div class="kpi-value">${leader ? leader.username.replace(/-PX$|^PX/i, "").slice(0, 14) : "-"}</div>
           <div class="kpi-foot"><strong>${formatNumber(leader.commits || 0)}</strong> commits</div>
         </div>
         <div class="kpi-card panel kpi--magenta">
           <div class="kpi-label">Em alta</div>
           <div class="kpi-value">${hottest.username.replace(/-PX$|^PX/i, "").slice(0, 14)}</div>
-          <div class="kpi-foot"><strong>${hottestStats.momentum >= 0 ? "+" : ""}${hottestStats.momentum.toFixed(0)}%</strong> nas ultimas 4 semanas</div>
+          <div class="kpi-foot"><strong>${hottestStats.momentum >= 0 ? "+" : ""}${hottestStats.momentum.toFixed(0)}%</strong> nas últimas 4 semanas</div>
         </div>
         <div class="kpi-card panel kpi--green">
           <div class="kpi-label">Esta semana</div>
@@ -239,7 +239,7 @@ function renderShell(competition, competitors, stats, allStats) {
           <div class="kpi-foot">por <strong>${biggestWeek.who}</strong></div>
         </div>
         <div class="kpi-card panel kpi--silver">
-          <div class="kpi-label">Projecao do lider (EOY)</div>
+          <div class="kpi-label">Projeção do líder (EOY)</div>
           <div class="kpi-value">${formatNumber(leaderProjected)}</div>
           <div class="kpi-foot">${(leaderStats && leaderStats.dailyRate || 0).toFixed(1)} commits/dia</div>
         </div>
@@ -248,7 +248,7 @@ function renderShell(competition, competitors, stats, allStats) {
       <section class="podium panel">
         <div class="podium-head">
           <div>
-            <h2>Podio 2026</h2>
+            <h2>Pódio 2026</h2>
             <p>Top 3 da disputa, com base nos commits acumulados.</p>
           </div>
         </div>
@@ -258,7 +258,7 @@ function renderShell(competition, competitors, stats, allStats) {
       <section class="city-stage panel">
         <div id="scene" class="city-scene" aria-label="Cena 3D da cidade"></div>
         <div class="scene-toolbar">
-          <button id="btn-fireworks" class="toolbar-btn" title="Soltar fogos no lider">Fogos</button>
+          <button id="btn-fireworks" class="toolbar-btn" title="Soltar fogos no líder">Fogos</button>
           <button id="btn-screenshot" class="toolbar-btn" title="Salvar screenshot">Screenshot</button>
         </div>
       </section>
@@ -267,8 +267,8 @@ function renderShell(competition, competitors, stats, allStats) {
         <div class="insight-panel panel">
           <div class="insight-head">
             <div>
-              <h2>Quem esta esquentando</h2>
-              <p>Variacao das ultimas 4 semanas vs as 4 anteriores</p>
+              <h2>Quem está esquentando</h2>
+              <p>Variação das últimas 4 semanas vs as 4 anteriores</p>
             </div>
             <div class="heat-icon">↑</div>
           </div>
@@ -277,8 +277,8 @@ function renderShell(competition, competitors, stats, allStats) {
         <div class="insight-panel panel">
           <div class="insight-head">
             <div>
-              <h2>Pace do lider</h2>
-              <p>Projecao para o fim de 2026 mantendo o ritmo atual</p>
+              <h2>Pace do líder</h2>
+              <p>Projeção para o fim de 2026 mantendo o ritmo atual</p>
             </div>
           </div>
           ${renderPace(leader, leaderStats, totalCommits, elapsedYearDays, remainingDays)}
@@ -291,7 +291,7 @@ function renderShell(competition, competitors, stats, allStats) {
           <div class="leaderboard-head">
             <div>
               <h2>Ranking de Commits</h2>
-              <p>Clique em qualquer linha para focar o predio na cidade.</p>
+              <p>Clique em qualquer linha para focar o prédio na cidade.</p>
             </div>
             <p>${competitors.length} torres nomeadas</p>
           </div>
@@ -299,9 +299,9 @@ function renderShell(competition, competitors, stats, allStats) {
             <div></div>
             <div></div>
             <div>Dev</div>
-            <div class="lb-hide-sm">Tendencia</div>
+            <div class="lb-hide-sm">Tendência</div>
             <div class="lb-hide-md">Esta sem.</div>
-            <div class="lb-hide-md">Media</div>
+            <div class="lb-hide-md">Média</div>
             <div class="lb-hide-md">Pico</div>
             <div>Commits</div>
           </div>
@@ -313,7 +313,7 @@ function renderShell(competition, competitors, stats, allStats) {
         <section class="chart-section panel">
           <div class="chart-header">
             <div>
-              <h2>Evolucao acumulada</h2>
+              <h2>Evolução acumulada</h2>
               <p>Commits somados ao longo do ano, por competidor</p>
             </div>
           </div>
@@ -331,7 +331,7 @@ function renderShell(competition, competitors, stats, allStats) {
       </section>
 
       <footer class="footer">
-        Contribution City usa dados estaticos em JSON e renderizacao 3D no navegador. GitHub Pages continua suficiente para hospedar tudo.
+        Contribution City usa dados estáticos em JSON e renderização 3D no navegador. GitHub Pages continua suficiente para hospedar tudo.
       </footer>
     </div>
   `;
@@ -358,7 +358,7 @@ function renderPodium(competitors, allStats) {
             <div class="podium-name">${c.username}</div>
             <div class="podium-commits">${formatNumber(c.commits || 0)}<small>commits</small></div>
             <div class="podium-pills">
-              <span class="pill">media ${formatNumber(s.weeklyAvg)}/sem</span>
+              <span class="pill">média ${formatNumber(s.weeklyAvg)}/sem</span>
               <span class="pill">pico ${formatNumber(s.peakWeek)}</span>
               <span class="pill ${s.momentum >= 0 ? "up" : "down"}">${s.momentum >= 0 ? "+" : ""}${s.momentum.toFixed(0)}%</span>
             </div>
@@ -389,7 +389,7 @@ function renderHotList(competitors, allStats) {
         <img src="${c.avatar}" alt="${c.username}">
         <div>
           <strong>${c.username}</strong>
-          <span>${formatNumber(s.last4)} nas ultimas 4 sem · ${formatNumber(s.prior4)} antes</span>
+          <span>${formatNumber(s.last4)} nas últimas 4 sem · ${formatNumber(s.prior4)} antes</span>
         </div>
         <div class="heat-delta ${cls}">${arrow} ${s.momentum >= 0 ? "+" : ""}${s.momentum.toFixed(0)}%</div>
       </button>
@@ -419,7 +419,7 @@ function renderPace(leader, stats, totalCommits, daysElapsed, daysRemaining) {
       </div>
       <div class="pace-stat">
         <div class="pace-stat-value">${formatNumber(stats.weeklyAvg)}</div>
-        <div class="pace-stat-label">Media semanal</div>
+        <div class="pace-stat-label">Média semanal</div>
       </div>
       <div class="pace-stat">
         <div class="pace-stat-value">${formatNumber(remainingPace)}</div>
@@ -427,7 +427,7 @@ function renderPace(leader, stats, totalCommits, daysElapsed, daysRemaining) {
       </div>
       <div class="pace-stat">
         <div class="pace-stat-value">${formatNumber(projected)}</div>
-        <div class="pace-stat-label">Projecao EOY</div>
+        <div class="pace-stat-label">Projeção EOY</div>
       </div>
     </div>
   `;
@@ -440,7 +440,7 @@ function renderBadges(badges) {
 
 function renderFocusPanel(competitor, leader, stats, color) {
   if (!competitor) {
-    return `<div class="focus-copy">Clique em um predio principal para ver os detalhes aqui.</div>`;
+    return `<div class="focus-copy">Clique em um prédio principal para ver os detalhes aqui.</div>`;
   }
 
   const isLeader = competitor.username === leader.username;
@@ -451,7 +451,7 @@ function renderFocusPanel(competitor, leader, stats, color) {
     <div class="focus-header">
       <img class="focus-avatar" src="${competitor.avatar}" alt="${competitor.username}">
       <div>
-        <div class="focus-kicker">${isLeader ? "Predio do lider" : `Posicao #${stats.idx + 1}`}</div>
+        <div class="focus-kicker">${isLeader ? "Prédio do líder" : `Posição #${stats.idx + 1}`}</div>
         <h3>${competitor.username}</h3>
       </div>
     </div>
@@ -460,7 +460,7 @@ function renderFocusPanel(competitor, leader, stats, color) {
 
     <div class="focus-sparkline">
       <div class="focus-sparkline-head">
-        <span>Trajetoria semanal</span>
+        <span>Trajetória semanal</span>
         <span>${formatNumber(stats.peakWeek)} pico</span>
       </div>
       ${buildSparkline(weekly, color, 320, 64)}
@@ -477,7 +477,7 @@ function renderFocusPanel(competitor, leader, stats, color) {
       </div>
       <div class="stat-tile">
         <strong>${formatNumber(stats.weeklyAvg)}</strong>
-        <span>Media semanal</span>
+        <span>Média semanal</span>
       </div>
       <div class="stat-tile">
         <strong>${formatNumber(stats.peakWeek)}</strong>
@@ -493,11 +493,11 @@ function renderFocusPanel(competitor, leader, stats, color) {
       </div>
       <div class="stat-tile">
         <strong>${isLeader ? "—" : formatNumber(stats.gapToLeader)}</strong>
-        <span>Gap pro lider</span>
+        <span>Gap pro líder</span>
       </div>
       <div class="stat-tile">
         <strong>${formatNumber(stats.projected)}</strong>
-        <span>Projecao EOY</span>
+        <span>Projeção EOY</span>
       </div>
     </div>
     <a class="focus-link" href="${competitor.profile}" target="_blank" rel="noopener noreferrer">Abrir perfil no GitHub →</a>
@@ -528,7 +528,7 @@ function renderLeaderboard(competitors, selectedUsername, allStats, colors) {
         </div>
         <div class="lb-spark lb-hide-sm">${buildSparkline(weekly, color, 160, 38)}</div>
         <div class="lb-num lb-hide-md ${deltaCls}">${formatNumber(stats.lastWeek)}<small>esta sem</small></div>
-        <div class="lb-num lb-hide-md">${formatNumber(stats.weeklyAvg)}<small>media</small></div>
+        <div class="lb-num lb-hide-md">${formatNumber(stats.weeklyAvg)}<small>média</small></div>
         <div class="lb-num lb-hide-md">${formatNumber(stats.peakWeek)}<small>pico</small></div>
         <div class="lb-num">${formatNumber(competitor.commits || 0)}<small>commits</small></div>
       </button>
@@ -568,7 +568,7 @@ function drawHistoryChart(canvas, competitors, colors) {
     ctx.fillStyle = "#98a9cf";
     ctx.font = "14px 'Space Grotesk', sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("Dados semanais nao disponiveis", width / 2, height / 2);
+    ctx.fillText("Dados semanais não disponíveis", width / 2, height / 2);
     return;
   }
 
@@ -667,7 +667,7 @@ function drawWeeklyChart(canvas, competitors, colors) {
     ctx.fillStyle = "#98a9cf";
     ctx.font = "14px 'Space Grotesk', sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("Dados semanais nao disponiveis", width / 2, height / 2);
+    ctx.fillText("Dados semanais não disponíveis", width / 2, height / 2);
     return;
   }
 
@@ -760,7 +760,7 @@ function renderError(message) {
 async function loadCompetitionData() {
   const response = await fetch(DATA_PATH, { cache: "no-store" });
   if (!response.ok) {
-    throw new Error("O JSON da competicao nao foi encontrado. Rode o workflow de atualizacao para gerar os dados.");
+    throw new Error("O JSON da competição não foi encontrado. Rode o workflow de atualização para gerar os dados.");
   }
   return response.json();
 }
