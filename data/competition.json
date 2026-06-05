@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-06-04T12:20:35.619Z",
-  "generatedAt": "2026-06-04T12:20:35.619Z",
+  "updatedAt": "2026-06-05T12:19:38.634Z",
+  "generatedAt": "2026-06-05T12:19:38.634Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-06-04T12:20:34.965Z"
+    "to": "2026-06-05T12:19:37.928Z"
   },
   "competitors": [
     {
@@ -1084,13 +1084,13 @@
       "name": "meleratiPX",
       "avatar": "https://avatars.githubusercontent.com/u/213462447?s=200&u=830c2675cbb8290ee0ad3ae2e2b0e178283c9723&v=4",
       "profile": "https://github.com/meleratiPX",
-      "contributions": 291,
-      "commits": 291,
+      "contributions": 294,
+      "commits": 294,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 291,
+      "restrictedContributions": 294,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1182,7 +1182,7 @@
         },
         {
           "week": "2026-05-31",
-          "contributions": 16
+          "contributions": 19
         }
       ]
     },
