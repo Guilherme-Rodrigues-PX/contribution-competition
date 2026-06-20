@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-06-19T20:49:09.856Z",
-  "generatedAt": "2026-06-19T20:49:09.856Z",
+  "updatedAt": "2026-06-20T11:25:42.322Z",
+  "generatedAt": "2026-06-20T11:25:42.322Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-06-19T20:49:09.152Z"
+    "to": "2026-06-20T11:25:41.565Z"
   },
   "competitors": [
     {
@@ -704,13 +704,13 @@
       "name": "KaioPradoPX",
       "avatar": "https://avatars.githubusercontent.com/u/281741078?s=200&v=4",
       "profile": "https://github.com/KaioPradoPX",
-      "contributions": 483,
-      "commits": 482,
+      "contributions": 486,
+      "commits": 485,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 482,
+      "restrictedContributions": 485,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -810,7 +810,7 @@
         },
         {
           "week": "2026-06-14",
-          "contributions": 18
+          "contributions": 21
         }
       ]
     },
