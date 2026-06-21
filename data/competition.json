@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-06-20T11:25:42.322Z",
-  "generatedAt": "2026-06-20T11:25:42.322Z",
+  "updatedAt": "2026-06-21T11:56:53.962Z",
+  "generatedAt": "2026-06-21T11:56:53.962Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-06-20T11:25:41.565Z"
+    "to": "2026-06-21T11:56:53.229Z"
   },
   "competitors": [
     {
@@ -121,6 +121,10 @@
         {
           "week": "2026-06-14",
           "contributions": 34
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -236,6 +240,10 @@
         {
           "week": "2026-06-14",
           "contributions": 239
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -351,6 +359,10 @@
         {
           "week": "2026-06-14",
           "contributions": 54
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -466,6 +478,10 @@
         {
           "week": "2026-06-14",
           "contributions": 97
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -581,6 +597,10 @@
         {
           "week": "2026-06-14",
           "contributions": 29
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -696,6 +716,10 @@
         {
           "week": "2026-06-14",
           "contributions": 55
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -811,6 +835,10 @@
         {
           "week": "2026-06-14",
           "contributions": 21
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -819,13 +847,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 481,
-      "commits": 480,
+      "contributions": 483,
+      "commits": 482,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 480,
+      "restrictedContributions": 482,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -925,7 +953,11 @@
         },
         {
           "week": "2026-06-14",
-          "contributions": 14
+          "contributions": 16
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1041,6 +1073,10 @@
         {
           "week": "2026-06-14",
           "contributions": 25
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1156,6 +1192,10 @@
         {
           "week": "2026-06-14",
           "contributions": 19
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1271,6 +1311,10 @@
         {
           "week": "2026-06-14",
           "contributions": 107
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1386,6 +1430,10 @@
         {
           "week": "2026-06-14",
           "contributions": 10
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1501,6 +1549,10 @@
         {
           "week": "2026-06-14",
           "contributions": 12
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1616,6 +1668,10 @@
         {
           "week": "2026-06-14",
           "contributions": 6
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1730,6 +1786,10 @@
         },
         {
           "week": "2026-06-14",
+          "contributions": 0
+        },
+        {
+          "week": "2026-06-21",
           "contributions": 0
         }
       ]
@@ -1846,6 +1906,10 @@
         {
           "week": "2026-06-14",
           "contributions": 2
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -1961,6 +2025,10 @@
         {
           "week": "2026-06-14",
           "contributions": 0
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 0
         }
       ]
     },
@@ -2075,6 +2143,10 @@
         },
         {
           "week": "2026-06-14",
+          "contributions": 0
+        },
+        {
+          "week": "2026-06-21",
           "contributions": 0
         }
       ]
