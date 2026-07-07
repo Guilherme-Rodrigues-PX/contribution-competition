@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-07-06T12:59:01.499Z",
-  "generatedAt": "2026-07-06T12:59:01.499Z",
+  "updatedAt": "2026-07-07T12:09:47.069Z",
+  "generatedAt": "2026-07-07T12:09:47.069Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-07-06T12:59:00.812Z"
+    "to": "2026-07-07T12:09:46.314Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "Guilherme-Rodrigues-PX",
       "avatar": "https://avatars.githubusercontent.com/u/187324256?s=200&u=2a6e0f1dcbdfdcee811cff5626a9d6247e046c76&v=4",
       "profile": "https://github.com/Guilherme-Rodrigues-PX",
-      "contributions": 3122,
-      "commits": 3120,
+      "contributions": 3131,
+      "commits": 3129,
       "publicCommits": 40,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 3080,
+      "restrictedContributions": 3089,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -132,7 +132,7 @@
         },
         {
           "week": "2026-07-05",
-          "contributions": 0
+          "contributions": 9
         }
       ]
     },
@@ -141,13 +141,13 @@
       "name": "PXTarda",
       "avatar": "https://avatars.githubusercontent.com/u/236474935?s=200&u=c6f004e7313bf16fa3ff8eb9b56181f1b221ef74&v=4",
       "profile": "https://github.com/PXTarda",
-      "contributions": 2965,
-      "commits": 2964,
+      "contributions": 2968,
+      "commits": 2967,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 2964,
+      "restrictedContributions": 2967,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -259,7 +259,7 @@
         },
         {
           "week": "2026-07-05",
-          "contributions": 0
+          "contributions": 3
         }
       ]
     },
@@ -268,13 +268,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 1701,
-      "commits": 1701,
+      "contributions": 1738,
+      "commits": 1738,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1701,
+      "restrictedContributions": 1738,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -386,7 +386,7 @@
         },
         {
           "week": "2026-07-05",
-          "contributions": 24
+          "contributions": 61
         }
       ]
     },
@@ -649,13 +649,13 @@
       "name": "Felipe Fukuoka",
       "avatar": "https://avatars.githubusercontent.com/u/190751833?s=200&u=c5d96dcbc758483204ff27b7893325db3d69f86e&v=4",
       "profile": "https://github.com/ffukuokaPX",
-      "contributions": 985,
-      "commits": 985,
+      "contributions": 1015,
+      "commits": 1015,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 985,
+      "restrictedContributions": 1015,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -763,11 +763,11 @@
         },
         {
           "week": "2026-06-28",
-          "contributions": 90
+          "contributions": 97
         },
         {
           "week": "2026-07-05",
-          "contributions": 0
+          "contributions": 23
         }
       ]
     },
@@ -776,13 +776,13 @@
       "name": "theo-tostopx",
       "avatar": "https://avatars.githubusercontent.com/u/275821085?s=200&u=5ed60c6d08e9c0ecf0ef575a946f91b1dcef0f64&v=4",
       "profile": "https://github.com/theo-tostopx",
-      "contributions": 608,
-      "commits": 607,
+      "contributions": 627,
+      "commits": 626,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 607,
+      "restrictedContributions": 626,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -894,7 +894,134 @@
         },
         {
           "week": "2026-07-05",
+          "contributions": 19
+        }
+      ]
+    },
+    {
+      "username": "luis-torrano",
+      "name": "luis-torrano",
+      "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
+      "profile": "https://github.com/luis-torrano",
+      "contributions": 612,
+      "commits": 611,
+      "publicCommits": 0,
+      "pullRequests": 0,
+      "reviews": 0,
+      "issues": 0,
+      "restrictedContributions": 611,
+      "weeklyHistory": [
+        {
+          "week": "2026-01-01",
           "contributions": 0
+        },
+        {
+          "week": "2026-01-04",
+          "contributions": 0
+        },
+        {
+          "week": "2026-01-11",
+          "contributions": 0
+        },
+        {
+          "week": "2026-01-18",
+          "contributions": 0
+        },
+        {
+          "week": "2026-01-25",
+          "contributions": 0
+        },
+        {
+          "week": "2026-02-01",
+          "contributions": 0
+        },
+        {
+          "week": "2026-02-08",
+          "contributions": 0
+        },
+        {
+          "week": "2026-02-15",
+          "contributions": 0
+        },
+        {
+          "week": "2026-02-22",
+          "contributions": 0
+        },
+        {
+          "week": "2026-03-01",
+          "contributions": 0
+        },
+        {
+          "week": "2026-03-08",
+          "contributions": 0
+        },
+        {
+          "week": "2026-03-15",
+          "contributions": 0
+        },
+        {
+          "week": "2026-03-22",
+          "contributions": 0
+        },
+        {
+          "week": "2026-03-29",
+          "contributions": 0
+        },
+        {
+          "week": "2026-04-05",
+          "contributions": 0
+        },
+        {
+          "week": "2026-04-12",
+          "contributions": 0
+        },
+        {
+          "week": "2026-04-19",
+          "contributions": 0
+        },
+        {
+          "week": "2026-04-26",
+          "contributions": 0
+        },
+        {
+          "week": "2026-05-03",
+          "contributions": 77
+        },
+        {
+          "week": "2026-05-10",
+          "contributions": 160
+        },
+        {
+          "week": "2026-05-17",
+          "contributions": 113
+        },
+        {
+          "week": "2026-05-24",
+          "contributions": 64
+        },
+        {
+          "week": "2026-05-31",
+          "contributions": 26
+        },
+        {
+          "week": "2026-06-07",
+          "contributions": 27
+        },
+        {
+          "week": "2026-06-14",
+          "contributions": 16
+        },
+        {
+          "week": "2026-06-21",
+          "contributions": 28
+        },
+        {
+          "week": "2026-06-28",
+          "contributions": 83
+        },
+        {
+          "week": "2026-07-05",
+          "contributions": 18
         }
       ]
     },
@@ -1026,144 +1153,17 @@
       ]
     },
     {
-      "username": "luis-torrano",
-      "name": "luis-torrano",
-      "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
-      "profile": "https://github.com/luis-torrano",
-      "contributions": 594,
-      "commits": 593,
-      "publicCommits": 0,
-      "pullRequests": 0,
-      "reviews": 0,
-      "issues": 0,
-      "restrictedContributions": 593,
-      "weeklyHistory": [
-        {
-          "week": "2026-01-01",
-          "contributions": 0
-        },
-        {
-          "week": "2026-01-04",
-          "contributions": 0
-        },
-        {
-          "week": "2026-01-11",
-          "contributions": 0
-        },
-        {
-          "week": "2026-01-18",
-          "contributions": 0
-        },
-        {
-          "week": "2026-01-25",
-          "contributions": 0
-        },
-        {
-          "week": "2026-02-01",
-          "contributions": 0
-        },
-        {
-          "week": "2026-02-08",
-          "contributions": 0
-        },
-        {
-          "week": "2026-02-15",
-          "contributions": 0
-        },
-        {
-          "week": "2026-02-22",
-          "contributions": 0
-        },
-        {
-          "week": "2026-03-01",
-          "contributions": 0
-        },
-        {
-          "week": "2026-03-08",
-          "contributions": 0
-        },
-        {
-          "week": "2026-03-15",
-          "contributions": 0
-        },
-        {
-          "week": "2026-03-22",
-          "contributions": 0
-        },
-        {
-          "week": "2026-03-29",
-          "contributions": 0
-        },
-        {
-          "week": "2026-04-05",
-          "contributions": 0
-        },
-        {
-          "week": "2026-04-12",
-          "contributions": 0
-        },
-        {
-          "week": "2026-04-19",
-          "contributions": 0
-        },
-        {
-          "week": "2026-04-26",
-          "contributions": 0
-        },
-        {
-          "week": "2026-05-03",
-          "contributions": 77
-        },
-        {
-          "week": "2026-05-10",
-          "contributions": 160
-        },
-        {
-          "week": "2026-05-17",
-          "contributions": 113
-        },
-        {
-          "week": "2026-05-24",
-          "contributions": 64
-        },
-        {
-          "week": "2026-05-31",
-          "contributions": 26
-        },
-        {
-          "week": "2026-06-07",
-          "contributions": 27
-        },
-        {
-          "week": "2026-06-14",
-          "contributions": 16
-        },
-        {
-          "week": "2026-06-21",
-          "contributions": 28
-        },
-        {
-          "week": "2026-06-28",
-          "contributions": 83
-        },
-        {
-          "week": "2026-07-05",
-          "contributions": 0
-        }
-      ]
-    },
-    {
       "username": "ScarlatoPX",
       "name": "PX - Scarlato",
       "avatar": "https://avatars.githubusercontent.com/u/274327350?s=200&u=4d14dbf99788e32d00ab73d296d2b43f770c01ee&v=4",
       "profile": "https://github.com/ScarlatoPX",
-      "contributions": 438,
-      "commits": 437,
+      "contributions": 439,
+      "commits": 438,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 437,
+      "restrictedContributions": 438,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1275,7 +1275,7 @@
         },
         {
           "week": "2026-07-05",
-          "contributions": 0
+          "contributions": 1
         }
       ]
     },
@@ -1538,13 +1538,13 @@
       "name": "PxEduardo",
       "avatar": "https://avatars.githubusercontent.com/u/267967732?s=200&u=b379ff6dc6eb808700b7e2fb92c3bde03d86b10c&v=4",
       "profile": "https://github.com/EduardoRhilo",
-      "contributions": 263,
-      "commits": 262,
+      "contributions": 268,
+      "commits": 267,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 262,
+      "restrictedContributions": 267,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1656,7 +1656,7 @@
         },
         {
           "week": "2026-07-05",
-          "contributions": 0
+          "contributions": 5
         }
       ]
     },
