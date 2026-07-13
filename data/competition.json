@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-07-12T10:43:22.747Z",
-  "generatedAt": "2026-07-12T10:43:22.747Z",
+  "updatedAt": "2026-07-13T12:16:56.207Z",
+  "generatedAt": "2026-07-13T12:16:56.207Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-07-12T10:43:21.961Z"
+    "to": "2026-07-13T12:16:55.288Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "Guilherme-Rodrigues-PX",
       "avatar": "https://avatars.githubusercontent.com/u/187324256?s=200&u=2a6e0f1dcbdfdcee811cff5626a9d6247e046c76&v=4",
       "profile": "https://github.com/Guilherme-Rodrigues-PX",
-      "contributions": 3285,
-      "commits": 3283,
+      "contributions": 3286,
+      "commits": 3284,
       "publicCommits": 40,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 3243,
+      "restrictedContributions": 3244,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -136,7 +136,7 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 0
+          "contributions": 1
         }
       ]
     },
@@ -276,13 +276,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 1779,
-      "commits": 1779,
+      "contributions": 1790,
+      "commits": 1790,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1779,
+      "restrictedContributions": 1790,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -398,7 +398,7 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 0
+          "contributions": 11
         }
       ]
     },
