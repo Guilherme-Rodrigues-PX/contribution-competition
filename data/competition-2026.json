@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-07-14T10:56:23.432Z",
-  "generatedAt": "2026-07-14T10:56:23.432Z",
+  "updatedAt": "2026-07-15T11:02:18.844Z",
+  "generatedAt": "2026-07-15T11:02:18.844Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-07-14T10:56:22.599Z"
+    "to": "2026-07-15T11:02:18.143Z"
   },
   "competitors": [
     {
@@ -145,13 +145,13 @@
       "name": "PXTarda",
       "avatar": "https://avatars.githubusercontent.com/u/236474935?s=200&u=c6f004e7313bf16fa3ff8eb9b56181f1b221ef74&v=4",
       "profile": "https://github.com/PXTarda",
-      "contributions": 2979,
-      "commits": 2978,
+      "contributions": 2986,
+      "commits": 2985,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 2978,
+      "restrictedContributions": 2985,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -267,7 +267,7 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 7
+          "contributions": 14
         }
       ]
     },
@@ -276,13 +276,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 1792,
-      "commits": 1792,
+      "contributions": 1795,
+      "commits": 1795,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1792,
+      "restrictedContributions": 1795,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -398,7 +398,7 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 13
+          "contributions": 16
         }
       ]
     },
@@ -931,13 +931,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 649,
-      "commits": 648,
+      "contributions": 651,
+      "commits": 650,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 648,
+      "restrictedContributions": 650,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1053,7 +1053,7 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 5
+          "contributions": 7
         }
       ]
     },
@@ -1586,13 +1586,13 @@
       "name": "PxEduardo",
       "avatar": "https://avatars.githubusercontent.com/u/267967732?s=200&u=b379ff6dc6eb808700b7e2fb92c3bde03d86b10c&v=4",
       "profile": "https://github.com/EduardoRhilo",
-      "contributions": 275,
-      "commits": 274,
+      "contributions": 278,
+      "commits": 277,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 274,
+      "restrictedContributions": 277,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1708,7 +1708,7 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 4
+          "contributions": 7
         }
       ]
     },
