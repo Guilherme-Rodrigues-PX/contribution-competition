@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-07-18T10:41:29.965Z",
-  "generatedAt": "2026-07-18T10:41:29.965Z",
+  "updatedAt": "2026-07-19T10:43:50.430Z",
+  "generatedAt": "2026-07-19T10:43:50.430Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-07-18T10:41:27.481Z"
+    "to": "2026-07-19T10:43:47.924Z"
   },
   "competitors": [
     {
@@ -137,6 +137,10 @@
         {
           "week": "2026-07-12",
           "contributions": 98
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -145,13 +149,13 @@
       "name": "PXTarda",
       "avatar": "https://avatars.githubusercontent.com/u/236474935?s=200&u=c6f004e7313bf16fa3ff8eb9b56181f1b221ef74&v=4",
       "profile": "https://github.com/PXTarda",
-      "contributions": 3005,
-      "commits": 3004,
+      "contributions": 3006,
+      "commits": 3005,
       "publicCommits": 2,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 3002,
+      "restrictedContributions": 3003,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -267,7 +271,11 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 33
+          "contributions": 34
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -276,13 +284,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 1815,
-      "commits": 1815,
+      "contributions": 1848,
+      "commits": 1848,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1815,
+      "restrictedContributions": 1848,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -398,7 +406,11 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 36
+          "contributions": 69
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -529,6 +541,10 @@
         },
         {
           "week": "2026-07-12",
+          "contributions": 0
+        },
+        {
+          "week": "2026-07-19",
           "contributions": 0
         }
       ]
@@ -661,6 +677,10 @@
         {
           "week": "2026-07-12",
           "contributions": 26
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -791,6 +811,10 @@
         },
         {
           "week": "2026-07-12",
+          "contributions": 0
+        },
+        {
+          "week": "2026-07-19",
           "contributions": 0
         }
       ]
@@ -923,6 +947,10 @@
         {
           "week": "2026-07-12",
           "contributions": 24
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -1054,6 +1082,10 @@
         {
           "week": "2026-07-12",
           "contributions": 28
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -1185,6 +1217,10 @@
         {
           "week": "2026-07-12",
           "contributions": 2
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -1316,6 +1352,10 @@
         {
           "week": "2026-07-12",
           "contributions": 6
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -1447,6 +1487,10 @@
         {
           "week": "2026-07-12",
           "contributions": 3
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -1578,6 +1622,10 @@
         {
           "week": "2026-07-12",
           "contributions": 2
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -1709,6 +1757,10 @@
         {
           "week": "2026-07-12",
           "contributions": 14
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -1839,6 +1891,10 @@
         },
         {
           "week": "2026-07-12",
+          "contributions": 0
+        },
+        {
+          "week": "2026-07-19",
           "contributions": 0
         }
       ]
@@ -1971,6 +2027,10 @@
         {
           "week": "2026-07-12",
           "contributions": 4
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -2102,6 +2162,10 @@
         {
           "week": "2026-07-12",
           "contributions": 0
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -2110,13 +2174,13 @@
       "name": "pxjoliveira",
       "avatar": "https://avatars.githubusercontent.com/u/190662863?s=200&v=4",
       "profile": "https://github.com/pxjoliveira",
-      "contributions": 42,
-      "commits": 42,
+      "contributions": 43,
+      "commits": 43,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 42,
+      "restrictedContributions": 43,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -2232,7 +2296,11 @@
         },
         {
           "week": "2026-07-12",
-          "contributions": 7
+          "contributions": 8
+        },
+        {
+          "week": "2026-07-19",
+          "contributions": 0
         }
       ]
     },
@@ -2363,6 +2431,10 @@
         },
         {
           "week": "2026-07-12",
+          "contributions": 0
+        },
+        {
+          "week": "2026-07-19",
           "contributions": 0
         }
       ]
