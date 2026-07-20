@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-07-19T10:43:50.430Z",
-  "generatedAt": "2026-07-19T10:43:50.430Z",
+  "updatedAt": "2026-07-20T11:58:49.645Z",
+  "generatedAt": "2026-07-20T11:58:49.645Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-07-19T10:43:47.924Z"
+    "to": "2026-07-20T11:58:47.371Z"
   },
   "competitors": [
     {
@@ -284,13 +284,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 1848,
-      "commits": 1848,
+      "contributions": 1849,
+      "commits": 1849,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1848,
+      "restrictedContributions": 1849,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -410,7 +410,7 @@
         },
         {
           "week": "2026-07-19",
-          "contributions": 0
+          "contributions": 1
         }
       ]
     },
@@ -959,13 +959,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 672,
-      "commits": 671,
+      "contributions": 674,
+      "commits": 673,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 671,
+      "restrictedContributions": 673,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1085,7 +1085,7 @@
         },
         {
           "week": "2026-07-19",
-          "contributions": 0
+          "contributions": 2
         }
       ]
     },
@@ -1499,13 +1499,13 @@
       "name": "meleratiPX",
       "avatar": "https://avatars.githubusercontent.com/u/213462447?s=200&u=830c2675cbb8290ee0ad3ae2e2b0e178283c9723&v=4",
       "profile": "https://github.com/meleratiPX",
-      "contributions": 329,
-      "commits": 329,
+      "contributions": 331,
+      "commits": 331,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 329,
+      "restrictedContributions": 331,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1625,7 +1625,7 @@
         },
         {
           "week": "2026-07-19",
-          "contributions": 0
+          "contributions": 2
         }
       ]
     },
