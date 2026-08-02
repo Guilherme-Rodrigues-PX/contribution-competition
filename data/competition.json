@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-08-01T10:49:24.922Z",
-  "generatedAt": "2026-08-01T10:49:24.922Z",
+  "updatedAt": "2026-08-02T10:51:09.061Z",
+  "generatedAt": "2026-08-02T10:51:09.061Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-08-01T10:49:23.907Z"
+    "to": "2026-08-02T10:51:08.129Z"
   },
   "competitors": [
     {
@@ -145,6 +145,10 @@
         {
           "week": "2026-07-26",
           "contributions": 280
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -284,6 +288,10 @@
         {
           "week": "2026-07-26",
           "contributions": 367
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -292,13 +300,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 2374,
-      "commits": 2374,
+      "contributions": 2489,
+      "commits": 2489,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 2374,
+      "restrictedContributions": 2489,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -422,7 +430,11 @@
         },
         {
           "week": "2026-07-26",
-          "contributions": 306
+          "contributions": 421
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -561,6 +573,10 @@
         },
         {
           "week": "2026-07-26",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-02",
           "contributions": 0
         }
       ]
@@ -701,6 +717,10 @@
         {
           "week": "2026-07-26",
           "contributions": 79
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -709,13 +729,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 1148,
-      "commits": 1147,
+      "contributions": 1161,
+      "commits": 1160,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1147,
+      "restrictedContributions": 1160,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -839,7 +859,11 @@
         },
         {
           "week": "2026-07-26",
-          "contributions": 351
+          "contributions": 364
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -979,6 +1003,10 @@
         {
           "week": "2026-07-26",
           "contributions": 61
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -1118,6 +1146,10 @@
         {
           "week": "2026-07-26",
           "contributions": 264
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -1257,6 +1289,10 @@
         {
           "week": "2026-07-26",
           "contributions": 21
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -1265,13 +1301,13 @@
       "name": "Lenara Londero",
       "avatar": "https://avatars.githubusercontent.com/u/274531758?s=200&u=86ef1e7d733bb17f74cdd35e7e391a7514a82ae9&v=4",
       "profile": "https://github.com/px-lenara",
-      "contributions": 829,
-      "commits": 828,
+      "contributions": 835,
+      "commits": 834,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 828,
+      "restrictedContributions": 834,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1395,7 +1431,11 @@
         },
         {
           "week": "2026-07-26",
-          "contributions": 249
+          "contributions": 255
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -1535,6 +1575,10 @@
         {
           "week": "2026-07-26",
           "contributions": 189
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -1674,6 +1718,10 @@
         {
           "week": "2026-07-26",
           "contributions": 10
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -1813,6 +1861,10 @@
         {
           "week": "2026-07-26",
           "contributions": 7
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -1952,6 +2004,10 @@
         {
           "week": "2026-07-26",
           "contributions": 1
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -2091,6 +2147,10 @@
         {
           "week": "2026-07-26",
           "contributions": 5
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -2229,6 +2289,10 @@
         },
         {
           "week": "2026-07-26",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-02",
           "contributions": 0
         }
       ]
@@ -2369,6 +2433,10 @@
         {
           "week": "2026-07-26",
           "contributions": 0
+        },
+        {
+          "week": "2026-08-02",
+          "contributions": 0
         }
       ]
     },
@@ -2507,6 +2575,10 @@
         },
         {
           "week": "2026-07-26",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-02",
           "contributions": 0
         }
       ]
