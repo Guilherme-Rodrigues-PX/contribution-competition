@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-08-02T10:51:09.061Z",
-  "generatedAt": "2026-08-02T10:51:09.061Z",
+  "updatedAt": "2026-08-03T12:36:29.932Z",
+  "generatedAt": "2026-08-03T12:36:29.932Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-08-02T10:51:08.129Z"
+    "to": "2026-08-03T12:36:29.000Z"
   },
   "competitors": [
     {
@@ -300,13 +300,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 2489,
-      "commits": 2489,
+      "contributions": 2572,
+      "commits": 2572,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 2489,
+      "restrictedContributions": 2572,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -434,7 +434,7 @@
         },
         {
           "week": "2026-08-02",
-          "contributions": 0
+          "contributions": 83
         }
       ]
     },
@@ -1015,13 +1015,13 @@
       "name": "KaioPradoPX",
       "avatar": "https://avatars.githubusercontent.com/u/281741078?s=200&v=4",
       "profile": "https://github.com/KaioPradoPX",
-      "contributions": 1074,
-      "commits": 1073,
+      "contributions": 1077,
+      "commits": 1076,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1073,
+      "restrictedContributions": 1076,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1149,7 +1149,7 @@
         },
         {
           "week": "2026-08-02",
-          "contributions": 0
+          "contributions": 3
         }
       ]
     },
@@ -1301,13 +1301,13 @@
       "name": "Lenara Londero",
       "avatar": "https://avatars.githubusercontent.com/u/274531758?s=200&u=86ef1e7d733bb17f74cdd35e7e391a7514a82ae9&v=4",
       "profile": "https://github.com/px-lenara",
-      "contributions": 835,
-      "commits": 834,
+      "contributions": 836,
+      "commits": 835,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 834,
+      "restrictedContributions": 835,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1435,7 +1435,7 @@
         },
         {
           "week": "2026-08-02",
-          "contributions": 0
+          "contributions": 1
         }
       ]
     },
