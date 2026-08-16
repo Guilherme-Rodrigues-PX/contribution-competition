@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-08-15T09:42:07.501Z",
-  "generatedAt": "2026-08-15T09:42:07.501Z",
+  "updatedAt": "2026-08-16T09:43:09.874Z",
+  "generatedAt": "2026-08-16T09:43:09.874Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-08-15T09:42:06.406Z"
+    "to": "2026-08-16T09:43:08.884Z"
   },
   "competitors": [
     {
@@ -153,6 +153,10 @@
         {
           "week": "2026-08-09",
           "contributions": 193
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -300,6 +304,10 @@
         {
           "week": "2026-08-09",
           "contributions": 196
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -447,6 +455,10 @@
         {
           "week": "2026-08-09",
           "contributions": 457
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -455,13 +467,13 @@
       "name": "Lenara Londero",
       "avatar": "https://avatars.githubusercontent.com/u/274531758?s=200&u=86ef1e7d733bb17f74cdd35e7e391a7514a82ae9&v=4",
       "profile": "https://github.com/px-lenara",
-      "contributions": 1658,
-      "commits": 1657,
+      "contributions": 1690,
+      "commits": 1689,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1657,
+      "restrictedContributions": 1689,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -593,7 +605,11 @@
         },
         {
           "week": "2026-08-09",
-          "contributions": 299
+          "contributions": 331
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -602,13 +618,13 @@
       "name": "KaioPradoPX",
       "avatar": "https://avatars.githubusercontent.com/u/281741078?s=200&v=4",
       "profile": "https://github.com/KaioPradoPX",
-      "contributions": 1478,
-      "commits": 1477,
+      "contributions": 1513,
+      "commits": 1512,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1477,
+      "restrictedContributions": 1512,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -740,7 +756,11 @@
         },
         {
           "week": "2026-08-09",
-          "contributions": 163
+          "contributions": 197
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 1
         }
       ]
     },
@@ -888,6 +908,10 @@
         {
           "week": "2026-08-09",
           "contributions": 66
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -1035,6 +1059,10 @@
         {
           "week": "2026-08-09",
           "contributions": 42
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -1181,6 +1209,10 @@
         },
         {
           "week": "2026-08-09",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-16",
           "contributions": 0
         }
       ]
@@ -1329,6 +1361,10 @@
         {
           "week": "2026-08-09",
           "contributions": 91
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -1476,6 +1512,10 @@
         {
           "week": "2026-08-09",
           "contributions": 67
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -1484,13 +1524,13 @@
       "name": "PX - Scarlato",
       "avatar": "https://avatars.githubusercontent.com/u/274327350?s=200&u=4d14dbf99788e32d00ab73d296d2b43f770c01ee&v=4",
       "profile": "https://github.com/ScarlatoPX",
-      "contributions": 775,
-      "commits": 774,
+      "contributions": 781,
+      "commits": 780,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 774,
+      "restrictedContributions": 780,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1622,7 +1662,11 @@
         },
         {
           "week": "2026-08-09",
-          "contributions": 25
+          "contributions": 31
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -1770,6 +1814,10 @@
         {
           "week": "2026-08-09",
           "contributions": 11
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -1917,6 +1965,10 @@
         {
           "week": "2026-08-09",
           "contributions": 12
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -2064,6 +2116,10 @@
         {
           "week": "2026-08-09",
           "contributions": 3
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -2211,6 +2267,10 @@
         {
           "week": "2026-08-09",
           "contributions": 11
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -2358,6 +2418,10 @@
         {
           "week": "2026-08-09",
           "contributions": 1
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -2505,6 +2569,10 @@
         {
           "week": "2026-08-09",
           "contributions": 3
+        },
+        {
+          "week": "2026-08-16",
+          "contributions": 0
         }
       ]
     },
@@ -2651,6 +2719,10 @@
         },
         {
           "week": "2026-08-09",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-16",
           "contributions": 0
         }
       ]
