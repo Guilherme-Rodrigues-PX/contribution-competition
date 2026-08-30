@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-08-29T14:30:05.684Z",
-  "generatedAt": "2026-08-29T14:30:05.684Z",
+  "updatedAt": "2026-08-30T14:25:33.640Z",
+  "generatedAt": "2026-08-30T14:25:33.640Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-08-29T14:30:04.574Z"
+    "to": "2026-08-30T14:25:32.474Z"
   },
   "competitors": [
     {
@@ -161,6 +161,10 @@
         {
           "week": "2026-08-23",
           "contributions": 304
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -316,6 +320,10 @@
         {
           "week": "2026-08-23",
           "contributions": 248
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -324,13 +332,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 4167,
-      "commits": 4167,
+      "contributions": 4208,
+      "commits": 4208,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 4167,
+      "restrictedContributions": 4208,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -470,7 +478,11 @@
         },
         {
           "week": "2026-08-23",
-          "contributions": 365
+          "contributions": 395
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 11
         }
       ]
     },
@@ -626,6 +638,10 @@
         {
           "week": "2026-08-23",
           "contributions": 141
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -781,6 +797,10 @@
         {
           "week": "2026-08-23",
           "contributions": 242
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -936,6 +956,10 @@
         {
           "week": "2026-08-23",
           "contributions": 134
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -1091,6 +1115,10 @@
         {
           "week": "2026-08-23",
           "contributions": 226
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -1246,6 +1274,10 @@
         {
           "week": "2026-08-23",
           "contributions": 58
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -1400,6 +1432,10 @@
         },
         {
           "week": "2026-08-23",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-30",
           "contributions": 0
         }
       ]
@@ -1556,6 +1592,10 @@
         {
           "week": "2026-08-23",
           "contributions": 0
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -1711,6 +1751,10 @@
         {
           "week": "2026-08-23",
           "contributions": 30
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -1866,6 +1910,10 @@
         {
           "week": "2026-08-23",
           "contributions": 16
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -2021,6 +2069,10 @@
         {
           "week": "2026-08-23",
           "contributions": 82
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -2029,13 +2081,13 @@
       "name": "PxEduardo",
       "avatar": "https://avatars.githubusercontent.com/u/267967732?s=200&u=50ba468e50e3301a359780e0072fe1d96a90369f&v=4",
       "profile": "https://github.com/EduardoRhilo",
-      "contributions": 363,
-      "commits": 362,
+      "contributions": 373,
+      "commits": 372,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 362,
+      "restrictedContributions": 372,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -2175,7 +2227,11 @@
         },
         {
           "week": "2026-08-23",
-          "contributions": 36
+          "contributions": 46
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -2330,6 +2386,10 @@
         },
         {
           "week": "2026-08-23",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-30",
           "contributions": 0
         }
       ]
@@ -2486,6 +2546,10 @@
         {
           "week": "2026-08-23",
           "contributions": 1
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -2640,6 +2704,10 @@
         },
         {
           "week": "2026-08-23",
+          "contributions": 0
+        },
+        {
+          "week": "2026-08-30",
           "contributions": 0
         }
       ]
@@ -2796,6 +2864,10 @@
         {
           "week": "2026-08-23",
           "contributions": 1
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -2951,6 +3023,10 @@
         {
           "week": "2026-08-23",
           "contributions": 1
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     },
@@ -3106,6 +3182,10 @@
         {
           "week": "2026-08-23",
           "contributions": 7
+        },
+        {
+          "week": "2026-08-30",
+          "contributions": 0
         }
       ]
     }
