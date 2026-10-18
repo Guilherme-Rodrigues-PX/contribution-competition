@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-10-17T12:59:15.208Z",
-  "generatedAt": "2026-10-17T12:59:15.208Z",
+  "updatedAt": "2026-10-18T13:19:45.880Z",
+  "generatedAt": "2026-10-18T13:19:45.880Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-10-17T12:59:13.693Z"
+    "to": "2026-10-18T13:19:44.389Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 8226,
-      "commits": 8226,
+      "contributions": 8275,
+      "commits": 8275,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 8226,
+      "restrictedContributions": 8275,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -188,7 +188,11 @@
         },
         {
           "week": "2026-10-11",
-          "contributions": 601
+          "contributions": 645
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 5
         }
       ]
     },
@@ -372,6 +376,10 @@
         {
           "week": "2026-10-11",
           "contributions": 50
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -555,6 +563,10 @@
         {
           "week": "2026-10-11",
           "contributions": 64
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -738,6 +750,10 @@
         {
           "week": "2026-10-11",
           "contributions": 36
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -921,6 +937,10 @@
         {
           "week": "2026-10-11",
           "contributions": 74
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -1104,6 +1124,10 @@
         {
           "week": "2026-10-11",
           "contributions": 5
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -1287,6 +1311,10 @@
         {
           "week": "2026-10-11",
           "contributions": 51
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -1470,6 +1498,10 @@
         {
           "week": "2026-10-11",
           "contributions": 42
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -1653,6 +1685,10 @@
         {
           "week": "2026-10-11",
           "contributions": 117
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -1836,6 +1872,10 @@
         {
           "week": "2026-10-11",
           "contributions": 155
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -2018,6 +2058,10 @@
         },
         {
           "week": "2026-10-11",
+          "contributions": 0
+        },
+        {
+          "week": "2026-10-18",
           "contributions": 0
         }
       ]
@@ -2202,6 +2246,10 @@
         {
           "week": "2026-10-11",
           "contributions": 0
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -2384,6 +2432,10 @@
         },
         {
           "week": "2026-10-11",
+          "contributions": 0
+        },
+        {
+          "week": "2026-10-18",
           "contributions": 0
         }
       ]
@@ -2568,6 +2620,10 @@
         {
           "week": "2026-10-11",
           "contributions": 169
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -2751,6 +2807,10 @@
         {
           "week": "2026-10-11",
           "contributions": 41
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -2934,6 +2994,10 @@
         {
           "week": "2026-10-11",
           "contributions": 2
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -3117,6 +3181,10 @@
         {
           "week": "2026-10-11",
           "contributions": 2
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -3299,6 +3367,10 @@
         },
         {
           "week": "2026-10-11",
+          "contributions": 0
+        },
+        {
+          "week": "2026-10-18",
           "contributions": 0
         }
       ]
@@ -3483,6 +3555,10 @@
         {
           "week": "2026-10-11",
           "contributions": 0
+        },
+        {
+          "week": "2026-10-18",
+          "contributions": 0
         }
       ]
     },
@@ -3665,6 +3741,10 @@
         },
         {
           "week": "2026-10-11",
+          "contributions": 0
+        },
+        {
+          "week": "2026-10-18",
           "contributions": 0
         }
       ]
