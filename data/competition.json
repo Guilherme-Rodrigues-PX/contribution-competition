@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-11-01T16:03:23.397Z",
-  "generatedAt": "2026-11-01T16:03:23.397Z",
+  "updatedAt": "2026-11-02T19:30:50.214Z",
+  "generatedAt": "2026-11-02T19:30:50.214Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-11-01T16:03:21.336Z"
+    "to": "2026-11-02T19:30:48.449Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 9220,
-      "commits": 9220,
+      "contributions": 9229,
+      "commits": 9229,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 9220,
+      "restrictedContributions": 9229,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -200,7 +200,7 @@
         },
         {
           "week": "2026-11-01",
-          "contributions": 0
+          "contributions": 9
         }
       ]
     },
@@ -794,13 +794,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 4200,
-      "commits": 4199,
+      "contributions": 4201,
+      "commits": 4200,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 4199,
+      "restrictedContributions": 4200,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -980,7 +980,7 @@
         },
         {
           "week": "2026-11-01",
-          "contributions": 0
+          "contributions": 1
         }
       ]
     },
