@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-11-07T15:41:02.739Z",
-  "generatedAt": "2026-11-07T15:41:02.739Z",
+  "updatedAt": "2026-11-08T15:59:44.259Z",
+  "generatedAt": "2026-11-08T15:59:44.259Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-11-07T15:41:00.698Z"
+    "to": "2026-11-08T15:59:42.647Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 9620,
-      "commits": 9620,
+      "contributions": 9860,
+      "commits": 9860,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 9620,
+      "restrictedContributions": 9860,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -200,7 +200,11 @@
         },
         {
           "week": "2026-11-01",
-          "contributions": 400
+          "contributions": 553
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 87
         }
       ]
     },
@@ -396,6 +400,10 @@
         {
           "week": "2026-11-01",
           "contributions": 1
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -591,6 +599,10 @@
         {
           "week": "2026-11-01",
           "contributions": 130
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -786,6 +798,10 @@
         {
           "week": "2026-11-01",
           "contributions": 14
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -794,13 +810,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 4250,
-      "commits": 4249,
+      "contributions": 4259,
+      "commits": 4258,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 4249,
+      "restrictedContributions": 4258,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -980,7 +996,11 @@
         },
         {
           "week": "2026-11-01",
-          "contributions": 47
+          "contributions": 51
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 5
         }
       ]
     },
@@ -1176,6 +1196,10 @@
         {
           "week": "2026-11-01",
           "contributions": 324
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -1371,6 +1395,10 @@
         {
           "week": "2026-11-01",
           "contributions": 16
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -1566,6 +1594,10 @@
         {
           "week": "2026-11-01",
           "contributions": 105
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -1761,6 +1793,10 @@
         {
           "week": "2026-11-01",
           "contributions": 115
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -1956,6 +1992,10 @@
         {
           "week": "2026-11-01",
           "contributions": 13
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -2150,6 +2190,10 @@
         },
         {
           "week": "2026-11-01",
+          "contributions": 0
+        },
+        {
+          "week": "2026-11-08",
           "contributions": 0
         }
       ]
@@ -2346,6 +2390,10 @@
         {
           "week": "2026-11-01",
           "contributions": 0
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -2541,6 +2589,10 @@
         {
           "week": "2026-11-01",
           "contributions": 6
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -2735,6 +2787,10 @@
         },
         {
           "week": "2026-11-01",
+          "contributions": 0
+        },
+        {
+          "week": "2026-11-08",
           "contributions": 0
         }
       ]
@@ -2931,6 +2987,10 @@
         {
           "week": "2026-11-01",
           "contributions": 11
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -3126,6 +3186,10 @@
         {
           "week": "2026-11-01",
           "contributions": 46
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -3320,6 +3384,10 @@
         },
         {
           "week": "2026-11-01",
+          "contributions": 0
+        },
+        {
+          "week": "2026-11-08",
           "contributions": 0
         }
       ]
@@ -3516,6 +3584,10 @@
         {
           "week": "2026-11-01",
           "contributions": 0
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -3711,6 +3783,10 @@
         {
           "week": "2026-11-01",
           "contributions": 0
+        },
+        {
+          "week": "2026-11-08",
+          "contributions": 0
         }
       ]
     },
@@ -3905,6 +3981,10 @@
         },
         {
           "week": "2026-11-01",
+          "contributions": 0
+        },
+        {
+          "week": "2026-11-08",
           "contributions": 0
         }
       ]
