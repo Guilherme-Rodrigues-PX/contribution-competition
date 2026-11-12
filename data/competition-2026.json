@@ -2,11 +2,11 @@
   "title": "Contribution Competition",
   "subtitle": "Quem vai dominar o GitHub em 2026?",
   "year": 2026,
-  "updatedAt": "2026-11-11T17:11:27.650Z",
-  "generatedAt": "2026-11-11T17:11:27.650Z",
+  "updatedAt": "2026-11-12T17:36:52.333Z",
+  "generatedAt": "2026-11-12T17:36:52.333Z",
   "range": {
     "from": "2026-01-01T00:00:00.000Z",
-    "to": "2026-11-11T17:11:25.445Z"
+    "to": "2026-11-12T17:36:50.323Z"
   },
   "competitors": [
     {
@@ -14,13 +14,13 @@
       "name": "Rafael Fiales",
       "avatar": "https://avatars.githubusercontent.com/u/157250652?s=200&u=5b18f0efb24a278f567845a873690191839a2f71&v=4",
       "profile": "https://github.com/rafaelfiales",
-      "contributions": 10388,
-      "commits": 10388,
+      "contributions": 10425,
+      "commits": 10425,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 10388,
+      "restrictedContributions": 10425,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -204,7 +204,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 608
+          "contributions": 645
         }
       ]
     },
@@ -213,13 +213,13 @@
       "name": "PXTarda",
       "avatar": "https://avatars.githubusercontent.com/u/236474935?s=200&u=49337c629172548d91a9a4475898b8b0880be678&v=4",
       "profile": "https://github.com/PXTarda",
-      "contributions": 7374,
-      "commits": 7373,
+      "contributions": 7428,
+      "commits": 7427,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 7373,
+      "restrictedContributions": 7427,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -403,7 +403,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 109
+          "contributions": 163
         }
       ]
     },
@@ -412,13 +412,13 @@
       "name": "Guilherme-Rodrigues-PX",
       "avatar": "https://avatars.githubusercontent.com/u/187324256?s=200&u=2a6e0f1dcbdfdcee811cff5626a9d6247e046c76&v=4",
       "profile": "https://github.com/Guilherme-Rodrigues-PX",
-      "contributions": 6391,
-      "commits": 6389,
+      "contributions": 6446,
+      "commits": 6444,
       "publicCommits": 42,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 6347,
+      "restrictedContributions": 6402,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -602,7 +602,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 72
+          "contributions": 127
         }
       ]
     },
@@ -611,13 +611,13 @@
       "name": "Lenara Londero",
       "avatar": "https://avatars.githubusercontent.com/u/274531758?s=200&u=86ef1e7d733bb17f74cdd35e7e391a7514a82ae9&v=4",
       "profile": "https://github.com/px-lenara",
-      "contributions": 4358,
-      "commits": 4357,
+      "contributions": 4359,
+      "commits": 4358,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 4357,
+      "restrictedContributions": 4358,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -801,7 +801,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 34
+          "contributions": 35
         }
       ]
     },
@@ -810,13 +810,13 @@
       "name": "luis-torrano",
       "avatar": "https://avatars.githubusercontent.com/u/281744255?s=200&u=9a91baddcd78642cf50917b9051e9124494660dd&v=4",
       "profile": "https://github.com/luis-torrano",
-      "contributions": 4269,
-      "commits": 4268,
+      "contributions": 4279,
+      "commits": 4278,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 4268,
+      "restrictedContributions": 4278,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1000,7 +1000,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 10
+          "contributions": 20
         }
       ]
     },
@@ -1009,13 +1009,13 @@
       "name": "px-paiola",
       "avatar": "https://avatars.githubusercontent.com/u/241786967?s=200&v=4",
       "profile": "https://github.com/px-paiola",
-      "contributions": 3894,
-      "commits": 3894,
+      "contributions": 3907,
+      "commits": 3907,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 3894,
+      "restrictedContributions": 3907,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1199,7 +1199,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 63
+          "contributions": 76
         }
       ]
     },
@@ -1208,13 +1208,13 @@
       "name": "Felipe Fukuoka",
       "avatar": "https://avatars.githubusercontent.com/u/190751833?s=200&u=c5d96dcbc758483204ff27b7893325db3d69f86e&v=4",
       "profile": "https://github.com/ffukuokaPX",
-      "contributions": 3337,
-      "commits": 3337,
+      "contributions": 3373,
+      "commits": 3373,
       "publicCommits": 2,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 3335,
+      "restrictedContributions": 3371,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1398,7 +1398,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 168
+          "contributions": 204
         }
       ]
     },
@@ -1407,13 +1407,13 @@
       "name": "KaioPradoPX",
       "avatar": "https://avatars.githubusercontent.com/u/281741078?s=200&v=4",
       "profile": "https://github.com/KaioPradoPX",
-      "contributions": 3291,
-      "commits": 3290,
+      "contributions": 3293,
+      "commits": 3292,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 3290,
+      "restrictedContributions": 3292,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1597,7 +1597,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 0
+          "contributions": 2
         }
       ]
     },
@@ -1606,13 +1606,13 @@
       "name": "Max Santos",
       "avatar": "https://avatars.githubusercontent.com/u/293961267?s=200&u=ce8b33237c780a165b24189be8801cb2b63a639b&v=4",
       "profile": "https://github.com/maxsantos-px",
-      "contributions": 2141,
-      "commits": 2140,
+      "contributions": 2144,
+      "commits": 2143,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 2140,
+      "restrictedContributions": 2143,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1796,7 +1796,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 0
+          "contributions": 3
         }
       ]
     },
@@ -1805,13 +1805,13 @@
       "name": "PX - Scarlato",
       "avatar": "https://avatars.githubusercontent.com/u/274327350?s=200&u=4d14dbf99788e32d00ab73d296d2b43f770c01ee&v=4",
       "profile": "https://github.com/ScarlatoPX",
-      "contributions": 1895,
-      "commits": 1894,
+      "contributions": 1955,
+      "commits": 1954,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 1894,
+      "restrictedContributions": 1954,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -1995,7 +1995,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 23
+          "contributions": 83
         }
       ]
     },
@@ -2402,13 +2402,13 @@
       "name": "PxEduardo",
       "avatar": "https://avatars.githubusercontent.com/u/267967732?s=200&v=4",
       "profile": "https://github.com/EduardoRhilo",
-      "contributions": 648,
-      "commits": 647,
+      "contributions": 650,
+      "commits": 649,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 647,
+      "restrictedContributions": 649,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -2592,7 +2592,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 5
+          "contributions": 7
         }
       ]
     },
@@ -2999,13 +2999,13 @@
       "name": "px-giovana",
       "avatar": "https://avatars.githubusercontent.com/u/274532716?s=200&v=4",
       "profile": "https://github.com/px-giovana",
-      "contributions": 291,
-      "commits": 290,
+      "contributions": 383,
+      "commits": 382,
       "publicCommits": 0,
       "pullRequests": 0,
       "reviews": 0,
       "issues": 0,
-      "restrictedContributions": 290,
+      "restrictedContributions": 382,
       "weeklyHistory": [
         {
           "week": "2026-01-01",
@@ -3189,7 +3189,7 @@
         },
         {
           "week": "2026-11-08",
-          "contributions": 14
+          "contributions": 106
         }
       ]
     },
